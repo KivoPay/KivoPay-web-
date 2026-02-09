@@ -11,7 +11,6 @@
       --text:#eef2ff;
       --muted:#aab3d6;
       --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.10);
       --stroke:rgba(255,255,255,.12);
       --brand:#6d5cff;
       --brand2:#29ffd1;
@@ -31,8 +30,10 @@
       min-height:100vh;
       overflow-x:hidden;
     }
-    a{color:inherit}
-    .wrap{max-width:1120px;margin:0 auto;padding:16px 14px 92px}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1120px;margin:0 auto;padding:16px 14px 22px}
+
+    /* TOPBAR */
     .topbar{
       position:sticky;top:0;z-index:60;
       background:rgba(7,10,18,.70);
@@ -56,6 +57,8 @@
       background:linear-gradient(135deg, rgba(109,92,255,.18), rgba(41,255,209,.10));
       font-size:12px;white-space:nowrap;
     }
+
+    /* CARD + BUTTON */
     .card{
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.05);
@@ -81,10 +84,6 @@
     .hero h2{margin:0 0 6px;font-size:18px}
     .hero p{margin:0;color:rgba(255,255,255,.82);font-size:13px;line-height:1.45}
 
-    .typing{margin-top:10px;font-weight:900;font-size:14px;display:flex;gap:8px;align-items:center}
-    .cursor{width:10px;height:16px;border-radius:2px;background:rgba(255,255,255,.9);animation:blink .9s infinite}
-    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
-
     .actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
     .btn{
       padding:12px 14px;border-radius:16px;
@@ -104,9 +103,11 @@
       box-shadow:0 14px 40px rgba(109,92,255,.22);
     }
 
+    /* PAGES */
     .page{display:none}
     .page.active{display:block}
 
+    /* FORM */
     .form{padding:16px;display:grid;gap:10px}
     .field{display:flex;flex-direction:column;gap:6px}
     .field label{font-size:12px;color:var(--muted)}
@@ -119,6 +120,7 @@
     .field input::placeholder{color:rgba(170,179,214,.7)}
     .hint{font-size:12px;color:rgba(255,255,255,.75);line-height:1.45}
 
+    /* SECTION + GRID */
     .section{margin-top:14px}
     .titleRow{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:10px}
     .titleRow h3{margin:0;font-size:15px}
@@ -153,6 +155,7 @@
     .thumb .pname{font-weight:950;font-size:13px;line-height:1.2}
     .body{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
     .mut{color:var(--muted);font-size:12px}
+
     .pillRow{display:flex;gap:8px;flex-wrap:wrap}
     .pill{
       padding:7px 10px;border-radius:999px;
@@ -176,6 +179,7 @@
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
 
+    /* LIST (checkout/status) */
     .list{display:flex;flex-direction:column;gap:10px;padding:16px}
     .line{
       display:flex;justify-content:space-between;gap:12px;
@@ -199,6 +203,7 @@
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
 
+    /* PAY METHODS */
     .payMethods{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -223,7 +228,8 @@
       border-color:rgba(109,92,255,.60);
       background:linear-gradient(135deg, rgba(109,92,255,.30), rgba(41,255,209,.12));
     }
-    .payResult{
+
+    .payBox{
       margin-top:12px;
       border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
@@ -231,30 +237,12 @@
       padding:12px;
       overflow:hidden;
     }
-    .payResult img{width:100%;display:block;border-radius:14px;border:1px solid rgba(255,255,255,.12)}
+    .payBox img{width:100%;display:block;border-radius:14px;border:1px solid rgba(255,255,255,.12)}
 
-    .bottom{
-      position:fixed;left:0;right:0;bottom:0;z-index:70;
-      background:rgba(7,10,18,.72);
-      backdrop-filter: blur(10px);
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:10px 12px 14px;
-    }
-    .bottom .bar{max-width:1120px;margin:0 auto;display:flex;gap:10px}
-    .tab{
-      flex:1;padding:12px;border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      text-align:center;font-weight:950;
-      cursor:pointer;user-select:none;
-    }
-    .tab.active{
-      border-color:rgba(109,92,255,.60);
-      background:linear-gradient(135deg, rgba(109,92,255,.45), rgba(41,255,209,.12));
-    }
+    /* TOAST */
     .toast{
       position:fixed;left:50%;transform:translateX(-50%);
-      bottom:90px;z-index:90;
+      bottom:18px;z-index:90;
       background:rgba(10,12,22,.9);
       border:1px solid rgba(255,255,255,.12);
       padding:10px 12px;border-radius:14px;
@@ -263,7 +251,48 @@
       box-shadow:0 18px 50px rgba(0,0,0,.5);
     }
     .toast.show{display:block}
-    .sep{height:1px;background:rgba(255,255,255,.08);margin:10px 0}
+
+    /* INTRO POPUP OVERLAY (after login) */
+    .overlay{
+      position:fixed;inset:0;z-index:200;
+      background:rgba(0,0,0,.62);
+      backdrop-filter: blur(8px);
+      display:none;
+      padding:14px;
+    }
+    .overlay.show{display:grid;place-items:center}
+    .pop{
+      width:min(640px, 100%);
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(12,14,26,.92);
+      box-shadow:0 24px 90px rgba(0,0,0,.7);
+      overflow:hidden;
+      transform: translateY(18px) scale(.98);
+      opacity:0;
+      animation: popin .28s ease forwards;
+    }
+    @keyframes popin{
+      to{transform: translateY(0) scale(1); opacity:1;}
+    }
+    .pophead{
+      padding:14px 14px 12px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .x{
+      width:38px;height:38px;border-radius:14px;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      user-select:none;
+    }
+    .popbody{padding:14px;display:flex;flex-direction:column;gap:12px}
+    .typing{font-weight:950;font-size:14px;display:flex;gap:8px;align-items:center}
+    .cursor{width:10px;height:16px;border-radius:2px;background:rgba(255,255,255,.9);animation:blink .9s infinite}
+    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
+
   </style>
 </head>
 <body>
@@ -283,41 +312,26 @@
 
   <div class="wrap">
 
-    <!-- LOGIN (START) -->
+    <!-- LOGIN -->
     <div class="page active" id="pageLogin">
       <div class="card">
         <div class="hero" style="padding:16px">
           <h2>Login</h2>
-          <p>Isi dulu biar lanjut ke intro animasi.</p>
+          <p>Login dulu, nanti muncul intro popup animasi.</p>
         </div>
         <div class="form">
           <div class="field">
             <label>Nama</label>
-            <input id="inpName" placeholder="contoh: Andi" autocomplete="off">
+            <input id="inpName" placeholder="contoh: keii" autocomplete="off">
           </div>
           <div class="field">
             <label>No WhatsApp (awali 62)</label>
             <input id="inpWa" placeholder="contoh: 62812xxxxxx" inputmode="numeric" autocomplete="off">
           </div>
-          <div class="hint">Setelah login, kamu akan masuk ke intro animasi typing.</div>
+          <div class="hint">* Setelah login, intro popup otomatis muncul.</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button class="btn primary" onclick="doLogin()">Login</button>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- INTRO -->
-    <div class="page" id="pageIntro">
-      <div class="card hero">
-        <h2>Selamat datang di Website KivoPay ✨</h2>
-        <p>Layanan produk aplikasi premium. Pilih kategori → pilih produk → checkout → pilih pembayaran.</p>
-        <div class="typing">
-          <span id="typingText"></span><span class="cursor"></span>
-        </div>
-        <div class="actions">
-          <button class="btn primary" onclick="goTo('pageKategori')">Masuk Ke Halaman Kategori</button>
-          <button class="btn" onclick="openWA()">Chat Admin</button>
         </div>
       </div>
     </div>
@@ -338,7 +352,8 @@
         <div class="grid">
           <div class="item" style="cursor:pointer" onclick="openKategori()">
             <div class="thumb">
-              <img alt="Premium" src="https://images.bukaolshop.com/hosting/181218/26f804d66e6e88158.png" onerror="this.style.display='none'">
+              <!-- FIX: bukan chatgpt lagi, pakai icon kategori yang kamu kasih -->
+              <img alt="Aplikasi Premium" src="https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" onerror="this.style.display='none'">
               <div>
                 <div class="pname">Aplikasi Premium</div>
                 <div class="mut">Produk digital • akun/paket</div>
@@ -356,7 +371,6 @@
 
         <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn" onclick="logout()">Logout</button>
-          <button class="btn" onclick="openWA()">Chat Admin</button>
         </div>
       </div>
     </div>
@@ -391,7 +405,7 @@
       </div>
     </div>
 
-    <!-- CHECKOUT -->
+    <!-- CHECKOUT (tanpa chat admin) -->
     <div class="page" id="pageCheckout">
       <div class="card hero" style="padding:16px">
         <h2>Checkout</h2>
@@ -421,26 +435,25 @@
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
           <button class="btn" onclick="copyOrder()">Salin Teks Order</button>
-          <button class="btn primary" onclick="openWA(true)">Konfirmasi WhatsApp</button>
+          <!-- FIX: tidak ada tombol chat admin sebelum pilih metode -->
         </div>
       </div>
     </div>
 
-    <!-- PAYMENT -->
+    <!-- PAYMENT (pilih metode -> auto masuk status) -->
     <div class="page" id="pagePay">
       <div class="card hero" style="padding:16px">
         <h2>Pembayaran</h2>
-        <p>Pilih metode pembayaran, lalu konfirmasi ke admin.</p>
+        <p>Pilih metode pembayaran. Setelah pilih, kamu akan diarahkan ke Status Pembayaran.</p>
         <div class="actions">
           <button class="btn" onclick="goTo('pageCheckout')">Kembali</button>
-          <button class="btn primary" onclick="openWA(true)">Konfirmasi WhatsApp</button>
         </div>
       </div>
 
       <div class="card list" style="margin-top:12px">
         <div class="line">
           <div><div class="k">Total</div><b id="pTotal">Rp 0</b></div>
-          <div style="text-align:right"><div class="k">Status</div><b>Manual</b></div>
+          <div style="text-align:right"><div class="k">Status</div><b>Belum dipilih</b></div>
         </div>
 
         <div class="k" style="color:var(--muted);font-size:12px">Pilih Metode Pembayaran</div>
@@ -450,15 +463,36 @@
           <button class="paybtn" id="mQris" onclick="selectPay('qris')">💳 QRIS</button>
         </div>
 
-        <div class="payResult" id="payResult">
-          <div class="mut">Klik salah satu metode untuk menampilkan detail pembayaran.</div>
+        <!-- FIX: sebelum pilih metode, tidak ada chat admin -->
+        <div class="payBox" id="payHint">
+          <div class="mut">Klik salah satu metode. Setelah itu kamu masuk ke halaman Status Pembayaran.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS PEMBAYARAN (baru muncul chat admin) -->
+    <div class="page" id="pageStatus">
+      <div class="card hero" style="padding:16px">
+        <h2>Status Pembayaran</h2>
+        <p>Silakan bayar sesuai metode yang kamu pilih. Setelah bayar, klik tombol konfirmasi.</p>
+        <div class="actions">
+          <button class="btn" onclick="goTo('pagePay')">Ganti Metode</button>
+          <button class="btn" onclick="goTo('pageProduk')">Kembali Produk</button>
+        </div>
+      </div>
+
+      <div class="card list" style="margin-top:12px">
+        <div class="line">
+          <div><div class="k">Metode</div><b id="sMethod">-</b></div>
+          <div style="text-align:right"><div class="k">Total</div><b id="sTotal">Rp 0</b></div>
         </div>
 
-        <div class="sep"></div>
+        <div class="payBox" id="sDetail"></div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
           <button class="btn" onclick="copyOrder()">Salin Teks Order</button>
-          <button class="btn primary" onclick="openWA(true)">Konfirmasi WhatsApp</button>
+          <!-- FIX: chat admin muncul DI SINI setelah metode dipilih -->
+          <button class="btn primary" onclick="openWA(true)">Saya Sudah Bayar (Chat Admin)</button>
         </div>
 
         <div class="mut" style="margin-top:10px">Admin WA: <b id="adminWaTxt"></b></div>
@@ -467,25 +501,37 @@
 
   </div>
 
-  <div class="bottom">
-    <div class="bar">
-      <div class="tab active" id="t1" onclick="goHome()">Login</div>
-      <div class="tab" id="t2" onclick="goTo('pageIntro')">Intro</div>
-      <div class="tab" id="t3" onclick="goTo('pageKategori')">Kategori</div>
-      <div class="tab" id="t4" onclick="goCheckout()">Checkout</div>
+  <!-- INTRO POPUP -->
+  <div class="overlay" id="introOverlay">
+    <div class="pop">
+      <div class="pophead">
+        <b>Selamat datang ✨</b>
+        <div class="x" onclick="closeIntro()">✕</div>
+      </div>
+      <div class="popbody">
+        <div style="font-weight:950;font-size:16px">Website KivoPay — Aplikasi Premium</div>
+        <div class="mut">Pilih produk → checkout → pilih pembayaran → konfirmasi setelah bayar.</div>
+        <div class="typing">
+          <span id="typingText"></span><span class="cursor"></span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn primary" onclick="enterKategori()">Masuk Ke Halaman Kategori</button>
+          <button class="btn" onclick="closeIntro()">Nanti</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="toast" id="toast">Tersalin</div>
+  <div class="toast" id="toast">OK</div>
 
 <script>
-  // ====== PAYMENT DATA (sesuai yg kamu kasih) ======
+  // ====== PAYMENT DATA (sesuai kamu) ======
   const ADMIN_WA = "6285150895395";
   const PAY_DANA = "087753513090";
   const PAY_SEABANK = "901517870612";
   const QRIS_IMG = "https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png";
 
-  // ====== FOTO PRODUK (sesuai yg kamu kirim) ======
+   // ====== FOTO PRODUK (sesuai kamu) ======
   const IMG = {
     "CapCut Pro":"https://images.bukaolshop.com/hosting/181218/47f862f5ed4a892435.png",
     "Canva Pro":"https://images.bukaolshop.com/hosting/181218/fc56c689cb9f975773.png",
@@ -505,7 +551,7 @@
     "iQIYI Premium":"https://images.bukaolshop.com/hosting/181218/891f9cc79330873789.png"
   };
 
-  // ====== PRODUK + HARGA (PERSIS dari list kamu, tanpa catatan garansi) ======
+  // ====== PRODUK + HARGA (tidak diubah) ======
   const PRODUCTS = [
     {brand:"CapCut Pro", title:"CapCut Pro", variants:[
       {name:"Private 1 Bulan", price:12000},
@@ -579,31 +625,29 @@
   ];
 
   // ====== STATE ======
-  let selected = []; // one choice per product {brand,title,variantName,price}
-  let payMethod = "";
+  let selected = [];
+  let payMethod = ""; // 'dana' | 'seabank' | 'qris'
 
   // ====== HELPERS ======
   const qs = (id)=>document.getElementById(id);
   const rupiah = (n)=>"Rp " + (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
-
   function toast(msg){
     const t = qs("toast");
     t.textContent = msg || "OK";
     t.classList.add("show");
     setTimeout(()=>t.classList.remove("show"), 1300);
   }
-
   function goTo(pageId){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     qs(pageId).classList.add("active");
   }
 
-  // ====== TYPING (INTRO) ======
+  // ====== INTRO POPUP + TYPING ======
   const words = [
-    "Layanan Aplikasi Premium Terbaik",
-    "Proses Cepat & Stabil",
-    "Pilih Produk → Checkout → Bayar",
-    "Konfirmasi via WhatsApp Admin"
+    "Layanan Aplikasi Premium",
+    "Pilih Produk → Checkout",
+    "Pilih Metode Pembayaran",
+    "Konfirmasi Setelah Bayar"
   ];
   let wI=0,cI=0,deleting=false,typingStarted=false;
   function startTyping(){
@@ -624,6 +668,18 @@
     })();
   }
 
+  function openIntro(){
+    qs("introOverlay").classList.add("show");
+    startTyping();
+  }
+  function closeIntro(){
+    qs("introOverlay").classList.remove("show");
+  }
+  function enterKategori(){
+    closeIntro();
+    goTo("pageKategori");
+  }
+
   // ====== LOGIN ======
   function syncUserChip(){
     const name = localStorage.getItem("kp_name");
@@ -641,8 +697,9 @@
     localStorage.setItem("kp_wa", wa);
     syncUserChip();
     toast("Login sukses");
-    goTo("pageIntro");
-    startTyping();
+    // FIX: setelah login langsung ke Kategori, tapi intro POPUP muncul
+    goTo("pageKategori");
+    setTimeout(openIntro, 200);
   }
 
   function logout(){
@@ -650,6 +707,8 @@
     localStorage.removeItem("kp_wa");
     selected = [];
     payMethod = "";
+    typingStarted=false;
+    qs("typingText").textContent="";
     syncUserChip();
     toast("Logout");
     goTo("pageLogin");
@@ -659,6 +718,10 @@
   function totalPaket(){
     return PRODUCTS.reduce((a,p)=>a+p.variants.length,0);
   }
+  function updateSelectedCount(){
+    qs("selCount").textContent = selected.length + " dipilih";
+  }
+  function esc(s){ return String(s).replace(/'/g,"\\'"); }
 
   function openKategori(){
     selected = [];
@@ -667,10 +730,6 @@
     renderProducts();
     updateSelectedCount();
     goTo("pageProduk");
-  }
-
-  function updateSelectedCount(){
-    qs("selCount").textContent = selected.length + " dipilih";
   }
 
   function pickVariant(brand, title, variantName, price){
@@ -721,9 +780,7 @@
       `;
     }).join("");
   }
-
   function resetSearch(){ qs("search").value=""; renderProducts(); }
-  function esc(s){ return String(s).replace(/'/g,"\\'"); }
 
   // ====== CHECKOUT ======
   function totalSelected(){ return selected.reduce((a,x)=>a+(x.price||0),0); }
@@ -758,9 +815,8 @@
   // ====== PAYMENT ======
   function renderPay(){
     qs("pTotal").textContent = rupiah(totalSelected());
-    ["mDana","mSeabank","mQris"].forEach(id=>qs(id).classList.remove("active"));
-    qs("payResult").innerHTML = `<div class="mut">Klik salah satu metode untuk menampilkan detail pembayaran.</div>`;
     payMethod = "";
+    ["mDana","mSeabank","mQris"].forEach(id=>qs(id).classList.remove("active"));
   }
 
   function selectPay(type){
@@ -770,31 +826,54 @@
     if(type==="seabank") qs("mSeabank").classList.add("active");
     if(type==="qris") qs("mQris").classList.add("active");
 
-    if(type==="dana"){
-      qs("payResult").innerHTML = `
+    // FIX: begitu klik metode -> langsung masuk halaman Status Pembayaran
+    renderStatus();
+    goTo("pageStatus");
+  }
+
+  function renderStatus(){
+    const total = totalSelected();
+    qs("sTotal").textContent = rupiah(total);
+
+    let methodLabel = "-";
+    let detailHTML = `<div class="mut">Metode belum dipilih.</div>`;
+
+    if(payMethod==="dana"){
+      methodLabel = "DANA";
+      detailHTML = `
         <b>DANA</b>
-        <div class="mut">Transfer sesuai total:</div>
-        <div style="margin-top:8px" class="line">
+        <div class="mut" style="margin-top:6px">Transfer sesuai total:</div>
+        <div class="line" style="margin-top:10px">
           <div><div class="k">Nomor</div><b>${PAY_DANA}</b></div>
-          <div style="text-align:right"><div class="k">Total</div><b>${rupiah(totalSelected())}</b></div>
+          <div style="text-align:right"><div class="k">Total</div><b>${rupiah(total)}</b></div>
         </div>
-        <div class="mut">Setelah transfer, klik “Konfirmasi WhatsApp” dan kirim bukti.</div>`;
-    } else if(type==="seabank"){
-      qs("payResult").innerHTML = `
-        <b>SEABANK</b>
-        <div class="mut">Transfer sesuai total:</div>
-        <div style="margin-top:8px" class="line">
-          <div><div class="k">Rekening</div><b>${PAY_SEABANK}</b></div>
-          <div style="text-align:right"><div class="k">Total</div><b>${rupiah(totalSelected())}</b></div>
-        </div>
-        <div class="mut">Setelah transfer, klik “Konfirmasi WhatsApp” dan kirim bukti.</div>`;
-    } else {
-      qs("payResult").innerHTML = `
-        <b>QRIS</b>
-        <div class="mut" style="margin-bottom:10px">Scan QRIS lalu bayar sesuai total.</div>
-        <img src="${QRIS_IMG}" alt="QRIS KivoPay" onerror="this.insertAdjacentHTML('beforebegin','<div class=mut>Gagal load QRIS. Cek link gambar.</div>'); this.remove();">
-        <div class="mut" style="margin-top:10px">Setelah bayar, klik “Konfirmasi WhatsApp” dan kirim bukti.</div>`;
+        <div class="mut">Setelah transfer, klik “Saya Sudah Bayar (Chat Admin)” dan kirim bukti.</div>
+      `;
     }
+    if(payMethod==="seabank"){
+      methodLabel = "SEABANK";
+      detailHTML = `
+        <b>SEABANK</b>
+        <div class="mut" style="margin-top:6px">Transfer sesuai total:</div>
+        <div class="line" style="margin-top:10px">
+          <div><div class="k">Rekening</div><b>${PAY_SEABANK}</b></div>
+          <div style="text-align:right"><div class="k">Total</div><b>${rupiah(total)}</b></div>
+        </div>
+        <div class="mut">Setelah transfer, klik “Saya Sudah Bayar (Chat Admin)” dan kirim bukti.</div>
+      `;
+    }
+    if(payMethod==="qris"){
+      methodLabel = "QRIS";
+      detailHTML = `
+        <b>QRIS</b>
+        <div class="mut" style="margin-top:6px;margin-bottom:10px">Scan QRIS lalu bayar sesuai total.</div>
+        <img src="${QRIS_IMG}" alt="QRIS KivoPay" onerror="this.insertAdjacentHTML('beforebegin','<div class=mut>Gagal load QRIS. Cek link gambar.</div>'); this.remove();">
+        <div class="mut" style="margin-top:10px">Setelah bayar, klik “Saya Sudah Bayar (Chat Admin)” dan kirim bukti.</div>
+      `;
+    }
+
+    qs("sMethod").textContent = methodLabel;
+    qs("sDetail").innerHTML = detailHTML;
   }
 
   // ====== ORDER TEXT + WA ======
@@ -804,7 +883,7 @@
     const total = totalSelected();
     const items = selected.map((x,i)=>`${i+1}. ${x.title} — ${x.variantName} — ${rupiah(x.price)}`).join("\n");
     const pm = payMethod ? payMethod.toUpperCase() : "(belum dipilih)";
-    return `KIVO PAY ORDER\n\nNama: ${name}\nWA: ${wa}\nMetode: ${pm}\n\nItem:\n${items}\n\nTotal: ${rupiah(total)}\n\nBukti bayar: (kirim foto)\nTerimakasih`;
+    return `KIVO PAY ORDER\n\nNama: ${name}\nWA: ${wa}\nMetode: ${pm}\n\nItem:\n${items}\n\nTotal: ${rupiah(total)}\n\nStatus: SAYA SUDAH BAYAR\nBukti bayar: (kirim foto)\nTerimakasih`;
   }
 
   function copyOrder(){
@@ -818,7 +897,7 @@
   }
 
   function openWA(withOrder=false){
-    const msg = withOrder ? orderText() : "Halo admin KivoPay, saya mau tanya / order.";
+    const msg = withOrder ? orderText() : "Halo admin KivoPay, saya mau tanya.";
     window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
@@ -827,22 +906,33 @@
     syncUserChip();
     qs("countPaket").textContent = totalPaket() + " Paket";
     qs("search").addEventListener("input", renderProducts);
+
+    // auto-login check (kalau sudah pernah login)
+    const name = localStorage.getItem("kp_name");
+    const wa = localStorage.getItem("kp_wa");
+    if(name && wa){
+      goTo("pageKategori");
+    }else{
+      goTo("pageLogin");
+    }
   }
   init();
 
   // expose for inline onclick
+  window.goTo=goTo;
+  window.doLogin=doLogin;
+  window.logout=logout;
   window.openKategori=openKategori;
   window.pickVariant=pickVariant;
   window.goCheckout=goCheckout;
   window.resetSearch=resetSearch;
   window.selectPay=selectPay;
-  window.renderPay=renderPay;
   window.copyOrder=copyOrder;
   window.openWA=openWA;
-</script>
+  window.closeIntro=closeIntro;
+  window.enterKategori=enterKategori;
 
-<script>
-  // when entering pay page from button, call renderPay
+  // render pay when open pay page
   const _goTo = goTo;
   window.goTo = function(pageId){
     _goTo(pageId);
