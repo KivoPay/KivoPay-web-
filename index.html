@@ -1,87 +1,719 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KivoPay</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KivoPay • Aplikasi Premium</title>
+  <style>
+    :root{
+      --bg:#0b0620;
+      --bg2:#2a0b63;
+      --card:rgba(255,255,255,.08);
+      --card2:rgba(255,255,255,.12);
+      --line:rgba(255,255,255,.14);
+      --txt:#eef0ff;
+      --muted:rgba(238,240,255,.72);
+      --accent:#a78bfa;
+      --accent2:#7c3aed;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(167,139,250,.28), transparent 55%),
+        radial-gradient(1000px 700px at 90% 20%, rgba(124,58,237,.22), transparent 55%),
+        radial-gradient(900px 500px at 40% 95%, rgba(52,211,153,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      min-height:100vh;
+    }
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#1c1445,#4a2bd6);
-color:white;
-text-align:center;
-}
+    /* subtle stars */
+    .stars{
+      position:fixed; inset:0; pointer-events:none; opacity:.35;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.75) 1px, transparent 2px),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.6) 1px, transparent 2px),
+        radial-gradient(circle at 60% 70%, rgba(255,255,255,.55) 1px, transparent 2px),
+        radial-gradient(circle at 30% 85%, rgba(255,255,255,.5) 1px, transparent 2px);
+      background-size: 260px 260px, 320px 320px, 280px 280px, 340px 340px;
+      filter: blur(.2px);
+    }
 
-header{
-padding:60px 20px;
-}
+    .app{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 14px 90px;
+    }
 
-.logo{
-width:90px;
-border-radius:20px;
-margin-bottom:15px;
-}
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      padding: 12px 10px;
+      margin: 0 -14px 14px;
+      backdrop-filter: blur(10px);
+      background: rgba(11,6,32,.55);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .toprow{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      max-width:980px; margin:0 auto; padding:0 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+    }
+    .logo{
+      width:40px; height:40px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(167,139,250,.95), rgba(124,58,237,.95));
+      box-shadow: 0 10px 30px rgba(124,58,237,.25);
+      position:relative;
+    }
+    .logo:before{
+      content:"";
+      position:absolute; inset:10px;
+      border-radius:10px;
+      background: rgba(255,255,255,.2);
+      transform: rotate(10deg);
+    }
+    .brand h1{font-size:15px; margin:0; letter-spacing:.2px}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      font-size:12px; color:var(--muted);
+    }
 
-.title{
-font-size:34px;
-font-weight:bold;
-}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    @media (max-width:860px){
+      .grid{grid-template-columns:1fr}
+    }
 
-.sub{
-opacity:.8;
-margin-top:8px;
-}
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-h{
+      padding: 14px 14px 10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .card-h b{font-size:14px}
+    .card-h span{font-size:12px; color:var(--muted)}
+    .card-b{padding: 14px}
+    .hero{
+      display:flex; gap:12px; align-items:center;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(124,58,237,.12));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .avatar{
+      width:42px; height:42px; border-radius:16px;
+      background: rgba(255,255,255,.12);
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .hero h2{margin:0; font-size:15px}
+    .hero p{margin:4px 0 0; font-size:12px; color:var(--muted)}
 
-.menu{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-padding:30px;
-}
+    .tabs{
+      display:flex; gap:8px; flex-wrap:wrap;
+      padding: 12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .tab{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--txt);
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tab.active{
+      background: linear-gradient(135deg, rgba(167,139,250,.35), rgba(124,58,237,.25));
+      border-color: rgba(167,139,250,.45);
+      box-shadow: 0 10px 30px rgba(124,58,237,.18);
+    }
 
-.card{
-background:rgba(255,255,255,.08);
-padding:25px;
-border-radius:18px;
-font-size:18px;
-font-weight:bold;
-backdrop-filter:blur(6px);
-transition:.3s;
-}
+    .search{
+      display:flex; gap:10px; align-items:center;
+      padding: 10px 14px 14px;
+    }
+    .search input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      outline: none;
+    }
+    .search input::placeholder{color: rgba(238,240,255,.55)}
+    .btn{
+      border:none;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(167,139,250,.95), rgba(124,58,237,.95));
+      color: white;
+      font-weight: 700;
+      cursor:pointer;
+      box-shadow: 0 14px 40px rgba(124,58,237,.25);
+      white-space:nowrap;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow:none;
+      font-weight:600;
+    }
+    .btn:active{transform: translateY(1px)}
 
-.card:hover{
-transform:scale(1.05);
-background:rgba(255,255,255,.15);
-}
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+      padding: 0 14px 14px;
+    }
+    .item{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+    }
+    .left{
+      display:flex; align-items:center; gap:12px;
+      min-width:0;
+    }
+    .ico{
+      width:44px; height:44px; border-radius: 16px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .meta{min-width:0}
+    .name{
+      margin:0;
+      font-weight:800;
+      font-size:13.5px;
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 420px;
+    }
+    .note{
+      margin:6px 0 0;
+      font-size:12px;
+      color: var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 420px;
+    }
+    .price{
+      font-weight:900;
+      font-size:13px;
+      color: #e9ddff;
+      text-align:right;
+      white-space:nowrap;
+    }
+    .add{
+      margin-top:6px;
+      font-size:12px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(167,139,250,.35);
+      background: rgba(167,139,250,.12);
+      color: #f3efff;
+      cursor:pointer;
+      font-weight:700;
+    }
 
-footer{
-margin-top:30px;
-padding:20px;
-opacity:.7;
-}
-</style>
+    .side{
+      position:sticky;
+      top:72px;
+      align-self:start;
+    }
+    @media (max-width:860px){
+      .side{position:relative; top:auto}
+    }
+
+    .summary{
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .sumrow{
+      display:flex; justify-content:space-between; gap:12px;
+      font-size:13px;
+      color: var(--muted);
+    }
+    .sumrow b{color: var(--txt)}
+    .cart{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .cartItem{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .cartItem small{display:block; color:var(--muted); margin-top:4px}
+    .x{
+      cursor:pointer;
+      padding: 6px 9px;
+      border-radius: 10px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      font-weight:800;
+    }
+
+    .hint{
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(167,139,250,.10);
+      color: #efe9ff;
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+    .hint b{color:#fff}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(52,211,153,.12);
+      border:1px solid rgba(52,211,153,.25);
+      color: #d7ffe9;
+      font-size:12px;
+      font-weight:800;
+    }
+    .badge.warn{
+      background: rgba(251,191,36,.12);
+      border-color: rgba(251,191,36,.25);
+      color: #fff3c4;
+    }
+
+    /* modal payment */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:999;
+      padding: 16px;
+    }
+    .overlay.show{display:flex}
+    .sheet{
+      width:min(560px, 100%);
+      background: rgba(16,10,40,.92);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      overflow:hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      backdrop-filter: blur(12px);
+    }
+    .sheet-h{
+      padding: 14px 14px 10px;
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .sheet-h b{font-size:14px}
+    .close{
+      cursor:pointer;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: var(--txt);
+      font-weight:900;
+    }
+    .sheet-b{padding: 14px}
+    .qris{
+      width:100%;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .qris img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .payInfo{
+      margin-top: 12px;
+      display:grid;
+      gap:8px;
+      font-size:12.5px;
+      color: var(--muted);
+    }
+    .payInfo b{color: var(--txt)}
+    .copyRow{
+      display:flex; gap:10px; align-items:center; margin-top:10px;
+    }
+    .copyRow input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      outline: none;
+      font-size:12.5px;
+    }
+    .footerbar{
+      position:fixed; left:0; right:0; bottom:0;
+      background: rgba(11,6,32,.65);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 10px 14px;
+      z-index: 9;
+    }
+    .footerinner{
+      max-width:980px; margin:0 auto;
+      display:flex; gap:10px; justify-content:space-between; align-items:center;
+    }
+    .footleft{font-size:12px; color:var(--muted)}
+    .footright{display:flex; gap:10px; align-items:center}
+    .mini{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--txt);
+      font-weight:800;
+      cursor:pointer;
+      font-size:12px;
+      white-space:nowrap;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="stars"></div>
 
-<header>
-<img class="logo" src="https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png">
-<div class="title">KivoPay</div>
-<div class="sub">Layanan Aplikasi Premium • Nokos • SMM</div>
-</header>
+  <div class="topbar">
+    <div class="toprow">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>KivoPay • Aplikasi Premium</h1>
+          <p>Checkout cepat • Pembayaran QRIS • Proses manual admin</p>
+        </div>
+      </div>
+      <div class="pill">✨ UI Premium • <span id="countPill">0 item</span></div>
+    </div>
+  </div>
 
-<div class="menu">
-<div class="card">Aplikasi Premium</div>
-<div class="card">Nomor Kosong (Nokos)</div>
-<div class="card">Suntik Sosmed</div>
-<div class="card">Topup & PPOB</div>
-</div>
+  <div class="app">
+    <div class="card">
+      <div class="hero">
+        <div class="avatar">💜</div>
+        <div>
+          <h2>Selamat Datang ✨</h2>
+          <p>Silakan pilih produk Aplikasi Premium, lalu lanjut checkout & bayar via QRIS.</p>
+        </div>
+      </div>
 
-<footer>
-© 2026 KivoPay Official
-</footer>
+      <div class="tabs">
+        <div class="tab active" data-tab="premium">Aplikasi Premium</div>
+        <div class="tab" data-tab="checkout">Checkout</div>
+        <div class="tab" data-tab="pembayaran">Pembayaran</div>
+      </div>
 
+      <div class="search">
+        <input id="q" placeholder="Cari: Canva, Netflix, Spotify, Capcut, dll..." />
+        <button class="btn ghost" id="clearBtn">Reset</button>
+      </div>
+
+      <div class="grid">
+        <div class="card" style="margin:0 14px 14px;">
+          <div class="card-h">
+            <b id="listTitle">Daftar Produk • Aplikasi Premium</b>
+            <span id="listSub">Klik “Tambah” untuk checkout</span>
+          </div>
+          <div class="card-b" style="padding:0">
+            <div class="list" id="list"></div>
+          </div>
+        </div>
+
+        <div class="card side" style="margin:0 14px 14px;">
+          <div class="card-h">
+            <b>Keranjang</b>
+            <span id="cartHint">0 item</span>
+          </div>
+          <div class="card-b">
+            <div class="cart" id="cart"></div>
+
+            <div class="summary" style="margin-top:12px">
+              <div class="sumrow"><span>Subtotal</span><b id="subtotal">Rp 0</b></div>
+              <div class="sumrow"><span>Admin</span><b>Rp 0</b></div>
+              <div class="sumrow"><span>Total</span><b id="total">Rp 0</b></div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:10px;">
+              <button class="btn" id="payBtn" style="width:100%">Lanjutkan ke Pembayaran</button>
+            </div>
+
+            <div class="hint" style="margin-top:12px">
+              📌 <b>Catatan:</b> Order & pembayaran diproses <b>MANUAL</b> oleh admin.
+              Setelah bayar, kirim bukti transfer + detail produk ke admin.
+            </div>
+
+            <div class="hint" style="margin-top:10px; background: rgba(251,191,36,.10); border-color: rgba(251,191,36,.22);">
+              ⚠️ <b>Garansi:</b> mengikuti <b>Note</b> di masing-masing produk (beda harga beda garansi).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment sheet -->
+  <div class="overlay" id="overlay">
+    <div class="sheet">
+      <div class="sheet-h">
+        <b>Pembayaran • QRIS</b>
+        <button class="close" id="closePay">✕</button>
+      </div>
+      <div class="sheet-b">
+        <div class="qris">
+          <img src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" alt="QRIS KivoPay" />
+        </div>
+
+        <div class="payInfo">
+          <div class="sumrow"><span>Total yang harus dibayar</span><b id="payTotal">Rp 0</b></div>
+          <div>✅ Scan QRIS di atas pakai OVO / DANA / GoPay / ShopeePay / LinkAja / mobile banking.</div>
+          <div>📩 Setelah bayar, kirim <b>bukti transfer</b> + <b>nama produk</b> ke Admin KivoPay.</div>
+          <div class="badge">Support Semua Pembayaran</div>
+        </div>
+
+        <div class="copyRow">
+          <input id="wa" value="https://wa.me/6285150895395" readonly />
+          <button class="btn ghost" id="copyBtn">Copy</button>
+        </div>
+        <div style="margin-top:10px; display:flex; gap:10px;">
+          <a class="btn" style="text-decoration:none; display:inline-flex; justify-content:center; align-items:center; width:100%;" href="https://wa.me/6285150895395" target="_blank" rel="noopener">Chat Admin di WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footerbar">
+    <div class="footerinner">
+      <div class="footleft">© KivoPay • Aplikasi Premium</div>
+      <div class="footright">
+        <button class="mini" id="goHome">Home</button>
+        <button class="mini" id="goCheckout">Checkout</button>
+        <button class="mini" id="goPay">Pembayaran</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ===== Data Produk (sesuai harga kamu) =====
+  const products = [
+    {group:"Capcut Pro", icon:"🎬", name:"Private 1 Bulan", price:12000, note:"Full Garansi 100% • Beda harga beda garansi"},
+    {group:"Capcut Pro", icon:"🎬", name:"Private 1 Bulan (Garansi lebih)", price:19000, note:"Full Garansi 100% • Beda harga beda garansi"},
+
+    {group:"Canva Pro", icon:"🖼️", name:"Anggota 2 Bulan", price:5600, note:"Harga mahal kualitas terjamin • Full Garansi 100%"},
+    {group:"Canva Pro", icon:"🖼️", name:"Desainer 1 Bulan", price:6600, note:"Harga mahal kualitas terjamin • Full Garansi 100%"},
+    {group:"Canva Education", icon:"🎓", name:"1 Tahun", price:15500, note:"Harga mahal kualitas terjamin • Full Garansi 100%"},
+
+    {group:"Netflix Premium", icon:"🍿", name:"Sharing 1p1u 1 Bulan", price:30500, note:"Full Garansi"},
+    {group:"Netflix Premium", icon:"🍿", name:"Sharing 1p2u 1 Bulan", price:27400, note:"Full Garansi"},
+    {group:"Netflix Premium", icon:"🍿", name:"Private 1 Bulan (acc b +4k)", price:195300, note:"Full Garansi"},
+
+    {group:"Video Premium", icon:"📺", name:"Shared 1 Bulan 2 User Mobile", price:17300, note:"Full Garansi"},
+    {group:"Video Premium", icon:"📺", name:"Private 1 Bulan Mobile", price:32400, note:"Full Garansi"},
+
+    {group:"Bstation Premium", icon:"🎞️", name:"3 Bulan (AKUN • SHARED • 1 DEVICES)", price:12400, note:"No Garansi"},
+    {group:"Bstation Premium", icon:"🎞️", name:"1 Bulan (AKUN • PRIVATE)", price:25300, note:"No Garansi"},
+    {group:"Bstation Premium", icon:"🎞️", name:"2 Bulan (AKUN • PRIVATE)", price:38400, note:"No Garansi"},
+    {group:"Bstation Premium", icon:"🎞️", name:"1 Tahun (AKUN • SHARED • 1 DEVICES)", price:15300, note:"No Garansi"},
+
+    {group:"Vision+ Premium", icon:"🏟️", name:"Private 1 Bulan (All Screen • Premium + Sports)", price:29300, note:"No Garansi"},
+
+    {group:"Alight Motion Premium", icon:"✨", name:"Private 1 Tahun (Garansi 3 Bulan)", price:9600, note:"No Garansi"},
+
+    {group:"ChatGPT Premium", icon:"🤖", name:"Member Team Business 1 Bulan (Private • Garansi 28 Hari)", price:25600, note:"No Garansi"},
+    {group:"ChatGPT Premium", icon:"🤖", name:"Owner Team Business 1 Bulan (Max 5 Member • Garansi 7 Hari)", price:53600, note:"No Garansi"},
+    {group:"ChatGPT Premium", icon:"🤖", name:"Plus Plan 1 Bulan (Private • Garansi 7 Hari)", price:20400, note:"No Garansi"},
+    {group:"ChatGPT Premium", icon:"🤖", name:"Plus Plan 1 Bulan (Private • Garansi 28 Hari)", price:30400, note:"No Garansi"},
+
+    {group:"Prime Video", icon:"🎥", name:"Shared 1 Bulan (1 Profile • 1 User)", price:6600, note:"No Garansi"},
+    {group:"Prime Video", icon:"🎥", name:"Private 1 Bulan (1 Akun • 5 Profile)", price:15300, note:"No Garansi"},
+
+    {group:"Getcontact Premium", icon:"📞", name:"Private 1 Bulan", price:16300, note:"No Garansi"},
+
+    {group:"Remini Premium", icon:"🪄", name:"Sharing 1 Bulan", price:15300, note:"Ada Garansi"},
+    {group:"Remini Premium", icon:"🪄", name:"Private 1 Bulan", price:20300, note:"Ada Garansi"},
+    {group:"Remini Premium", icon:"🪄", name:"Private 1 Tahun", price:27300, note:"Ada Garansi"},
+
+    {group:"Disney Premium", icon:"🏰", name:"1 User 1 Bulan", price:23300, note:"Ada Garansi"},
+    {group:"Disney Premium", icon:"🏰", name:"6 User 1 Bulan", price:31300, note:"Ada Garansi"},
+
+    {group:"Wattpad Premium", icon:"📚", name:"Sharing 1 Bulan", price:11300, note:"Ada Garansi"},
+    {group:"Wattpad Premium", icon:"📚", name:"Sharing 1 Tahun", price:18300, note:"Ada Garansi"},
+
+    {group:"WeTV Premium", icon:"🌙", name:"1 Bulan (Shared • 1 Devices)", price:14500, note:"No Garansi"},
+    {group:"WeTV Premium", icon:"🌙", name:"1 Bulan (Private)", price:35300, note:"No Garansi"},
+
+    {group:"iQIYI Premium", icon:"🟡", name:"1 Bulan (Shared)", price:15300, note:"No Garansi"},
+    {group:"iQIYI Premium", icon:"🟡", name:"1 Bulan (Shared • Max 2 Device)", price:24300, note:"No Garansi"},
+
+     {group:"Spotify Premium", icon:"🎧", name:"Famplan 1 Bulan (+2k acc seller)", price:18000, note:"No Garansi"},
+{group:"Spotify Premium", icon:"🎧", name:"Indplan 1 Bulan", price:25300, note:"No Garansi"},
+{group:"Spotify Premium", icon:"🎧", name:"Famplan 2 Bulan", price:29300, note:"No Garansi"}
+];
+
+  const rupiah = n => "Rp " + (n||0).toLocaleString("id-ID");
+  const listEl = document.getElementById("list");
+  const cartEl = document.getElementById("cart");
+  const qEl = document.getElementById("q");
+  const clearBtn = document.getElementById("clearBtn");
+  const subtotalEl = document.getElementById("subtotal");
+  const totalEl = document.getElementById("total");
+  const cartHint = document.getElementById("cartHint");
+  const countPill = document.getElementById("countPill");
+  const overlay = document.getElementById("overlay");
+  const payBtn = document.getElementById("payBtn");
+  const closePay = document.getElementById("closePay");
+  const payTotal = document.getElementById("payTotal");
+  const copyBtn = document.getElementById("copyBtn");
+  const waInput = document.getElementById("wa");
+
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  const goHome = document.getElementById("goHome");
+  const goCheckout = document.getElementById("goCheckout");
+  const goPay = document.getElementById("goPay");
+
+  let cart = [];
+
+  function renderList(filter=""){
+    const f = filter.trim().toLowerCase();
+    const filtered = products.filter(p=>{
+      const s = (p.group+" "+p.name+" "+p.note).toLowerCase();
+      return s.includes(f);
+    });
+
+    listEl.innerHTML = filtered.map((p, idx) => `
+      <div class="item">
+        <div class="left">
+          <div class="ico">${p.icon}</div>
+          <div class="meta">
+            <p class="name">${p.group} • ${p.name}</p>
+            <p class="note">${p.note}</p>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="price">${rupiah(p.price)}</div>
+          <button class="add" data-add="${p.group}||${p.name}">Tambah</button>
+        </div>
+      </div>
+    `).join("") || `<div style="padding:14px; color:rgba(238,240,255,.75)">Produk tidak ditemukan.</div>`;
+
+    document.querySelectorAll("[data-add]").forEach(btn=>{
+      btn.onclick = ()=>{
+        const key = btn.getAttribute("data-add");
+        const [group,name] = key.split("||");
+        const prod = products.find(x=>x.group===group && x.name===name);
+        if(!prod) return;
+        cart.push({...prod, id: Date.now()+Math.random()});
+        renderCart();
+      };
+    });
+  }
+
+  function renderCart(){
+    if(cart.length===0){
+      cartEl.innerHTML = `<div style="color:rgba(238,240,255,.70); font-size:13px">Keranjang masih kosong. Tambah produk dulu ya.</div>`;
+    }else{
+      cartEl.innerHTML = cart.map(c=>`
+        <div class="cartItem">
+          <div>
+            <b>${c.group}</b>
+            <small>${c.name} • ${rupiah(c.price)}</small>
+          </div>
+          <button class="x" data-x="${c.id}">×</button>
+        </div>
+      `).join("");
+      document.querySelectorAll("[data-x]").forEach(x=>{
+        x.onclick = ()=>{
+          const id = x.getAttribute("data-x");
+          cart = cart.filter(i=>String(i.id)!==String(id));
+          renderCart();
+        };
+      });
+    }
+
+    const sub = cart.reduce((a,b)=>a+(b.price||0),0);
+    subtotalEl.textContent = rupiah(sub);
+    totalEl.textContent = rupiah(sub);
+    payTotal.textContent = rupiah(sub);
+
+    cartHint.textContent = `${cart.length} item`;
+    countPill.textContent = `${cart.length} item`;
+  }
+
+  function setTab(tab){
+    tabs.forEach(t=>t.classList.toggle("active", t.dataset.tab===tab));
+    if(tab==="premium"){
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+    if(tab==="checkout"){
+      document.querySelector(".side").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    if(tab==="pembayaran"){
+      if(cart.length===0){
+        alert("Keranjang masih kosong. Pilih produk dulu ya.");
+        return;
+      }
+      overlay.classList.add("show");
+    }
+  }
+
+  qEl.addEventListener("input", ()=>renderList(qEl.value));
+  clearBtn.onclick = ()=>{ qEl.value=""; renderList(""); };
+
+  payBtn.onclick = ()=> setTab("pembayaran");
+  closePay.onclick = ()=> overlay.classList.remove("show");
+  overlay.addEventListener("click", (e)=>{ if(e.target===overlay) overlay.classList.remove("show"); });
+
+  copyBtn.onclick = async ()=>{
+    try{
+      await navigator.clipboard.writeText(waInput.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(()=>copyBtn.textContent="Copy", 1200);
+    }catch(e){
+      alert("Gagal copy. Salin manual ya: " + waInput.value);
+    }
+  };
+
+  tabs.forEach(t=> t.onclick = ()=> setTab(t.dataset.tab));
+  goHome.onclick = ()=> setTab("premium");
+  goCheckout.onclick = ()=> setTab("checkout");
+  goPay.onclick = ()=> setTab("pembayaran");
+
+  // init
+  renderList("");
+  renderCart();
+</script>
 </body>
 </html>
