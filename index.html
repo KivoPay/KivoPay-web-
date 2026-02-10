@@ -6,767 +6,743 @@
   <title>KivoPay Store — Aplikasi Premium</title>
   <style>
     :root{
-      --bg:#070a12;
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.10);
-      --b: rgba(255,255,255,.12);
+      --bg:#060a14;
+      --card:rgba(255,255,255,.07);
+      --card2:rgba(255,255,255,.10);
+      --b:rgba(255,255,255,.12);
       --t:#eaf0ff;
       --m:#aeb9d6;
       --a:#6ea8fe;
       --g:#7cffb2;
       --r:18px;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow:0 18px 60px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       color:var(--t);
-      background:
-        radial-gradient(900px 520px at 10% 10%,rgba(110,168,254,.18),transparent 55%),
-        radial-gradient(800px 520px at 90% 20%,rgba(124,255,178,.10),transparent 55%),
-        radial-gradient(900px 520px at 60% 90%,rgba(180,120,255,.10),transparent 55%),
-        var(--bg);
+      background:var(--bg);
       min-height:100vh;
       overflow-x:hidden;
     }
-    a{color:inherit}
-    .wrap{max-width:1050px;margin:0 auto;padding:14px 14px 90px}
+
+    /* animated background */
+    .bgfx{
+      position:fixed; inset:0; z-index:-2;
+      background:
+        radial-gradient(900px 520px at 10% 10%, rgba(110,168,254,.20), transparent 55%),
+        radial-gradient(800px 520px at 90% 20%, rgba(124,255,178,.12), transparent 55%),
+        radial-gradient(900px 520px at 60% 90%, rgba(180,120,255,.10), transparent 55%),
+        linear-gradient(180deg,#050914 0%, #040712 100%);
+      filter:saturate(1.05);
+    }
+    .blob{
+      position:fixed; z-index:-1; inset:auto;
+      width:380px; height:380px; border-radius:999px;
+      background:radial-gradient(circle at 30% 30%, rgba(110,168,254,.35), transparent 55%),
+                 radial-gradient(circle at 70% 70%, rgba(124,255,178,.22), transparent 55%);
+      filter:blur(18px);
+      opacity:.7;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .blob.b1{left:-120px; top:120px; animation-duration:12s}
+    .blob.b2{right:-140px; top:380px; animation-duration:14s}
+    .blob.b3{left:20%; bottom:-180px; animation-duration:16s}
+    @keyframes floaty{
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(30px,-24px) scale(1.05)}
+    }
+
     header{
-      position:sticky;top:0;z-index:10;
-      background: rgba(7,10,18,.65);
+      position:sticky; top:0; z-index:10;
+      background:rgba(7,10,18,.66);
       backdrop-filter: blur(10px);
       border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .topbar{display:flex;align-items:center;gap:12px;max-width:1050px;margin:0 auto;padding:12px 14px}
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .wrap{max-width:1050px; margin:0 auto; padding:14px 14px 90px}
+    .topbar{display:flex; align-items:center; gap:12px; padding:12px 0}
     .logo{
-      width:42px;height:42px;border-radius:14px;
-      display:grid;place-items:center;
-      background: linear-gradient(135deg, rgba(110,168,254,.95), rgba(124,255,178,.55));
-      box-shadow: 0 10px 30px rgba(110,168,254,.18);
-      font-weight:800;
+      width:42px; height:42px; border-radius:14px;
+      display:grid; place-items:center;
+      background:linear-gradient(135deg, rgba(110,168,254,.95), rgba(124,255,178,.55));
+      box-shadow:0 10px 30px rgba(110,168,254,.18);
+      font-weight:900;
     }
-    .btxt{min-width:0}
-    .btxt b{display:block;font-size:15px;letter-spacing:.2px}
-    .btxt span{display:block;color:var(--m);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+    .brand{min-width:0}
+    .brand b{display:block; font-size:15px; letter-spacing:.2px}
+    .brand span{display:block; color:var(--m); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .right{margin-left:auto; display:flex; gap:10px; align-items:center}
     .pill{
-      display:flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      background: rgba(255,255,255,.07);
+      display:flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background:rgba(255,255,255,.07);
       border:1px solid rgba(255,255,255,.10);
       color:var(--m);
       font-size:12px;
     }
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 18px rgba(124,255,178,.45)}
+    .dot{width:8px; height:8px; border-radius:50%; background:var(--g); box-shadow:0 0 18px rgba(124,255,178,.45)}
     .btn{
       border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
+      background:rgba(255,255,255,.08);
       color:var(--t);
       padding:10px 12px;
       border-radius:14px;
-      cursor:pointer;
       font-weight:650;
-      transition: transform .12s ease, background .12s ease;
+      cursor:pointer;
+      transition:.12s ease;
+      user-select:none;
     }
-    .btn:hover{transform: translateY(-1px);background: rgba(255,255,255,.10)}
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.10)}
     .btn.primary{
       border-color: rgba(110,168,254,.38);
       background: linear-gradient(135deg, rgba(110,168,254,.95), rgba(110,168,254,.35));
-      box-shadow: 0 14px 40px rgba(110,168,254,.18);
+      box-shadow:0 14px 40px rgba(110,168,254,.18);
     }
-    .btn.ghost{background: transparent}
+    .btn.red{
+      border-color: rgba(255,110,110,.30);
+      background: rgba(255,110,110,.12);
+    }
+
     .hero{
       margin-top:14px;
-      padding:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.10);
       border-radius:var(--r);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .hTitle{font-size:18px; margin:0 0 6px}
+    .typingRow{display:flex; align-items:center; gap:10px; color:var(--m); font-size:13px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero::before,.hero::after{
-      content:"";
-      position:absolute;inset:auto;
-      width:220px;height:220px;border-radius:50%;
-      filter: blur(40px);
-      opacity:.22;
-      animation: floaty 7s ease-in-out infinite;
-    }
-    .hero::before{background: rgba(110,168,254,.9); left:-60px; top:-80px;}
-    .hero::after{background: rgba(124,255,178,.9); right:-80px; bottom:-120px; animation-delay: -3s;}
-    @keyframes floaty{0%,100%{transform: translate(0,0)}50%{transform: translate(22px,16px)}}
-    .hero h1{margin:0 0 6px;font-size:18px}
-    .typingLine{
-      display:flex;align-items:center;gap:8px;
-      color:var(--m);
-      font-size:13px;
-      min-height:20px;
-    }
-    .caret{
-      width:10px;
-      animation: blink 1s steps(2,end) infinite;
-      color:rgba(255,255,255,.65);
-    }
-    @keyframes blink{50%{opacity:0}}
-    .tools{
+      background:rgba(255,255,255,.06);
       margin-top:12px;
-      display:flex;gap:10px;flex-wrap:wrap;
-      align-items:center;
+      margin-right:8px;
+      font-size:12px;
+      color:var(--m);
     }
-    .search{
-      flex:1;min-width:200px;
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
+    .caret{opacity:1; animation: blink 1s steps(2,end) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .searchRow{
+      display:flex; gap:10px; margin-top:12px;
     }
-    .search input{
+    input, textarea, select{
       width:100%;
-      background:transparent;border:0;outline:0;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
       color:var(--t);
+      padding:12px 12px;
+      border-radius:14px;
+      outline:none;
       font-size:14px;
     }
-    .hint{color:var(--m);font-size:12px;margin-top:10px}
+    input::placeholder, textarea::placeholder{color:rgba(174,185,214,.7)}
+    .hint{
+      margin-top:10px;
+      color:rgba(174,185,214,.85);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
     .grid{
-      margin-top:14px;
       display:grid;
       grid-template-columns: repeat(2, minmax(0,1fr));
       gap:12px;
+      margin-top:14px;
     }
-    @media(min-width:860px){.grid{grid-template-columns: repeat(4, minmax(0,1fr));}}
+    @media (min-width:900px){
+      .grid{grid-template-columns: repeat(4, minmax(0,1fr))}
+    }
     .card{
-      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
+      border-radius:18px;
       overflow:hidden;
-      box-shadow: 0 14px 44px rgba(0,0,0,.25);
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
+      transition:.12s ease;
     }
-    .card:hover{transform: translateY(-2px);border-color: rgba(110,168,254,.25);background: rgba(255,255,255,.08);}
+    .card:hover{transform:translateY(-2px)}
     .thumb{
-      height:92px;
-      background: rgba(255,255,255,.04);
-      display:grid;place-items:center;
-    }
-    .thumb img{max-height:70px;max-width:90%;object-fit:contain;filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));}
-    .cbody{padding:10px 10px 12px}
-    .cbody b{display:block;font-size:13px;line-height:1.2}
-    .cbody span{display:block;color:var(--m);font-size:12px;margin-top:6px}
-    .tag{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:6px 10px;border-radius:999px;
-      background: rgba(110,168,254,.10);
-      border:1px solid rgba(110,168,254,.22);
-      color: rgba(234,240,255,.9);
-      font-size:12px;
-      margin-top:10px;
-    }
-
-    /* modal */
-    .overlay{
-      position:fixed;inset:0;z-index:50;
-      background: rgba(0,0,0,.55);
-      display:none;
-      padding:18px;
-    }
-    .overlay.show{display:block}
-    .modal{
-      max-width:560px;margin:0 auto;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(15,18,28,.92);
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      transform: translateY(8px);
-      animation: pop .14s ease forwards;
-    }
-    @keyframes pop{to{transform:translateY(0)}}
-    .mhead{
-      padding:14px 14px 10px;
-      display:flex;align-items:center;gap:12px;
+      height:120px;
+      background:rgba(255,255,255,.04);
+      display:grid; place-items:center;
       border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .mhead img{width:40px;height:40px;border-radius:14px;object-fit:cover;background:rgba(255,255,255,.06)}
-    .mhead .tt{min-width:0}
-    .mhead .tt b{display:block}
-    .mhead .tt span{display:block;color:var(--m);font-size:12px}
-    .mhead .x{margin-left:auto}
-    .mbody{padding:14px}
-    .variants{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-    .vbtn{
-      text-align:left;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      cursor:pointer;
-      display:flex;justify-content:space-between;gap:10px;
+    .thumb img{
+      width:100%; height:100%;
+      object-fit:cover;
     }
-    .vbtn:hover{border-color: rgba(110,168,254,.22)}
-    .vbtn.active{border-color: rgba(124,255,178,.38);background: rgba(124,255,178,.08)}
-    .vbtn small{color:var(--m)}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .field{
-      width:100%;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:var(--t);
-      outline:0;
-    }
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media(max-width:520px){.split{grid-template-columns:1fr}}
-    .paypick{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .pay{
-      flex:1;min-width:140px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      padding:10px 12px;
-      cursor:pointer;
-      display:flex;align-items:center;gap:10px;
-    }
-    .pay img{width:34px;height:34px;border-radius:12px;background:rgba(255,255,255,.06);object-fit:contain}
-    .pay b{display:block;font-size:13px}
-    .pay span{display:block;color:var(--m);font-size:12px}
-    .pay.active{border-color: rgba(110,168,254,.28);background: rgba(110,168,254,.09)}
-    .paydetails{
-      margin-top:10px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
+    .cBody{padding:12px}
+    .cName{font-weight:800; margin:0 0 6px; font-size:14px}
+    .cPrice{color:var(--g); font-weight:850; margin:0 0 10px}
+    .cBtnRow{display:flex; gap:10px}
+    .btn.small{padding:10px 12px; border-radius:14px; font-size:13px; width:100%}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; z-index:50;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      background:rgba(0,0,0,.55);
       padding:12px;
     }
-    .qrisimg{
-      width:100%;
-      border-radius:16px;
+    .modal.show{display:flex}
+    .sheet{
+      width:min(760px, 100%);
+      background:rgba(10,14,24,.92);
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+      border-radius:22px;
+      box-shadow:0 26px 80px rgba(0,0,0,.65);
       overflow:hidden;
-      margin-top:10px;
+      animation: pop .16s ease;
     }
-    .qrisimg img{width:100%;display:block}
-    .mini{color:var(--m);font-size:12px;margin-top:10px;line-height:1.35}
-    .toast{
-      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-      background: rgba(10,12,18,.86);
+    @keyframes pop{from{transform:translateY(12px); opacity:.7}to{transform:translateY(0); opacity:1}}
+    .sheetTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .sheetTop b{font-size:14px}
+    .closeX{
+      width:40px; height:40px; border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
       color:var(--t);
-      padding:10px 12px;border-radius:14px;
-      box-shadow: var(--shadow);
-      display:none;
-      z-index:90;
+      cursor:pointer;
+    }
+    .sheetBody{padding:14px}
+    .sumRow{
+      display:flex; gap:10px; align-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px;
+      margin-bottom:12px;
+    }
+    .sumRow .meta{min-width:0}
+    .sumRow .meta b{display:block}
+    .sumRow .meta span{display:block; color:var(--m); font-size:12px; margin-top:2px}
+    .sumRow .price{margin-left:auto; font-weight:900}
+    .segTitle{font-size:13px; color:var(--m); margin:12px 0 8px}
+    .variants{display:flex; flex-wrap:wrap; gap:10px}
+    .vBtn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--t);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
       font-size:13px;
     }
-    .toast.show{display:block}
+    .vBtn.active{
+      border-color: rgba(110,168,254,.45);
+      background: rgba(110,168,254,.14);
+      box-shadow:0 10px 30px rgba(110,168,254,.16);
+    }
+    .formGrid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .payPick{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pay{
+      display:flex; gap:10px; align-items:center;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      user-select:none;
+    }
+    .pay.active{
+      border-color: rgba(124,255,178,.35);
+      background: rgba(124,255,178,.10);
+    }
+    .pay img{
+      width:34px; height:34px; border-radius:10px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      object-fit:cover;
+    }
+    .pay b{display:block}
+    .pay span{display:block; font-size:12px; color:var(--m); margin-top:2px}
+    .payInfo{
+      margin-top:10px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px;
+      color:var(--m);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+    .qrisBox{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .qrisShow{
+      width:100%;
+      border:1px solid rgba(110,168,254,.35);
+      background: rgba(110,168,254,.14);
+      color:var(--t);
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .actions{
+      display:flex; gap:10px; margin-top:12px;
+    }
+    .actions .btn{width:100%}
+
+    /* QRIS Modal */
+    .modalQris{
+      position:fixed; inset:0; z-index:80;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.60);
+      padding:14px;
+    }
+    .modalQris.show{display:flex}
+    .modalCard{
+      width:min(520px, 100%);
+      background:rgba(10,14,24,.95);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      box-shadow:0 26px 80px rgba(0,0,0,.65);
+      overflow:hidden;
+    }
+    .modalTop{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .modalClose{
+      width:40px; height:40px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--t);
+      cursor:pointer;
+    }
+    .modalBody{padding:14px}
+    .qrImg{
+      width:100%;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:#fff;
+      display:block;
+    }
+    .modalFoot{padding:12px 14px; border-top:1px solid rgba(255,255,255,.08)}
+    .btnRed{
+      width:100%;
+      border:1px solid rgba(255,110,110,.30);
+      background:rgba(255,110,110,.14);
+      color:var(--t);
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .muted{color:rgba(174,185,214,.85)}
   </style>
 </head>
 <body>
-<header>
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">K</div>
-      <div class="btxt">
-        <b>KivoPay Store</b>
-        <span>Aplikasi Premium • Order manual via WhatsApp Admin</span>
-      </div>
-    </div>
-    <div class="right">
-      <div class="pill"><span class="dot"></span> Ready</div>
-      <button class="btn" id="btnLoginTop">Masuk</button>
-    </div>
-  </div>
-</header>
+  <div class="bgfx"></div>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
 
-<div class="wrap">
-  <section class="hero">
-    <h1>Aplikasi Premium (Lengkap)</h1>
-    <div class="typingLine">
-      <span id="typingText"></span><span class="caret">|</span>
-    </div>
-
-    <div class="tools">
-      <div class="search">
-        🔎 <input id="q" placeholder="Cari produk... (contoh: Netflix, Canva, Remini)" autocomplete="off" />
-      </div>
-      <button class="btn ghost" id="btnReset">Reset</button>
-    </div>
-
-    <div class="hint">
-      Cara order: <b>Klik produk</b> → pilih paket → (kalau belum masuk) isi <b>Nama & WhatsApp</b> → pilih pembayaran → <b>Order ke Admin</b>.
-    </div>
-  </section>
-
-  <div class="grid" id="grid"></div>
-</div>
-
-<!-- MODAL: PRODUCT -->
-<div class="overlay" id="ovProduct" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="mhead">
-      <img id="mImg" alt="" />
-      <div class="tt">
-        <b id="mTitle">Produk</b>
-        <span id="mSub">Pilih paket</span>
-      </div>
-      <button class="btn x" onclick="closeAll()">✕</button>
-    </div>
-    <div class="mbody">
-      <div class="variants" id="variantList"></div>
-
-      <div style="margin-top:12px" class="row">
-        <span class="tag" id="selTag">Pilih paket dulu</span>
-      </div>
-
-      <div style="margin-top:12px" class="split">
-        <button class="btn" onclick="closeAll()">Kembali</button>
-        <button class="btn primary" id="btnCheckout" disabled>Checkout</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: LOGIN -->
-<div class="overlay" id="ovLogin" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="mhead">
-      <div class="tt">
-        <b>Masuk dulu</b>
-        <span>Wajib isi data sebelum checkout</span>
-      </div>
-      <button class="btn x" onclick="closeAll()">✕</button>
-    </div>
-    <div class="mbody">
-      <input class="field" id="inpName" placeholder="Nama kamu (wajib)" />
-      <div style="height:10px"></div>
-      <input class="field" id="inpWA" placeholder="Nomor WhatsApp (contoh: 628xxxx)" inputmode="numeric" />
-      <div class="mini">Tips: pakai format WA <b>62</b> tanpa <b>+</b>.</div>
-
-      <div style="margin-top:12px" class="split">
-        <button class="btn" onclick="closeAll()">Nanti dulu</button>
-        <button class="btn primary" id="btnDoLogin">Simpan & Lanjut</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: PAY -->
-<div class="overlay" id="ovPay" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="mhead">
-      <div class="tt">
-        <b>Checkout</b>
-        <span id="paySub">Pilih pembayaran</span>
-      </div>
-      <button class="btn x" onclick="closeAll()">✕</button>
-    </div>
-    <div class="mbody">
-      <div class="paydetails">
-        <div class="row" style="justify-content:space-between">
-          <div>
-            <b id="sumProd">Produk</b>
-            <div style="color:var(--m);font-size:12px" id="sumVar">Paket</div>
-          </div>
-          <div style="text-align:right">
-            <div style="color:var(--m);font-size:12px">Harga</div>
-            <b id="sumPrice">Rp 0</b>
-          </div>
+  <header>
+    <div class="wrap" style="padding-bottom:12px">
+      <div class="topbar">
+        <div class="logo">K</div>
+        <div class="brand">
+          <b>KivoPay Store</b>
+          <span>Aplikasi Premium • Order manual via WhatsApp Admin</span>
+        </div>
+        <div class="right">
+          <div class="pill"><span class="dot"></span>Ready</div>
         </div>
       </div>
 
-      <div class="paypick" id="payPick"></div>
-
-      <div class="paydetails" id="payInfo"></div>
-
-      <div style="margin-top:10px">
-        <textarea class="field" id="note" rows="2" placeholder="Catatan (optional)"></textarea>
-      </div>
-
-      <label class="mini" style="display:flex;gap:10px;align-items:center;margin-top:10px;cursor:pointer">
-        <input type="checkbox" id="paidTick" />
-        Saya sudah bayar ✅ (nanti kirim bukti ke admin)
-      </label>
-
-      <div style="margin-top:12px" class="split">
-        <button class="btn" onclick="closeAll()">Kembali</button>
-        <button class="btn primary" id="btnOrder">Order ke WhatsApp Admin</button>
-      </div>
-
-      <div class="mini">
-        Setelah klik order, WhatsApp akan terbuka otomatis. Kalau tidak kebuka, cek pop-up/browser.
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">Tersalin ✅</div>
-
-<script>
-// ===================== SETTING =====================
-  const ADMIN_WA = "6285150895395"; // ganti nomor admin kamu (format 62xxxx)
-
-  // Pembayaran (logo kecil saja + QRIS PNG baru)
-  const PAY = {
-    dana: { name:"Dana",  info:"087753513090 • a/n Kamxxx",  img:"https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" },
-    sea:  { name:"SeaBank", info:"901517870612 • a/n Kamxxx", img:"https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" },
-    qris: { name:"QRIS", info:"Scan QRIS (gambar)", img:"https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" }
-  };
-
-  // ===================== DATA PRODUK (Lengkap sesuai list kamu) =====================
-  const products = [
-    { id:"alight", name:"Alight Motion Premium", img:"https://images.bukaolshop.com/hosting/181218/4a04b8d7e542788237.png",
-      variants:[ {label:"Private Akun 1 Tahun", price:9600} ] },
-
-    { id:"prime", name:"Prime Video", img:"https://images.bukaolshop.com/hosting/181218/ad8345f7b9c8953792.png",
-      variants:[
-        {label:"Shared 1 Bulan", price:6700},
-        {label:"Private 1 Bulan", price:15300},
-      ] },
-
-    { id:"bstation", name:"Bstation Premium", img:"https://images.bukaolshop.com/hosting/181218/8a64287f1e0d26389.png",
-      variants:[
-        {label:"Akun Shared 3 Bulan", price:13300},
-        {label:"Akun Private 1 Bulan", price:25300},
-        {label:"Akun Private 2 Bulan", price:40300},
-      ] },
-
-    { id:"canva", name:"Canva Pro Premium", img:"https://images.bukaolshop.com/hosting/181218/fc56c689cb9f975773.png",
-      variants:[
-        {label:"Canva Anggota 2 Bulan", price:5600},
-        {label:"Canva Pro Desainer 1 Bulan", price:5500},
-        {label:"Canva Education 1 Tahun", price:16500},
-      ] },
-
-    { id:"capcut", name:"Capcut Pro Premium", img:"https://images.bukaolshop.com/hosting/181218/47f862f5ed4a892435.png",
-      variants:[
-        {label:"Private Akun 1 Bulan Gar 7h", price:11300},
-        {label:"Private Akun 1 Bulan Gar 28h", price:20300},
-      ] },
-
-    { id:"chatgpt", name:"ChatGpt Premium", img:"https://images.bukaolshop.com/hosting/181218/26f804d66e6e88158.png",
-      variants:[
-        {label:"Member Plan 1 Bulan Private", price:25700},
-        {label:"Owner Business Plan 1 Bulan", price:84300},
-        {label:"Plus Plan 1 Bulan Private", price:20300},
-        {label:"Plus Plan 1 Bulan Private (opsi 2)", price:30500},
-      ] },
-
-    { id:"iqiyi", name:"IQIYI Premium", img:"https://images.bukaolshop.com/hosting/181218/891f9cc79330873789.png",
-      variants:[
-        {label:"Iqiyi Premium 1 Bulan Shared", price:15300},
-        {label:"Iqiyi Premium 1 Bulan Shared 2 Devices", price:23500},
-      ] },
-
-    { id:"vidio", name:"Vidio Premium", img:"https://images.bukaolshop.com/hosting/181218/1174d76c8ed6103972.png",
-      variants:[
-        {label:"Shared 1 Bulan 2 User Mobile", price:18800},
-        {label:"Private 1 Bulan Khusus Mobile", price:32400},
-      ] },
-
-    { id:"vision", name:"Vision+ Premium", img:"https://images.bukaolshop.com/hosting/181218/072f4a242c47628279.png",
-      variants:[
-        {label:"Private Akun 1 Bulan All Screen", price:30000},
-      ] },
-
-    { id:"viu", name:"Viu Premium", img:"https://images.bukaolshop.com/hosting/181218/e185c3b3935534665.png",
-      variants:[
-        {label:"Private 3 Bulan 1 Device", price:7000},
-        {label:"Private 6 Bulan 1 Device", price:8600},
-      ] },
-
-    { id:"wetv", name:"Wetv Premium", img:"https://images.bukaolshop.com/hosting/181218/9639c4484b80226918.png",
-      variants:[
-        {label:"Wetv Premium 1 Bulan Shared", price:13600},
-        {label:"Wetv Premium 1 Bulan Private", price:35300},
-      ] },
-
-    { id:"youtube", name:"YouTube Premium", img:"https://images.bukaolshop.com/hosting/181218/e1b9eae8982d985428.png",
-      variants:[
-        {label:"Anggota Family Plan 1 Bulan Invited", price:8300},
-      ] },
-
-    { id:"netflix", name:"Netflix Premium", img:"https://images.bukaolshop.com/hosting/181218/e97361a0f1be36831.png",
-      variants:[
-        {label:"Sharing 1 Bulan 1p1u", price:32000},
-        {label:"Sharing 1 Bulan 1p2u", price:26300},
-        {label:"Private 1 Bulan", price:200000},
-      ] },
-
-    { id:"remini", name:"Remini Premium", img:"https://images.bukaolshop.com/hosting/181218/e0211889cbb1648699.png",
-      variants:[
-        {label:"Sharing 1 Bulan", price:16400},
-        {label:"Private 1 Bulan", price:25300},
-        {label:"Private 1 Tahun", price:35300},
-      ] },
-
-    { id:"disney", name:"Disney Premium", img:"https://images.bukaolshop.com/hosting/181218/db9934847fa6433172.png",
-      variants:[
-        {label:"Shared 1 User 1 Bulan", price:25300},
-        {label:"Shared 6 User 1 Bulan", price:32300},
-      ] },
-
-    { id:"spotify", name:"Spotify Premium", img:"https://images.bukaolshop.com/hosting/181218/ff232ca6b143229137.png",
-      variants:[
-        {label:"Famplan 1 Bulan", price:19300},
-        {label:"Indplan 1 Bulan", price:26300},
-        {label:"Famplan 2 Bulan", price:30300},
-      ] },
-  ];
-
-  // ===================== HELPERS =====================
-  const $ = (id)=>document.getElementById(id);
-  const rupiah = (n)=>"Rp " + (n||0).toLocaleString("id-ID");
-  function toast(msg="OK ✅"){
-    const t=$("toast");
-    t.textContent=msg;
-    t.classList.add("show");
-    setTimeout(()=>t.classList.remove("show"), 1200);
-  }
-
-  // ===================== RENDER GRID =====================
-  let filtered = [...products];
-  function render(){
-    const g = $("grid");
-    g.innerHTML = filtered.map(p=>{
-      const min = Math.min(...p.variants.map(v=>v.price));
-      const max = Math.max(...p.variants.map(v=>v.price));
-      const range = (min===max) ? rupiah(min) : `${rupiah(min)} - ${rupiah(max)}`;
-      return `
-        <div class="card" onclick="openProduct('${p.id}')">
-          <div class="thumb"><img src="${p.img}" alt=""></div>
-          <div class="cbody">
-            <b>${p.name}</b>
-            <span>${p.variants.length} paket • ${range}</span>
-            <span class="tag">Pesan</span>
-          </div>
+      <div class="hero">
+        <h2 class="hTitle">Aplikasi Premium (Lengkap)</h2>
+        <div class="typingRow">
+          <span id="typingText"></span><span class="caret">|</span>
         </div>
-      `;
-    }).join("");
-  }
-
-  // ===================== STATE =====================
-  let selProd = null;
-  let selVarIndex = -1;
-  let payMethod = "qris"; // default
-
-  function openProduct(id){
-    selProd = products.find(p=>p.id===id);
-    selVarIndex = -1;
-    $("mImg").src = selProd.img;
-    $("mTitle").textContent = selProd.name;
-    $("mSub").textContent = "Pilih paket untuk lihat harga";
-    $("selTag").textContent = "Pilih paket dulu";
-    $("btnCheckout").disabled = true;
-
-    const list = $("variantList");
-    list.innerHTML = selProd.variants.map((v,i)=>`
-      <div class="vbtn" id="v_${i}" onclick="pickVar(${i})">
         <div>
-          <b>${v.label}</b>
-          <small>${selProd.name}</small>
+          <span class="chip">✨ Harga transparan</span>
+          <span class="chip">⚡ Order via WhatsApp</span>
+          <span class="chip">🛡️ Aman & rapi</span>
         </div>
-        <div><b>${rupiah(v.price)}</b></div>
+
+        <div class="searchRow">
+          <input id="q" placeholder="Cari produk... (contoh: Netflix, Canva, Remini)" />
+          <button class="btn" id="btnReset" type="button">Reset</button>
+        </div>
+        <div class="hint">
+          Cara order: <b>Klik Pesan</b> → pilih paket → isi <b>Nama</b> & <b>WhatsApp</b> → pilih pembayaran → klik <b>Order ke WhatsApp Admin</b>.
+        </div>
       </div>
-    `).join("");
+    </div>
+  </header>
 
-    show("ovProduct");
-  }
+  <main class="wrap" style="padding-top:0">
+    <div class="grid" id="grid"></div>
+  </main>
 
-  function pickVar(i){
-    selVarIndex = i;
-    [...document.querySelectorAll(".vbtn")].forEach(el=>el.classList.remove("active"));
-    const el = $("v_"+i);
-    if(el) el.classList.add("active");
+  <!-- MODAL: ORDER -->
+  <div class="modal" id="ovOrder" onclick="closeOrder()">
+    <div class="sheet" onclick="event.stopPropagation()">
+      <div class="sheetTop">
+        <b>Checkout</b>
+        <button class="closeX" onclick="closeOrder()">✕</button>
+      </div>
+      <div class="sheetBody">
+        <div class="sumRow">
+          <div class="meta">
+            <b id="sumProd">-</b>
+            <span id="sumVar">-</span>
+          </div>
+          <div class="price" id="sumPrice">Rp -</div>
+        </div>
 
-    const v = selProd.variants[i];
-    $("selTag").textContent = `Dipilih: ${v.label} • ${rupiah(v.price)}`;
-    $("btnCheckout").disabled = false;
-    $("btnCheckout").onclick = ()=> goCheckout();
-  }
+        <div class="segTitle">Pilih paket</div>
+        <div class="variants" id="varBox"></div>
 
-  // ===================== LOGIN + CHECKOUT FLOW =====================
-  function isLogged(){
-    return !!localStorage.getItem("kp_name") && !!localStorage.getItem("kp_wa");
-  }
-  function setLoggedUI(){
-    const nm = localStorage.getItem("kp_name");
-    $("btnLoginTop").textContent = nm ? nm : "Masuk";
-    $("btnLoginTop").onclick = ()=> {
-      if(nm){ logout(); } else { show("ovLogin"); }
+        <div class="segTitle">Format orderan</div>
+        <div class="formGrid">
+          <input id="inpName" placeholder="Nama kamu (wajib)" />
+          <input id="inpWa" placeholder="Nomor WhatsApp (wajib) contoh: 628xxxxxxxxxx" inputmode="numeric" />
+          <textarea id="note" placeholder="Catatan (opsional)" rows="2"></textarea>
+        </div>
+
+        <div class="segTitle">Pilih pembayaran</div>
+        <div class="payPick" id="payPick"></div>
+
+        <div class="payInfo" id="payInfo"></div>
+
+        <div class="actions">
+          <button class="btn" type="button" onclick="copyText()">Salin Teks</button>
+          <button class="btn primary" id="btnOrder" type="button">Order ke WhatsApp Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SHOW QRIS -->
+  <div class="modalQris" id="modalQris" onclick="closeQris()">
+    <div class="modalCard" onclick="event.stopPropagation()">
+      <div class="modalTop">
+        <b>SHOW QRIS</b>
+        <button class="modalClose" onclick="closeQris()">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="muted" style="text-align:center;margin-bottom:10px">SCAN QRIS BERIKUT</div>
+        <img class="qrImg" id="qrisImg"
+             src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png"
+             alt="QRIS">
+        <div class="muted" style="text-align:center;margin-top:10px">
+          Jumlah bayar: <b id="qrisAmount">Rp -</b>
+        </div>
+      </div>
+      <div class="modalFoot">
+        <button class="btnRed" onclick="closeQris()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== CONFIG ======
+    const ADMIN_WA = "6287753513090"; // admin WA (tanpa +)
+    const PAY = {
+      dana:{
+        key:"dana",
+        name:"Dana",
+        info:"087753513090 • A/N Kamxxx",
+        img:"https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png"
+      },
+      sea:{
+        key:"sea",
+        name:"SeaBank",
+        info:"901517870612 • A/N Kamxxx",
+        img:"https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png"
+      },
+      qris:{
+        key:"qris",
+        name:"QRIS",
+        info:"Scan QRIS (gambar)",
+        img:"https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png"
+      }
     };
-  }
-  function logout(){
-    localStorage.removeItem("kp_name");
-    localStorage.removeItem("kp_wa");
-    toast("Logout ✅");
-    setLoggedUI();
-  }
+  // ====== DATA: PRODUK + PNG ======
+    const products = [
+      {name:"Alight Motion Premium", img:"https://images.bukaolshop.com/hosting/181218/4a04b8d7e542788237.png",
+        variants:[{label:"Private Akun 1 Tahun", price:9600}]},
 
-  function goCheckout(){
-    closeAll();
-    if(!isLogged()){
-      show("ovLogin");
-      // setelah login lanjut ke checkout
-      $("btnDoLogin").dataset.next = "pay";
-    }else{
-      openPay();
-    }
-  }
+      {name:"Prime Video", img:"https://images.bukaolshop.com/hosting/181218/ad8345f7b9c8953792.png",
+        variants:[{label:"Shared 1 Bulan", price:6700},{label:"Private 1 Bulan", price:15300}]},
 
-  $("btnDoLogin").onclick = ()=>{
-    const name = $("inpName").value.trim();
-    const wa = $("inpWA").value.trim().replace(/\s+/g,"");
-    if(!name || !wa){ toast("Isi Nama & WA dulu"); return; }
-    if(!/^62\d{7,16}$/.test(wa)){ toast("Format WA harus 62xxxx"); return; }
-    localStorage.setItem("kp_name", name);
-    localStorage.setItem("kp_wa", wa);
-    setLoggedUI();
-    closeAll();
-    if($("btnDoLogin").dataset.next==="pay") openPay();
-  };
+      {name:"Bstation Premium", img:"https://images.bukaolshop.com/hosting/181218/8a64287f1e0d26389.png",
+        variants:[{label:"Akun Shared 3 Bulan", price:13300},{label:"Akun Private 1 Bulan", price:25300},{label:"Akun Private 2 Bulan", price:40300}]},
 
-  function openPay(){
-    if(!selProd || selVarIndex<0){ toast("Pilih paket dulu"); return; }
-    const v = selProd.variants[selVarIndex];
-    $("sumProd").textContent = selProd.name;
-    $("sumVar").textContent = v.label;
-    $("sumPrice").textContent = rupiah(v.price);
-    $("note").value = "";
-    $("paidTick").checked = false;
+      {name:"Canva Pro Premium", img:"https://images.bukaolshop.com/hosting/181218/fc56c689cb9f975773.png",
+        variants:[{label:"Canva Anggota 2 Bulan", price:5600},{label:"Canva Pro Desainer 1 Bulan", price:5500},{label:"Canva Education 1 Tahun", price:16500}]},
 
-    // render payment pick
-    const pick = $("payPick");
-    const keys = ["dana","sea","qris"];
-    pick.innerHTML = keys.map(k=>{
-      const p = PAY[k];
-      return `
-        <div class="pay ${k===payMethod?"active":""}" onclick="setPay('${k}')">
-          <img src="${p.img}" alt="">
-          <div>
-            <b>${p.name}</b>
-            <span>${p.info}</span>
+      {name:"Capcut Pro Premium", img:"https://images.bukaolshop.com/hosting/181218/47f862f5ed4a892435.png",
+        variants:[{label:"Private Akun 1 Bulan Gar 7h", price:11300},{label:"Private Akun 1 Bulan Gar 28h", price:20300}]},
+
+      {name:"ChatGpt Premium", img:"https://images.bukaolshop.com/hosting/181218/26f804d66e6e88158.png",
+        variants:[{label:"Member Plan 1 Bulan Private", price:25700},{label:"Owner Business Plan 1 Bulan", price:84300},{label:"Plus Plan 1 Bulan Private", price:20300},{label:"Plus Plan 1 Bulan Private (Varian 2)", price:30500}]},
+
+      {name:"IQIYI Premium", img:"https://images.bukaolshop.com/hosting/181218/891f9cc79330873789.png",
+        variants:[{label:"Iqiyi Premium 1 Bulan Shared", price:15300},{label:"Iqiyi Premium 1 Bulan Shared 2 Devices", price:23500}]},
+
+      {name:"Vidio Premium", img:"https://images.bukaolshop.com/hosting/181218/1174d76c8ed6103972.png",
+        variants:[{label:"Shared 1 Bulan 2 User Mobile", price:18800},{label:"Private 1 Bulan Khusus Mobile", price:32400}]},
+
+      {name:"Vision+ Premium", img:"https://images.bukaolshop.com/hosting/181218/072f4a242c47628279.png",
+        variants:[{label:"Private Akun 1 Bulan All Screen", price:30000}]},
+
+      {name:"Viu Premium", img:"https://images.bukaolshop.com/hosting/181218/e185c3b3935534665.png",
+        variants:[{label:"Private 3 Bulan 1 Device", price:7000},{label:"Private 6 Bulan 1 Device", price:8600}]},
+
+      {name:"Wetv Premium", img:"https://images.bukaolshop.com/hosting/181218/9639c4484b80226918.png",
+        variants:[{label:"Wetv Premium 1 Bulan Shared", price:13600},{label:"Wetv Premium 1 Bulan Private", price:35300}]},
+
+      {name:"YouTube Premium", img:"https://images.bukaolshop.com/hosting/181218/e1b9eae8982d985428.png",
+        variants:[{label:"Anggota Family Plan 1 Bulan Invited", price:8300}]},
+
+      {name:"Netflix Premium", img:"https://images.bukaolshop.com/hosting/181218/e97361a0f1be36831.png",
+        variants:[{label:"Sharing 1 Bulan 1p1u", price:32000},{label:"Sharing 1 Bulan 1p2u", price:26300},{label:"Private 1 Bulan", price:200000}]},
+
+      {name:"Remini Premium", img:"https://images.bukaolshop.com/hosting/181218/e0211889cbb1648699.png",
+        variants:[{label:"Sharing 1 Bulan", price:16400},{label:"Private 1 Bulan", price:25300},{label:"Private 1 Tahun", price:35300}]},
+
+      {name:"Disney Premium", img:"https://images.bukaolshop.com/hosting/181218/db9934847fa6433172.png",
+        variants:[{label:"Shared 1 User 1 Bulan", price:25300},{label:"Shared 6 User 1 Bulan", price:32300}]},
+
+      {name:"Spotify Premium", img:"https://images.bukaolshop.com/hosting/181218/ff232ca6b143229137.png",
+        variants:[{label:"Famplan 1 Bulan", price:19300},{label:"Indplan 1 Bulan", price:26300},{label:"Famplan 2 Bulan", price:30300}]}
+    ];
+
+    // ====== UTIL ======
+    const $ = (id)=>document.getElementById(id);
+    const rupiah = (n)=> "Rp " + (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".");
+    const toast = (msg)=>{ alert(msg); };
+
+    // ====== RENDER GRID ======
+    let filtered = [...products];
+    function renderGrid(){
+      const g = $("grid");
+      g.innerHTML = filtered.map((p,i)=>`
+        <div class="card">
+          <div class="thumb"><img src="${p.img}" alt="${p.name}"></div>
+          <div class="cBody">
+            <p class="cName">${p.name}</p>
+            <p class="cPrice">Mulai ${rupiah(minPrice(p))}</p>
+            <div class="cBtnRow">
+              <button class="btn small primary" onclick="openOrder(${i})">Pesan</button>
+            </div>
           </div>
         </div>
-      `;
-    }).join("");
-
-    setPay(payMethod, true);
-    $("btnOrder").onclick = ()=> orderToAdmin();
-    show("ovPay");
-  }
-
-  function setPay(k, silent=false){
-    payMethod = k;
-    [...document.querySelectorAll(".pay")].forEach(el=>el.classList.remove("active"));
-    const all = $("payPick").children;
-    for(const el of all){
-      if(el && el.getAttribute("onclick")?.includes(`'${k}'`)) el.classList.add("active");
+      `).join("");
+    }
+    function minPrice(p){
+      return Math.min(...p.variants.map(v=>v.price));
     }
 
-    const info = $("payInfo");
-    if(k==="dana"){
-      info.innerHTML = `
-        <b>Pembayaran via Dana</b>
-        <div class="mini"><b>${PAY.dana.info}</b><br>Transfer sesuai nominal, lalu kirim bukti ke admin.</div>
-      `;
-    }else if(k==="sea"){
-      info.innerHTML = `
-        <b>Pembayaran via SeaBank</b>
-        <div class="mini"><b>${PAY.sea.info}</b><br>Transfer sesuai nominal, lalu kirim bukti ke admin.</div>
-      `;
-    }else{
-      info.innerHTML = `
-        <b>Pembayaran via QRIS</b>
-        <div class="mini">Scan QRIS di bawah ini, bayar sesuai nominal, lalu kirim bukti ke admin.</div>
-        <div class="qrisimg"><img src="${PAY.qris.img}" alt="QRIS"></div>
-      `;
+    // ====== ORDER FLOW ======
+    let selProd = null;
+    let selVarIndex = 0;
+    let payMethod = "qris";
+
+    function openOrder(idx){
+      selProd = filtered[idx];
+      selVarIndex = 0;
+      payMethod = "qris";
+
+      $("sumProd").textContent = selProd.name;
+      $("varBox").innerHTML = selProd.variants.map((v,vi)=>`
+        <button class="vBtn ${vi===0?'active':''}" onclick="pickVar(${vi})">
+          ${v.label} • ${rupiah(v.price)}
+        </button>
+      `).join("");
+
+      $("inpName").value = "";
+      $("inpWa").value = "";
+      $("note").value = "";
+
+      renderPayPick();
+      pickVar(0);
+      show("ovOrder");
     }
-    if(!silent) toast("Metode dipilih ✅");
-  }
 
-  function orderToAdmin(){
-    const name = localStorage.getItem("kp_name") || "";
-    const wa = localStorage.getItem("kp_wa") || "";
-    if(!name || !wa){ toast("Masuk dulu"); closeAll(); show("ovLogin"); $("btnDoLogin").dataset.next="pay"; return; }
-    if(!selProd || selVarIndex<0){ toast("Pilih paket dulu"); return; }
-
-    const v = selProd.variants[selVarIndex];
-    const methodLabel = (payMethod==="dana") ? "Dana" : (payMethod==="sea" ? "SeaBank" : "QRIS");
-    const paid = $("paidTick").checked ? "Sudah Bayar ✅ (bukti menyusul)" : "Belum Bayar";
-    const note = $("note").value.trim();
-
-    const text =
-`Halo Admin KivoPay, saya mau order:
-
-Nama: ${name}
-WhatsApp: ${wa}
-
-Produk: ${selProd.name}
-Paket: ${v.label}
-Harga: ${rupiah(v.price)}
-
-Metode Bayar: ${methodLabel}
-Status: ${paid}
-${note ? `Catatan: ${note}\n` : ""}
-Mohon diproses ya kak 🙏`;
-
-    const url = `https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank");
-  }
-
-  // ===================== MODAL CONTROL =====================
-  function show(id){ $(id).classList.add("show"); }
-  function hide(id){ $(id).classList.remove("show"); }
-  function closeAll(){ ["ovProduct","ovLogin","ovPay"].forEach(hide); }
-
-  // close on overlay click
-  ["ovProduct","ovLogin","ovPay"].forEach(id=>{
-    $(id).addEventListener("click",(e)=>{ if(e.target.id===id) closeAll(); });
-  });
-
-  // ===================== SEARCH =====================
-  $("q").addEventListener("input", ()=>{
-    const s = $("q").value.trim().toLowerCase();
-    filtered = products.filter(p=> p.name.toLowerCase().includes(s));
-    render();
-  });
-  $("btnReset").onclick = ()=>{
-    $("q").value="";
-    filtered=[...products];
-    render();
-  };
-
-  // ===================== TOP LOGIN BUTTON =====================
-  $("btnLoginTop").onclick = ()=> show("ovLogin");
-
-  // ===================== TYPING ANIMATION (Hero) =====================
-  const typingMsg = "Selamat berbelanja di KivoPay ☺️ • Klik produk untuk lihat paket & harga • Checkout via WhatsApp Admin";
-  let tIndex=0, tForward=true;
-  function typeLoop(){
-    const el = $("typingText");
-    if(!el) return;
-    if(tForward){
-      tIndex++;
-      if(tIndex>=typingMsg.length){ tForward=false; setTimeout(typeLoop, 1000); return; }
-    }else{
-      tIndex--;
-      if(tIndex<=0){ tForward=true; setTimeout(typeLoop, 300); return; }
+    function pickVar(vi){
+      selVarIndex = vi;
+      [...$("varBox").children].forEach((el,i)=>el.classList.toggle("active", i===vi));
+      const v = selProd.variants[selVarIndex];
+      $("sumVar").textContent = v.label;
+      $("sumPrice").textContent = rupiah(v.price);
+      $("qrisAmount").textContent = rupiah(v.price);
+      setPay(payMethod,true);
+      $("btnOrder").onclick = ()=>orderToAdmin();
     }
-    el.textContent = typingMsg.slice(0,tIndex);
-    setTimeout(typeLoop, 40);
-  }
 
-  // ===================== INIT =====================
-  setLoggedUI();
-  render();
-  typeLoop();
-</script>
+    function renderPayPick(){
+      const keys = ["dana","sea","qris"];
+      $("payPick").innerHTML = keys.map(k=>{
+        const p = PAY[k];
+        return `
+          <div class="pay ${k===payMethod?'active':''}" onclick="setPay('${k}')">
+            <img src="${p.img}" alt="">
+            <div>
+              <b>${p.name}</b>
+              <span>${p.info}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+      renderPayInfo();
+    }
+
+    function setPay(k, silent=false){
+      payMethod = k;
+      [...document.querySelectorAll(".pay")].forEach(el=>el.classList.remove("active"));
+      // re-render pick to set active easily
+      renderPayPick();
+
+      renderPayInfo();
+      if(!silent) toast("Metode dipilih ✅");
+    }
+
+    function renderPayInfo(){
+      const p = PAY[payMethod];
+      if(payMethod==="dana"){
+        $("payInfo").innerHTML = `
+          <b>Pembayaran via Dana</b><br>
+          <span class="muted">${p.info}</span><br>
+          Transfer sesuai nominal, lalu klik <b>Order ke WhatsApp Admin</b> untuk kirim format.
+        `;
+      }else if(payMethod==="sea"){
+        $("payInfo").innerHTML = `
+          <b>Pembayaran via SeaBank</b><br>
+          <span class="muted">${p.info}</span><br>
+          Transfer sesuai nominal, lalu klik <b>Order ke WhatsApp Admin</b> untuk kirim format.
+        `;
+      }else{
+        $("payInfo").innerHTML = `
+          <b>Pembayaran via QRIS</b><br>
+          <span class="muted">Scan QRIS, bayar sesuai nominal, lalu kirim bukti ke admin.</span>
+          <div class="qrisBox">
+            <button class="qrisShow" type="button" onclick="openQris()">Tampilkan QRIS 👁</button>
+          </div>
+        `;
+        $("qrisImg").src = PAY.qris.img;
+      }
+    }
+
+    function openQris(){
+      const v = selProd?.variants?.[selVarIndex];
+      $("qrisAmount").textContent = rupiah(v?.price || 0);
+      show("modalQris");
+    }
+    function closeQris(){ hide("modalQris"); }
+
+    function buildOrderText(){
+      const name = $("inpName").value.trim();
+      const wa = $("inpWa").value.trim();
+      if(!name || !wa) return null;
+
+      const v = selProd.variants[selVarIndex];
+      const methodLabel = (payMethod==="dana"?"Dana":payMethod==="sea"?"SeaBank":"QRIS");
+      const note = $("note").value.trim();
+
+      return [
+        `Halo Admin KivoPay, saya mau order:`,
+        ``,
+        `Nama: ${name}`,
+        `WhatsApp: ${wa}`,
+        ``,
+        `Produk: ${selProd.name}`,
+        `Paket: ${v.label}`,
+        `Harga: ${rupiah(v.price)}`,
+        `Metode Bayar: ${methodLabel}`,
+        note?`Catatan: ${note}`:null,
+        ``,
+        `Mohon diproses ya kak 🙏`
+      ].filter(Boolean).join("\n");
+    }
+
+    function orderToAdmin(){
+      const name = $("inpName").value.trim();
+      const wa = $("inpWa").value.trim();
+      if(!name || !wa){ toast("Isi Nama & WhatsApp dulu."); return; }
+
+      const text = buildOrderText();
+      const url = `https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    }
+
+    function copyText(){
+      const text = buildOrderText();
+      if(!text){ toast("Isi Nama & WhatsApp dulu."); return; }
+      navigator.clipboard.writeText(text).then(()=>toast("Teks order disalin ✅")).catch(()=>toast("Gagal salin"));
+    }
+
+    // ====== MODAL HELPERS ======
+    function show(id){ $(id).classList.add("show"); }
+    function hide(id){ $(id).classList.remove("show"); }
+    function closeOrder(){ hide("ovOrder"); }
+
+    // ====== SEARCH ======
+    $("q").addEventListener("input", ()=>{
+      const s = $("q").value.trim().toLowerCase();
+      filtered = products.filter(p=>p.name.toLowerCase().includes(s));
+      renderGrid();
+    });
+    $("btnReset").onclick = ()=>{
+      $("q").value = "";
+      filtered = [...products];
+      renderGrid();
+    };
+
+    // ====== TYPING ANIMATION ======
+    const typingMsg = "Selamat belanja di KivoPay ✨ • Klik produk untuk lihat paket & harga • Checkout via WhatsApp Admin";
+    let tIndex = 0;
+    let tForward = true;
+    function typeLoop(){
+      const el = $("typingText");
+      if(!el) return;
+      if(tForward){
+        tIndex++;
+        if(tIndex >= typingMsg.length){ tForward=false; setTimeout(typeLoop, 1000); return; }
+      }else{
+        tIndex--;
+        if(tIndex <= 0){ tForward=true; setTimeout(typeLoop, 300); return; }
+      }
+      el.textContent = typingMsg.slice(0, tIndex);
+      setTimeout(typeLoop, 40);
+    }
+
+    // ====== INIT ======
+    renderGrid();
+    typeLoop();
+  </script>
 </body>
 </html>
-```0
