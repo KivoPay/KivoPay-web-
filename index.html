@@ -1,283 +1,474 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>KivoPay — Store</title>
-<meta name="theme-color" content="#070a12"/>
-<style>
-:root{--bg:#070a12;--c:rgba(255,255,255,.07);--l:rgba(255,255,255,.12);--t:#eef2ff;--m:#aab3d6;--b:#6ea8fe;--g:#7dffb2;--r:18px}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial;color:var(--t);background:radial-gradient(900px 420px at 10% 0%,rgba(110,168,254,.22),transparent 60%),radial-gradient(900px 420px at 90% 10%,rgba(125,255,178,.12),transparent 55%),var(--bg);min-height:100vh}
-.wrap{max-width:980px;margin:0 auto;padding:14px 14px 40px}
-.top{position:sticky;top:0;z-index:9;background:rgba(7,10,18,.72);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
-.topin{max-width:980px;margin:0 auto;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center}
-.logo{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;font-weight:900;border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,rgba(110,168,254,.95),rgba(125,255,178,.55))}
-.brand h1{margin:0;font-size:15px;line-height:1.1} .brand p{margin:2px 0 0;font-size:12px;color:var(--m)}
-.pill{padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-size:12px}
-.hero{margin-top:12px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(135deg,rgba(110,168,254,.18),rgba(255,255,255,.04));border-radius:24px;padding:14px}
-.typ{margin-top:8px;padding:10px 12px;border-radius:16px;border:1px dashed rgba(110,168,254,.40);background:rgba(110,168,254,.10);font-size:13px;display:flex;gap:8px;align-items:center}
-.dot{width:9px;height:9px;border-radius:99px;background:var(--g);box-shadow:0 0 16px rgba(125,255,178,.55)}
-.caret{animation:blink 1s steps(1) infinite;opacity:.9} @keyframes blink{50%{opacity:0}}
-.grid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.card{border-radius:20px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);overflow:hidden}
-.head{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:10px;align-items:center}
-.head img{width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.12);object-fit:contain;padding:6px}
-.head b{font-size:13px} .head small{display:block;color:var(--m);font-size:12px;margin-top:2px}
-.list{padding:10px;display:grid;gap:8px}
-.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 10px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.14)}
-.item span{color:rgba(255,255,255,.9);font-size:12.5px;line-height:1.25}
-.price{font-weight:900;font-size:12.5px;background:linear-gradient(135deg,rgba(110,168,254,.95),rgba(125,255,178,.70));-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
-.btn{margin-top:10px;width:100%;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--t);font-weight:900;cursor:pointer}
-.btn:hover{background:rgba(255,255,255,.08)}
-.pay{margin-top:12px;border-radius:22px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);padding:12px}
-.paygrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-@media(max-width:520px){.paygrid{grid-template-columns:1fr}}
-.pmet{padding:10px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.14);display:flex;gap:10px;align-items:center}
-.pmet img{width:34px;height:34px;border-radius:12px;border:1px solid rgba(255,255,255,.10);object-fit:cover}
-.note{margin-top:10px;color:var(--m);font-size:12px;line-height:1.45}
-input,select{width:100%;padding:12px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18);color:var(--t);outline:none}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:640px){.row{grid-template-columns:1fr}}
-hr{border:0;border-top:1px solid rgba(255,255,255,.10);margin:12px 0}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KivoPay Store</title>
+  <style>
+    :root{
+      --bg:#070a12; --card:rgba(255,255,255,.06); --bd:rgba(255,255,255,.10);
+      --t:#eaf0ff; --m:#aeb9d6; --a:#6ea8fe;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--t);
+      background:
+        radial-gradient(900px 420px at 10% 10%, rgba(110,168,254,.18), transparent 60%),
+        radial-gradient(800px 420px at 90% 20%, rgba(124,255,178,.10), transparent 55%),
+        var(--bg);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:16px}
+    header{
+      position:sticky; top:0; z-index:9;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,18,.55);
+      border-bottom:1px solid var(--bd);
+    }
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px}
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{
+      width:40px; height:40px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(110,168,254,.95), rgba(150,255,210,.55));
+      display:grid; place-items:center; font-weight:800;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    .title{line-height:1.1}
+    .title b{display:block; font-size:16px}
+    .title small{color:var(--m)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--bd); background:rgba(255,255,255,.06);
+      color:var(--m); font-size:13px;
+    }
+    .card{
+      border:1px solid var(--bd);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-radius:18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    .hero{margin-top:14px; padding:16px}
+    .hero h1{margin:0 0 8px; font-size:18px}
+    .typingLine{
+      color:var(--m); font-size:14px; min-height:20px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .caret{display:inline-block; width:10px; color:var(--a); animation: blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+    .tools{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
+    .input{
+      flex:1; min-width:220px;
+      border:1px solid var(--bd); background:rgba(255,255,255,.05);
+      border-radius:14px; padding:12px 12px;
+      color:var(--t); outline:none;
+    }
+    .grid{display:grid; gap:12px; margin-top:14px}
+    @media(min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
+    .item{
+      padding:14px; cursor:pointer;
+      transition:.18s transform ease, .18s background ease;
+    }
+    .item:hover{transform: translateY(-2px); background:rgba(255,255,255,.06)}
+    .row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .item b{display:block; font-size:15px}
+    .item small{color:var(--m)}
+    .price{font-weight:800; white-space:nowrap}
+    .badge{
+      margin-top:10px; display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px dashed rgba(110,168,254,.35);
+      background:rgba(110,168,254,.10);
+      color:var(--m); font-size:12px;
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.55);
+      display:none; align-items:flex-end; justify-content:center; z-index:99;
+      padding:12px;
+    }
+    .modal{
+      width:min(820px, 100%);
+      border:1px solid var(--bd);
+      background:rgba(10,14,26,.88);
+      backdrop-filter: blur(12px);
+      border-radius:22px;
+      box-shadow:0 22px 70px rgba(0,0,0,.55);
+      overflow:hidden;
+      animation: pop .18s ease;
+    }
+    @keyframes pop{from{transform:translateY(10px); opacity:.8}to{transform:translateY(0); opacity:1}}
+    .modalHead{padding:14px 14px 10px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .modalHead b{font-size:15px}
+    .x{
+      border:1px solid var(--bd); background:rgba(255,255,255,.06);
+      color:var(--t); border-radius:12px; padding:8px 10px; cursor:pointer;
+    }
+    .modalBody{padding:14px; display:grid; gap:12px}
+    .two{display:grid; gap:10px}
+    @media(min-width:720px){ .two{grid-template-columns:1.2fr .8fr} }
+    .box{padding:12px}
+    .box h3{margin:0 0 10px; font-size:14px}
+    .muted{color:var(--m); font-size:13px; margin:0}
+    .btn{
+      border:1px solid var(--bd);
+      background:rgba(255,255,255,.06);
+      color:var(--t);
+      padding:12px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(110,168,254,.90), rgba(124,255,178,.35));
+      border-color: rgba(110,168,254,.45);
+    }
+    .btn:disabled{opacity:.55; cursor:not-allowed}
+
+    .field{display:grid; gap:8px; margin-top:10px}
+    .label{color:var(--m); font-size:12px}
+    select.input{appearance:none}
+    .payRow{
+      display:flex; align-items:center; gap:10px; padding:10px;
+      border:1px solid var(--bd); border-radius:14px; background:rgba(255,255,255,.04);
+    }
+    .payLogo{width:34px; height:34px; border-radius:12px; border:1px solid var(--bd); background:#0b1020; overflow:hidden; display:grid; place-items:center}
+    .payLogo img{width:22px; height:22px; object-fit:contain}
+    .payInfo b{display:block; font-size:13px}
+    .payInfo small{color:var(--m)}
+    .qrImg{
+      width:100%; border-radius:14px; border:1px solid var(--bd);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+    .qrImg img{width:100%; display:block}
+    .toast{
+      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+      background:rgba(20,26,45,.92); border:1px solid var(--bd);
+      color:var(--t); padding:10px 12px; border-radius:14px;
+      display:none; z-index:120;
+    }
+  </style>
 </head>
+
 <body>
-
-<div class="top">
-  <div class="topin">
-    <div style="display:flex;gap:10px;align-items:center">
-      <div class="logo">K</div>
+  <header>
+    <div class="topbar">
       <div class="brand">
-        <h1>KivoPay Store</h1>
-        <p>Order manual via WhatsApp Admin</p>
-      </div>
-    </div>
-    <div class="pill">✅ Ready</div>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="hero">
-    <b style="font-size:16px">Aplikasi Premium (Lengkap)</b>
-    <div class="typ"><div class="dot"></div><div><span id="typing"></span><span class="caret">|</span></div></div>
-
-    <div class="row" style="margin-top:12px">
-      <div>
-        <small style="color:var(--m)">Nama (wajib)</small>
-        <input id="nm" placeholder="Nama kamu">
-      </div>
-      <div>
-        <small style="color:var(--m)">WhatsApp (wajib)</small>
-        <input id="wa" placeholder="628xxxxxxxxxx">
-      </div>
-    </div>
-
-    <div class="row" style="margin-top:10px">
-      <div>
-        <small style="color:var(--m)">Metode Bayar</small>
-        <select id="payMethod">
-          <option value="Dana">Dana</option>
-          <option value="SeaBank">SeaBank</option>
-          <option value="QRIS">QRIS</option>
-        </select>
-      </div>
-      <div>
-        <small style="color:var(--m)">Catatan (opsional)</small>
-        <input id="note" placeholder="Catatan (opsional)">
-      </div>
-    </div>
-
-    <div class="note">Cara order: <b>klik paket</b> → otomatis buka WhatsApp Admin → kirim bukti transfer setelah bayar.</div>
-  </div>
-
-  <div class="pay">
-    <b>Payment KivoPay</b>
-    <div class="paygrid">
-      <div class="pmet">
-        <img src="https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" alt="">
-        <div>
-          <b>Dana</b><div class="note" style="margin:2px 0 0">087753513090 • A/N Kamxxx</div>
+        <div class="logo">K</div>
+        <div class="title">
+          <b>KivoPay Store</b>
+          <small>Order manual via WhatsApp Admin</small>
         </div>
       </div>
-      <div class="pmet">
-        <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" alt="">
-        <div>
-          <b>SeaBank</b><div class="note" style="margin:2px 0 0">901517870612 • A/N Kamxxx</div>
-        </div>
-      </div>
-      <div class="pmet">
-        <img src="https://images.bukaolshop.com/hosting/181218/111e83c3a6f5204498.png" alt="">
-        <div>
-          <b>QRIS</b><div class="note" style="margin:2px 0 0">Scan QRIS (gambar)</div>
-        </div>
-      </div>
+      <div class="pill">✅ Ready</div>
     </div>
-    <div class="note">QRIS: <span style="color:rgba(255,255,255,.85)">https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png</span></div>
-  </div>
+  </header>
 
-  <hr/>
+  <main class="wrap">
+    <section class="card hero">
+      <h1>Aplikasi Premium (Lengkap)</h1>
+      <div class="typingLine">
+        <span id="typingText"></span><span class="caret">|</span>
+      </div>
+      <div class="tools">
+        <input id="q" class="input" placeholder="Cari produk… (contoh: Netflix / Canva / Spotify)" />
+      </div>
+      <div id="list" class="grid"></div>
+      <p class="muted" style="margin-top:12px">
+        Cara order: klik produk → isi Nama & WA → pilih metode bayar → klik “Chat Admin” untuk kirim detail + bukti transfer.
+      </p>
+    </section>
+  </main>
 
-  <div class="grid" id="grid"></div>
+  <!-- Modal Order -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="modalHead">
+        <div>
+          <b id="mTitle">Order</b><br/>
+          <small id="mVariant" style="color:var(--m)"></small>
+        </div>
+        <button class="x" onclick="closeModal()">Tutup</button>
+      </div>
 
-  <button class="btn" onclick="openAdmin()">💬 Chat Admin (Manual)</button>
-  <div class="note">Klik paket untuk order lebih cepat. Kalau ada kendala, chat admin.</div>
-</div>
+      <div class="modalBody">
+        <div class="two">
+          <div class="card box">
+            <h3>Data Checkout</h3>
+            <p class="muted" id="mPrice"></p>
 
-<script>
-const ADMIN_WA = "6285150895395";
+            <div class="field">
+              <div class="label">Nama (wajib)</div>
+              <input id="inpName" class="input" placeholder="Nama kamu" />
+            </div>
 
-const PRODUCTS = [
-  {name:"CapCut Pro", img:"https://images.bukaolshop.com/hosting/181218/47f862f5ed4a892435.png", items:[
-    ["Private 1 Bulan",12000],
-    ["Private 1 Bulan (Rp 19.000)",19000],
-  ]},
-  {name:"Canva Pro", img:"https://images.bukaolshop.com/hosting/181218/fc56c689cb9f975773.png", items:[
-    ["Anggota 2 Bulan",5600],
-    ["Desainer 1 Bulan",6600],
-    ["Education 1 Tahun",15500],
-  ]},
-  {name:"Netflix Premium", img:"https://images.bukaolshop.com/hosting/181218/e97361a0f1be36831.png", items:[
-    ["Sharing 1p1u 1 Bulan",30500],
-    ["Sharing 1p2u 1 Bulan",27400],
-    ["Private 1 Bulan (acc b +4k)",195300],
-  ]},
-  {name:"Vidio Premium", img:"https://images.bukaolshop.com/hosting/181218/1174d76c8ed6103972.png", items:[
-    ["Shared 1 Bulan 2 User Mobile",17300],
-    ["Private 1 Bulan Mobile",32400],
-  ]},
-  {name:"Bstation Premium", img:"https://images.bukaolshop.com/hosting/181218/8a64287f1e0d26389.png", items:[
-    ["3 Bulan Shared 1 Device",12400],
-    ["1 Bulan Private",25300],
-    ["2 Bulan Private",38400],
-    ["1 Tahun Shared 1 Device",15300],
-  ]},
-  {name:"Vision+ Premium", img:"https://images.bukaolshop.com/hosting/181218/072f4a242c47628279.png", items:[
-    ["Private 1 Bulan All Screen Premium+Sports",29300],
-  ]},
-  {name:"Alight Motion Premium", img:"https://images.bukaolshop.com/hosting/181218/4a04b8d7e542788237.png", items:[
-    ["Private 1 Tahun",9600],
-  ]},
-  {name:"ChatGPT Premium", img:"https://images.bukaolshop.com/hosting/181218/26f804d66e6e88158.png", items:[
-    ["Member Team Business 1 Bulan",25600],
-    ["Owner Team Business 1 Bulan",53600],
-    ["Plus Plan 1 Bulan Garansi 7 Hari",20400],
-    ["Plus Plan 1 Bulan Garansi 28 Hari",30400],
-  ]},
-  {name:"Prime Video", img:"https://images.bukaolshop.com/hosting/181218/ad8345f7b9c8953792.png", items:[
-    ["Shared 1 Bulan (1 Profile 1 User)",6600],
-    ["Private 1 Bulan (1 Akun 5 Profile)",15300],
-  ]},
-  {name:"GetContact Premium", img:"https://images.bukaolshop.com/hosting/181218/45231c6da75d480602.png", items:[
-    ["Private 1 Bulan",16300],
-  ]},
-  {name:"Remini Premium", img:"https://images.bukaolshop.com/hosting/181218/e0211889cbb1648699.png", items:[
-    ["Sharing 1 Bulan",15300],
-    ["Private 1 Bulan",20300],
-    ["Private 1 Tahun",27300],
-  ]},
-  {name:"Disney Premium", img:"https://images.bukaolshop.com/hosting/181218/db9934847fa6433172.png", items:[
-    ["1 User 1 Bulan",23300],
-    ["6 User 1 Bulan",31300],
-  ]},
-  {name:"Wattpad Premium", img:"https://images.bukaolshop.com/hosting/181218/86c6a9bd633513072.png", items:[
-    ["Sharing 1 Bulan",11300],
-    ["Sharing 1 Tahun",18300],
-  ]},
-  {name:"WeTV Premium", img:"https://images.bukaolshop.com/hosting/181218/9639c4484b80226918.png", items:[
-    ["1 Bulan Shared 1 Device",14500],
-    ["1 Bulan Private",35300],
-  ]},
-  {name:"iQIYI Premium", img:"https://images.bukaolshop.com/hosting/181218/891f9cc79330873789.png", items:[
-    ["1 Bulan Shared",15300],
-    ["1 Bulan Shared Max 2 Device",24300],
-  ]},
-  {name:"Spotify Premium", img:"https://images.bukaolshop.com/hosting/181218/ff232ca6b143229137.png", items:[
-    ["Famplan 1 Bulan +2k Acc Seller",18000],
-    ["Indplan 1 Bulan",25300],
-    ["Famplan 2 Bulan",29300],
-  ]},
-];
+            <div class="field">
+              <div class="label">WhatsApp (wajib) format 62xxxx</div>
+              <input id="inpWa" class="input" inputmode="numeric" placeholder="628xxxxxxxxxx" />
+            </div>
 
-const rupiah = n => "Rp " + Number(n||0).toLocaleString("id-ID");
+            <div class="field">
+              <div class="label">Catatan (optional)</div>
+              <input id="inpNote" class="input" placeholder="Misal: request cepat / jam online / dll" />
+            </div>
 
-function val(id){ return (document.getElementById(id).value||"").trim(); }
+            <div class="field">
+              <div class="label">Metode Bayar</div>
+              <select id="payMethod" class="input" onchange="renderPay()">
+                <option value="qris">QRIS</option>
+                <option value="dana">Dana</option>
+                <option value="seabank">SeaBank</option>
+              </select>
+            </div>
 
-function openAdmin(){
-  window.open("https://wa.me/"+ADMIN_WA, "_blank");
-}
+            <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+              <button class="btn" onclick="copyOrderText()">Salin Teks Order</button>
+              <button class="btn primary" id="btnChat" onclick="chatAdmin()">Chat Admin (Bukti Transfer)</button>
+            </div>
+          </div>
 
-function order(prod, pack, price){
-  const name = val("nm");
-  const wa = val("wa");
-  const pay = val("payMethod");
-  const note = val("note");
-
-  if(!name || !wa){ alert("Isi Nama & WhatsApp dulu ya (wajib)."); return; }
-  if(!/^62\d{8,15}$/.test(wa)){ alert("Format WA harus 62xxxxxxxx (tanpa +)."); return; }
-
-  const payText =
-    pay==="Dana" ? "Dana: 087753513090 (A/N Kamxxx)" :
-    pay==="SeaBank" ? "SeaBank: 901517870612 (A/N Kamxxx)" :
-    "QRIS: https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png";
-
-  const msg = [
-    "Halo Admin KivoPay, saya mau order ✅",
-    "",
-    "Nama: "+name,
-    "WA: "+wa,
-    "",
-    "Produk: "+prod,
-    "Paket: "+pack,
-    "Harga: "+rupiah(price),
-    "Metode Bayar: "+pay,
-    "Info Pembayaran: "+payText,
-    note ? ("Catatan: "+note) : ""
-  ].filter(Boolean).join("\n");
-
-  window.open("https://wa.me/"+ADMIN_WA+"?text="+encodeURIComponent(msg), "_blank");
-}
-
-function render(){
-  const g = document.getElementById("grid");
-  g.innerHTML = PRODUCTS.map(p=>{
-    return `
-      <div class="card">
-        <div class="head">
-          <img src="${p.img}" alt="">
-          <div>
-            <b>${p.name}</b>
-            <small>${p.items.length} paket</small>
+          <div class="card box">
+            <h3>Pembayaran</h3>
+            <div id="payBox"></div>
+            <p class="muted" style="margin-top:10px">
+              Transfer sesuai nominal. Setelah bayar, klik “Chat Admin” dan kirim bukti.
+            </p>
           </div>
         </div>
-        <div class="list">
-          ${p.items.map(it=>`
-            <div class="item" onclick="order('${p.name.replaceAll("'","")}','${String(it[0]).replaceAll("'","")}','${it[1]}')">
-              <span>${it[0]}</span>
-              <div class="price">${rupiah(it[1])}</div>
-            </div>
-          `).join("")}
-        </div>
       </div>
-    `;
-  }).join("");
-}
+    </div>
+  </div>
 
-const T = [
-  "Selamat Berbelanja Di Website KivoPay, Happy Shopping Ya Kak ☺️",
-  "Klik paket untuk order • Semua pembayaran manual via Admin",
-  "Metode bayar: Dana • SeaBank • QRIS (scan gambar)",
-];
-let ti=0, ci=0, del=false;
-function typing(){
-  const el = document.getElementById("typing");
-  const w = T[ti];
-  if(!del){ ci++; el.textContent = w.slice(0,ci); if(ci>=w.length){ del=true; setTimeout(typing,900); return; } }
-  else { ci--; el.textContent = w.slice(0,ci); if(ci<=0){ del=false; ti=(ti+1)%T.length; } }
-  setTimeout(typing, del?30:45);
-}
+  <div class="toast" id="toast">Tersalin ✅</div>
 
-render(); typing();
-</script>
+  <script>
+    // ================= SETTINGS =================
+    const ADMIN_WA = "6285150895395"; // ganti ini kalau mau
+    const PAY = {
+      dana: { number: "087753513090", name: "Kamxxx", logo: "https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" },
+      seabank: { number: "901517870612", name: "Kamxxx", logo: "https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" },
+      qris: { img: "https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" }
+    };
+
+    const PRODUCTS = [
+      // --- isi sesuai data kamu (contoh lengkap; silakan tambah/ubah) ---
+      {title:"CapCut Pro", variant:"Private 1 Bulan", price:12000},
+      {title:"CapCut Pro", variant:"Private 1 Bulan (Garansi lebih)", price:19000},
+
+      {title:"Canva Pro", variant:"Anggota 2 Bulan", price:5600},
+      {title:"Canva Pro", variant:"Desainer 1 Bulan", price:6600},
+      {title:"Canva Education", variant:"1 Tahun", price:15500},
+
+      {title:"Netflix Premium", variant:"Sharing 1p1u 1 Bulan", price:30500},
+      {title:"Netflix Premium", variant:"Sharing 1p2u 1 Bulan", price:27400},
+      {title:"Netflix Premium", variant:"Private 1 Bulan (acc b + 4K)", price:195300},
+
+      {title:"Vidio Premium", variant:"Shared 1 Bulan (2 User Mobile)", price:17300},
+      {title:"Vidio Premium", variant:"Private 1 Bulan (Mobile)", price:32400},
+
+      {title:"Bstation Premium", variant:"3 Bulan (Shared, 1 Device)", price:12400},
+      {title:"Bstation Premium", variant:"1 Bulan (Private)", price:25300},
+      {title:"Bstation Premium", variant:"2 Bulan (Private)", price:38400},
+      {title:"Bstation Premium", variant:"1 Tahun (Shared, 1 Device)", price:15300},
+
+      {title:"Vision+ Premium", variant:"1 Bulan (All Screen, Premium + Sports)", price:29300},
+
+      {title:"Alight Motion Premium", variant:"1 Tahun (Garansi 3 Bulan)", price:9600},
+
+      {title:"ChatGPT Premium", variant:"Team Business Member 1 Bulan", price:25600},
+      {title:"ChatGPT Premium", variant:"Team Business Owner 1 Bulan (Max 5 Member)", price:53600},
+
+      {title:"Prime Video", variant:"Shared 1 Bulan (1 Profile, 1 User)", price:6600},
+      {title:"Prime Video", variant:"Private 1 Bulan (1 Akun, 5 Profile)", price:15300},
+
+      {title:"GetContact Premium", variant:"Private 1 Bulan", price:16300},
+
+      {title:"Remini Premium", variant:"Sharing 1 Bulan", price:15300},
+      {title:"Remini Premium", variant:"Private 1 Bulan", price:20300},
+      {title:"Remini Premium", variant:"Private 1 Tahun", price:27300},
+
+      {title:"Disney Premium", variant:"1 User 1 Bulan", price:23300},
+      {title:"Disney Premium", variant:"6 User 1 Bulan", price:31300},
+
+      {title:"Wattpad Premium", variant:"Sharing 1 Bulan", price:11300},
+      {title:"Wattpad Premium", variant:"Sharing 1 Tahun", price:18300},
+
+      {title:"WeTV Premium", variant:"1 Bulan (Shared, 1 Device)", price:14500},
+      {title:"WeTV Premium", variant:"1 Bulan (Private)", price:35300},
+
+      {title:"iQIYI Premium", variant:"1 Bulan (Shared)", price:15300},
+      {title:"iQIYI Premium", variant:"1 Bulan (Shared, Max 2 Device)", price:24300},
+
+      {title:"Spotify Premium", variant:"Famplan 1 Bulan (+2k Acc Seller)", price:18000},
+      {title:"Spotify Premium", variant:"Indplan 1 Bulan", price:25300},
+      {title:"Spotify Premium", variant:"Famplan 2 Bulan", price:29300},
+    ];
+
+    // ================= HELPERS =================
+    const qs = (s)=>document.querySelector(s);
+    const rupiah = (n)=>"Rp " + (n||0).toLocaleString("id-ID");
+    function toast(msg="Tersalin ✅"){
+      const t = qs("#toast");
+      t.textContent = msg;
+      t.style.display="block";
+      setTimeout(()=>t.style.display="none", 1200);
+    }
+
+    // ================= RENDER LIST =================
+    let current = null;
+    function renderList(){
+      const q = (qs("#q").value||"").toLowerCase().trim();
+      const data = PRODUCTS.filter(p => (`${p.title} ${p.variant}`).toLowerCase().includes(q));
+      const el = qs("#list");
+      el.innerHTML = data.map((p, i)=>`
+        <div class="card item" onclick="openModal(${i})">
+          <div class="row">
+            <div>
+              <b>${escapeHtml(p.title)}</b>
+              <small>${escapeHtml(p.variant)}</small>
+              <div class="badge">Klik untuk order</div>
+            </div>
+            <div class="price">${rupiah(p.price)}</div>
+          </div>
+        </div>
+      `).join("");
+      if(!data.length){
+        el.innerHTML = `<div class="card item"><b>Produk tidak ditemukan</b><small>Coba kata lain.</small></div>`;
+      }
+    }
+    function escapeHtml(s){
+      return (s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+    }
+
+    // ================= MODAL =================
+    function openModal(index){
+      current = PRODUCTS[index];
+      qs("#mTitle").textContent = current.title;
+      qs("#mVariant").textContent = current.variant;
+      qs("#mPrice").textContent = `Harga: ${rupiah(current.price)}`;
+      qs("#overlay").style.display="flex";
+      qs("#payMethod").value="qris";
+      renderPay();
+    }
+    function closeModal(){
+      qs("#overlay").style.display="none";
+    }
+
+    function renderPay(){
+      const m = qs("#payMethod").value;
+      const box = qs("#payBox");
+      if(m==="dana"){
+        box.innerHTML = `
+          <div class="payRow">
+            <div class="payLogo"><img alt="Dana" src="${PAY.dana.logo}"></div>
+            <div class="payInfo">
+              <b>Dana</b>
+              <small>${PAY.dana.number} • A/N ${PAY.dana.name}</small>
+            </div>
+          </div>
+        `;
+      }else if(m==="seabank"){
+        box.innerHTML = `
+          <div class="payRow">
+            <div class="payLogo"><img alt="SeaBank" src="${PAY.seabank.logo}"></div>
+            <div class="payInfo">
+              <b>SeaBank</b>
+              <small>${PAY.seabank.number} • A/N ${PAY.seabank.name}</small>
+            </div>
+          </div>
+        `;
+      }else{
+        box.innerHTML = `
+          <div class="payRow">
+            <div class="payLogo"><span style="font-weight:900">QR</span></div>
+            <div class="payInfo">
+              <b>QRIS</b>
+              <small>Scan QRIS (gambar)</small>
+            </div>
+          </div>
+          <div class="qrImg" style="margin-top:10px">
+            <img alt="QRIS" src="${PAY.qris.img}">
+          </div>
+        `;
+      }
+    }
+
+    function getCheckoutData(){
+      const name = (qs("#inpName").value||"").trim();
+      const wa = (qs("#inpWa").value||"").trim();
+      const note = (qs("#inpNote").value||"").trim();
+      const method = qs("#payMethod").value;
+      if(!name) return {ok:false, msg:"Isi Nama dulu"};
+      if(!wa || !wa.startsWith("62")) return {ok:false, msg:"WA wajib format 62xxxx"};
+      if(!current) return {ok:false, msg:"Pilih produk dulu"};
+      return {ok:true, name, wa, note, method};
+    }
+
+    function buildOrderText(){
+      const d = getCheckoutData();
+      if(!d.ok) return {ok:false, msg:d.msg};
+
+      const payText =
+        d.method==="dana" ? `Dana: ${PAY.dana.number} (A/N ${PAY.dana.name})` :
+        d.method==="seabank" ? `SeaBank: ${PAY.seabank.number} (A/N ${PAY.seabank.name})` :
+        `QRIS: (scan gambar)`;
+
+      const lines = [
+        "Halo Admin, saya mau order:",
+        `• Nama: ${d.name}`,
+        `• WA: ${d.wa}`,
+        `• Produk: ${current.title}`,
+        `• Paket: ${current.variant}`,
+        `• Harga: ${rupiah(current.price)}`,
+        `• Metode Bayar: ${d.method.toUpperCase()}`,
+        `• Info Bayar: ${payText}`,
+      ];
+      if(d.note) lines.push(`• Catatan: ${d.note}`);
+      lines.push("", "Saya sudah transfer, ini bukti transfernya ✅");
+      return {ok:true, text: lines.join("\n")};
+    }
+
+    function copyOrderText(){
+      const o = buildOrderText();
+      if(!o.ok){ toast(o.msg); return; }
+      navigator.clipboard.writeText(o.text).then(()=>toast("Teks order tersalin ✅")).catch(()=>toast("Gagal salin"));
+    }
+
+    function chatAdmin(){
+      const o = buildOrderText();
+      if(!o.ok){ toast(o.msg); return; }
+      const url = `https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(o.text)}`;
+      window.open(url, "_blank");
+    }
+
+    // ================= TYPING =================
+    const typingMsg = "Selamat Berbelanja Di Website KivoPay, Happy Shopping Ya Kak ☺️";
+    let ti=0, forward=true;
+    function typingLoop(){
+      const el = qs("#typingText");
+      if(!el) return;
+      if(forward){
+        ti++;
+        if(ti >= typingMsg.length){ forward=false; setTimeout(typingLoop, 1100); return; }
+      }else{
+        ti--;
+        if(ti <= 0){ forward=true; }
+      }
+      el.textContent = typingMsg.substring(0, ti);
+      setTimeout(typingLoop, forward ? 45 : 20);
+    }
+
+    // init
+    qs("#q").addEventListener("input", renderList);
+    renderList();
+    typingLoop();
+
+    // close modal on outside click
+    qs("#overlay").addEventListener("click", (e)=>{
+      if(e.target.id==="overlay") closeModal();
+    });
+  </script>
 </body>
-</html>
+  </html>
