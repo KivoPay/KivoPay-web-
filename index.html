@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KivoPay</title>
+  <title>KivoPay Store</title>
+  <meta name="theme-color" content="#070a12" />
   <style>
     :root{
       --bg:#070a12;
       --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
       --line:rgba(255,255,255,.12);
-      --text:#eaf0ff;
-      --muted:#aeb9d6;
-      --accent:#6ea8fe;
-      --good:#7dffb2;
-      --shadow: 0 12px 30px rgba(0,0,0,.35);
-      --r:18px;
+      --text:#eef2ff;
+      --muted:#aab3d6;
+      --brand:#6ea8fe;
+      --brand2:#7dffb2;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --r:22px;
     }
     *{box-sizing:border-box}
     body{
@@ -22,725 +24,585 @@
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 420px at 10% 10%,rgba(110,168,254,.20),transparent 55%),
-        radial-gradient(800px 420px at 90% 20%,rgba(125,255,178,.10),transparent 55%),
+        radial-gradient(900px 520px at 10% 0%,rgba(110,168,254,.22),transparent 60%),
+        radial-gradient(900px 520px at 90% 10%,rgba(125,255,178,.12),transparent 55%),
+        radial-gradient(700px 420px at 50% 115%,rgba(110,168,254,.14),transparent 60%),
         var(--bg);
       min-height:100vh;
+      overflow-x:hidden;
     }
-    header{
-      position:sticky; top:0; z-index:10;
-      padding:12px 14px;
-      background:rgba(7,10,18,.65);
+    a{color:inherit}
+    .wrap{max-width:1080px;margin:0 auto;padding:16px 14px 90px}
+    /* floating blobs */
+    .blob{
+      position:fixed; inset:auto;
+      width:420px; height:420px; border-radius:50%;
+      filter: blur(30px);
+      opacity:.18; pointer-events:none;
+      z-index:0;
+      animation: drift 10s ease-in-out infinite;
+    }
+    .b1{left:-120px; top:-140px;background:radial-gradient(circle at 30% 30%, rgba(110,168,254,.9), transparent 60%)}
+    .b2{right:-140px; top:40px;background:radial-gradient(circle at 30% 30%, rgba(125,255,178,.9), transparent 60%);animation-delay:1.7s}
+    .b3{left:20%; bottom:-220px;background:radial-gradient(circle at 30% 30%, rgba(110,168,254,.7), transparent 60%);animation-delay:3.2s}
+    @keyframes drift{
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(18px,-14px) scale(1.05)}
+    }
+
+    /* topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background:rgba(7,10,18,.68);
       backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
+    .topin{max-width:1080px;margin:0 auto;padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px}
     .brand{display:flex; align-items:center; gap:10px}
     .logo{
-      width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg,rgba(110,168,254,.9),rgba(125,255,178,.45));
-      box-shadow: var(--shadow);
-      display:grid; place-items:center; font-weight:800;
+      width:40px;height:40px;border-radius:14px;
+      background:linear-gradient(135deg, rgba(110,168,254,.95), rgba(125,255,178,.55));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 14px 40px rgba(110,168,254,.20);
+      display:grid;place-items:center;
+      font-weight:900; letter-spacing:.5px;
     }
-    .btxt{line-height:1.1}
-    .btxt .t{font-weight:800}
-    .btxt .s{color:var(--muted); font-size:12px}
-    .userpill{
-      display:flex; align-items:center; gap:8px;
-      background:var(--card); border:1px solid var(--line);
+    .bt h1{margin:0;font-size:15px;line-height:1.1}
+    .bt p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+    .pill{
+      display:flex; align-items:center; gap:10px;
       padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      white-space:nowrap;
     }
-    .userdot{width:10px;height:10px;border-radius:99px;background:var(--good); box-shadow:0 0 14px rgba(125,255,178,.5)}
-    .userpill span{font-size:13px; color:var(--muted)}
-    .userpill b{color:var(--text); font-weight:700}
+    .dot{
+      width:10px;height:10px;border-radius:99px;
+      background:var(--brand2);
+      box-shadow:0 0 18px rgba(125,255,178,.55);
+      animation:pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1.12);opacity:1}}
 
-    main{padding:14px; max-width:980px; margin:0 auto;}
-    .page{display:none; animation: fade .25s ease both}
-    .page.show{display:block}
-    @keyframes fade{from{opacity:0; transform:translateY(4px)}to{opacity:1; transform:none}}
-
-    .panel{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:24px;
+    /* page sections */
+    .hero{
+      position:relative;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(135deg, rgba(110,168,254,.22), rgba(255,255,255,.04));
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .content{padding:16px}
-    h2{margin:0 0 6px; font-size:20px}
-    p{margin:0; color:var(--muted); font-size:14px; line-height:1.45}
-    .divider{height:1px;background:var(--line); margin:14px 0}
-    .muted{color:var(--muted)}
-    .mini{color:var(--muted); font-size:12px; margin-top:8px}
-
-    .btn{
-      appearance:none; border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
+    .hero::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 240px at 18% 15%, rgba(125,255,178,.18), transparent 60%),
+        radial-gradient(520px 260px at 85% 25%, rgba(110,168,254,.22), transparent 60%);
+      opacity:.95;
+      pointer-events:none;
+    }
+    .heroIn{position:relative;z-index:1;padding:16px}
+    .heroTop{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .hero h2{margin:0 0 6px;font-size:18px}
+    .hero p{margin:0;color:rgba(255,255,255,.80);font-size:13px;line-height:1.4}
+    .typingBar{
+      margin-top:12px;
+      display:flex; align-items:center; gap:10px;
       padding:10px 12px;
-      border-radius:14px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.15s ease;
+      border-radius:16px;
+      border:1px dashed rgba(110,168,254,.40);
+      background:rgba(110,168,254,.10);
+      font-size:13px;
     }
-    .btn:hover{transform:translateY(-1px); border-color:rgba(110,168,254,.35)}
-    .btn:active{transform:none}
-    .btn.primary{
-      border-color:rgba(110,168,254,.45);
-      background:linear-gradient(135deg,rgba(110,168,254,.35),rgba(110,168,254,.12));
+    .caret{animation:blink 1s steps(1) infinite; opacity:.85}
+    @keyframes blink{50%{opacity:0}}
+    .spark{
+      width:10px;height:10px;border-radius:99px;background:var(--brand);
+      box-shadow:0 0 16px rgba(110,168,254,.55);
     }
-    .btn.danger{
-      border-color:rgba(255,120,120,.35);
-      background:linear-gradient(135deg,rgba(255,120,120,.22),rgba(255,120,120,.08));
-    }
-
-    .loginbox{
-      display:grid; gap:10px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-    }
-    .f{display:grid; gap:10px}
-    input{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.22);
-      color:var(--text);
-      outline:none;
-    }
-    input:focus{border-color:rgba(110,168,254,.55); box-shadow:0 0 0 3px rgba(110,168,254,.12)}
 
     .grid{
+      margin-top:14px;
       display:grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
-      padding:14px;
+      position:relative;
+      z-index:1;
     }
-    @media(min-width:560px){
-      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-    @media(min-width:920px){
-      .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-    }
-
+    @media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
     .card{
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.24);
       cursor:pointer;
-      transition:.15s ease;
-      display:grid; gap:10px;
+      user-select:none;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      box-shadow: 0 10px 26px rgba(0,0,0,.26);
+      overflow:hidden;
+      transition:.16s transform, .16s background, .16s border-color;
     }
-    .card:hover{transform:translateY(-1px); border-color:rgba(110,168,254,.35)}
-    .c-head{display:flex; gap:12px; align-items:center}
-    .c-ico img{width:46px;height:46px;border-radius:14px; object-fit:cover; border:1px solid var(--line)}
-    .c-title{font-weight:800; margin:0}
-    .c-sub{margin:2px 0 0; font-size:12px; color:var(--muted)}
-    .c-foot{display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .card:hover{transform:translateY(-2px); border-color:rgba(110,168,254,.35); background:rgba(255,255,255,.06)}
+    .card:active{transform:translateY(0)}
+    .thumb{
+      height:88px;
+      display:flex; align-items:center; justify-content:center;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(200px 90px at 20% 30%, rgba(125,255,178,.22), transparent 60%),
+        radial-gradient(240px 100px at 80% 30%, rgba(110,168,254,.26), transparent 60%),
+        rgba(255,255,255,.04);
+    }
+    .thumb img{height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+    .cbody{padding:12px}
+    .ctitle{margin:0;font-weight:900;font-size:13px}
+    .cdesc{margin:4px 0 0; font-size:12px; color:var(--muted); line-height:1.35}
+    .chipRow{margin-top:10px; display:flex; gap:8px; flex-wrap:wrap}
     .chip{
-      font-size:12px;
+      font-size:11px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.14);
+      color:rgba(255,255,255,.82);
     }
 
-    .toolbar{
+    /* product list */
+    .panel{
+      margin-top:14px;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      z-index:1;
+    }
+    .phead{
+      padding:14px 14px 12px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.10);
+    }
+    .phead h3{margin:0;font-size:15px}
+    .phead small{color:var(--muted)}
+    .tools{
       padding:12px 14px;
       display:flex; gap:10px; flex-wrap:wrap;
-      border-top:1px solid var(--line);
-      background:rgba(255,255,255,.03);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
     .search{
-      flex:1;
-      min-width:220px;
+      flex:1; min-width:200px;
       display:flex; align-items:center; gap:10px;
-      border:1px solid var(--line);
-      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
       padding:8px 10px;
       background:rgba(0,0,0,.18);
     }
     .search input{
-      border:0; padding:8px; background:transparent;
+      width:100%;
+      border:0; outline:0;
+      background:transparent;
+      color:var(--text);
+      font-size:14px;
     }
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:16px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+      transition:.15s transform, .15s background;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.08); transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn.primary{
+      border-color: rgba(110,168,254,.55);
+      background: linear-gradient(135deg, rgba(110,168,254,.70), rgba(125,255,178,.16));
+      box-shadow: 0 14px 40px rgba(110,168,254,.18);
+    }
+    .btn.ghost{background:transparent}
 
     .list{padding:14px; display:grid; gap:10px}
     .item{
-      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px;
+    }
+    .iL{display:flex; align-items:center; gap:12px; min-width:0}
+    .iL img{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.10);
+      object-fit:cover;
+    }
+    .iT{min-width:0}
+    .iT b{display:block; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .iT span{display:block; font-size:12px; color:var(--muted); margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .iR{display:flex; align-items:center; gap:10px}
+    .price{
+      font-weight:900;
+      background:linear-gradient(135deg, rgba(110,168,254,.95), rgba(125,255,178,.70));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    /* modal */
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.62);
+      backdrop-filter: blur(10px);
+      display:none;
+      place-items:center;
+      z-index:200;
+      padding:14px;
+    }
+    .overlay.show{display:grid}
+    .modal{
+      width:min(640px,100%);
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(12,14,26,.92);
+      box-shadow: 0 30px 100px rgba(0,0,0,.65);
+      overflow:hidden;
+      animation: pop .18s ease-out;
+    }
+    @keyframes pop{from{transform:scale(.98);opacity:.4}to{transform:scale(1);opacity:1}}
+    .mhead{
+      padding:14px 14px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .mhead b{font-size:14px}
+    .x{
+      width:38px;height:38px;border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      user-select:none;
+    }
+    .mcontent{padding:14px; display:grid; gap:12px}
+    .field label{display:block; font-size:12px; color:var(--muted); margin:0 0 6px}
+    .field input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.22);
+      color:var(--text);
+      outline:none;
+    }
+    .field input:focus{border-color: rgba(110,168,254,.55); box-shadow:0 0 0 3px rgba(110,168,254,.10)}
+    .line{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
       padding:12px;
       border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      font-size:13px;
     }
-    .iL{display:flex; gap:12px; align-items:center}
-    .iL img{width:44px;height:44px;border-radius:14px; object-fit:cover; border:1px solid var(--line)}
-    .iT{line-height:1.1}
-    .iT b{display:block}
-    .iT span{display:block; font-size:12px; color:var(--muted); margin-top:4px}
-    .iR{display:flex; align-items:center; gap:10px}
-    .price{font-weight:900}
-    .qty{
-      min-width:34px;
-      text-align:center;
-      padding:6px 10px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-      color:var(--text);
-      font-weight:800;
-      font-size:12px;
+    .line span{color:var(--muted); font-size:12px}
+    .methods{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
     }
-
-    .sum{
-      padding:14px;
-      border-top:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      display:grid; gap:10px;
-    }
-    .row{display:flex; justify-content:space-between; gap:10px; align-items:center}
-    .row span{color:var(--muted)}
-    .row b{font-size:16px}
-
-    .qrisBox{
-      padding:14px;
-      display:grid; gap:10px;
-    }
-    .qrisImg{
-      width:100%;
+    @media(max-width:520px){.methods{grid-template-columns:1fr}}
+    .mtd{
       border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      padding:12px;
+      cursor:pointer;
+      user-select:none;
+      transition:.15s transform,.15s background,.15s border-color;
+      display:flex; gap:10px; align-items:center;
+    }
+    .mtd:hover{transform:translateY(-1px); background:rgba(255,255,255,.06); border-color:rgba(110,168,254,.35)}
+    .mtd.active{
+      border-color: rgba(110,168,254,.60);
+      background: linear-gradient(135deg, rgba(110,168,254,.22), rgba(125,255,178,.08));
+      box-shadow: 0 16px 60px rgba(110,168,254,.14);
+    }
+    .mtd img{width:34px; height:34px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.16); object-fit:cover}
+    .mtd b{font-size:13px}
+    .mtd small{display:block; color:var(--muted); font-size:11px; margin-top:2px}
+
+    .payBox{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
       overflow:hidden;
     }
-    .qrisImg img{width:100%; display:block}
-    .smallnote{font-size:12px;color:var(--muted)}
+    .payTop{padding:12px 12px 10px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .payTop b{font-size:13px}
+    .payImg{width:100%; display:block}
+    .payBody{padding:12px; display:grid; gap:8px}
+    .copyRow{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      font-size:13px;
+    }
+    .copyRow code{color:rgba(255,255,255,.92); font-weight:900; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .muted{color:var(--muted); font-size:12px; line-height:1.45}
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+
+    /* toast */
     .toast{
-      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-      background:rgba(0,0,0,.72);
+      position:fixed; left:50%; bottom:18px;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,.70);
       border:1px solid rgba(255,255,255,.12);
-      color:var(--text);
       padding:10px 12px;
       border-radius:14px;
-      opacity:0; pointer-events:none;
-      transition:.2s ease;
-      z-index:99;
       box-shadow: var(--shadow);
-      font-weight:700;
+      opacity:0;
+      pointer-events:none;
+      transition:.18s ease;
+      z-index:300;
+      font-weight:800;
       font-size:13px;
       white-space:nowrap;
     }
     .toast.show{opacity:1; transform:translateX(-50%) translateY(-2px)}
-
-    /* typing (kategori) */
-    .typingWrap{margin-top:10px}
-    .typingLine{
-      display:flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px dashed rgba(110,168,254,.35);
-      background:rgba(110,168,254,.08);
-      color:var(--text);
-      font-size:13px;
-    }
-    .dotPulse{
-      width:10px;height:10px;border-radius:999px;
-      background:var(--accent);
-      box-shadow:0 0 16px rgba(110,168,254,.45);
-      animation:pulse 1.2s ease infinite;
-    }
-    @keyframes pulse{
-      0%{transform:scale(.9); opacity:.8}
-      50%{transform:scale(1.12); opacity:1}
-      100%{transform:scale(.9); opacity:.8}
-    }
-    .caret{
-      display:inline-block;
-      opacity:.9;
-      animation: blink .9s steps(1) infinite;
-      margin-left:2px;
-    }
-    @keyframes blink{50%{opacity:0}}
-
-    .floatingTips{
-      margin-top:10px;
-      display:flex; flex-wrap:wrap; gap:8px;
-    }
-    .floatingTips .chip{
-      animation: floaty 2.8s ease-in-out infinite;
-    }
-    .floatingTips .chip:nth-child(2){animation-delay:.4s}
-    .floatingTips .chip:nth-child(3){animation-delay:.8s}
-    @keyframes floaty{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-4px)}
-    }
-
-    /* hide header on login */
-    body[data-page="pageLogin"] header{display:none}
   </style>
 </head>
 
-<body data-page="pageLogin">
-  <header>
-    <div class="brand">
-      <div class="logo">K</div>
-      <div class="btxt">
-        <div class="t">KivoPay</div>
-        <div class="s">Aplikasi Premium • Proses cepat & stabil</div>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <div class="topbar">
+    <div class="topin">
+      <div class="brand">
+        <div class="logo">K</div>
+        <div class="bt">
+          <h1>KivoPay Store</h1>
+          <p>Website store • lihat produk dulu, checkout baru login</p>
+        </div>
+      </div>
+      <div class="pill" id="userPill">
+        <div class="dot"></div>
+        <div id="userTxt">Guest</div>
       </div>
     </div>
-    <div class="userpill">
-      <div class="userdot"></div>
-      <span>Hi, <b id="uName">Guest</b></span>
+  </div>
+
+  <div class="wrap">
+    <!-- HERO + TYPING -->
+    <div class="hero">
+      <div class="heroIn">
+        <div class="heroTop">
+          <div>
+            <h2>Produk Digital Premium</h2>
+            <p>Pilih kategori → pilih paket → checkout → pilih metode pembayaran.</p>
+          </div>
+          <div class="pill" style="gap:8px">
+            <span style="color:rgba(255,255,255,.75)">Status:</span>
+            <b style="color:rgba(255,255,255,.92)">Ready</b>
+          </div>
+        </div>
+
+        <div class="typingBar" aria-live="polite">
+          <div class="spark"></div>
+          <div><span id="typing"></span><span class="caret">|</span></div>
+        </div>
+
+        <div class="chipRow">
+          <span class="chip">⚡ Fast Proses</span>
+          <span class="chip">💳 Dana / SeaBank / QRIS</span>
+          <span class="chip">🛒 Checkout Simple</span>
+        </div>
+      </div>
     </div>
-  </header>
 
-  <main>
-    <!-- PAGE: LOGIN -->
-    <section class="page show" id="pageLogin">
-      <div class="panel">
-        <div class="content">
-          <h2>Login KivoPay</h2>
-          <p>Masuk dulu biar bisa lihat kategori & checkout.</p>
+    <!-- KATEGORI -->
+    <div class="grid" id="catGrid"></div>
 
-          <div class="divider"></div>
-
-          <div class="loginbox">
-            <b>Data Buyer</b>
-            <div class="f">
-              <input id="inpName" placeholder="Nama kamu (contoh: Keii)" autocomplete="off">
-              <input id="inpWa" placeholder="Nomor WhatsApp (contoh: 62xxxxxxxx)" inputmode="numeric" autocomplete="off">
-              <button class="btn primary" onclick="doLogin()">Masuk</button>
-            </div>
-            <div class="mini">Tips: gunakan format WA <b>62</b> (tanpa + atau 0)</div>
-          </div>
+    <!-- PRODUK PANEL -->
+    <div class="panel" id="prodPanel" style="display:none">
+      <div class="phead">
+        <div>
+          <h3 id="catTitle">Produk</h3>
+          <small id="catSub">Pilih paket untuk checkout</small>
         </div>
+        <button class="btn ghost" onclick="closeProduk()">Tutup</button>
       </div>
-    </section>
 
-    <!-- PAGE: INTRO -->
-    <section class="page" id="pageIntro">
-      <div class="panel">
-        <div class="content">
-          <h2>Selamat Datang ✨</h2>
-          <p class="muted">Halo <b id="introName">Kak</b>, siap belanja?</p>
-          <div class="divider"></div>
-          <p class="muted" style="margin-bottom:10px">Klik tombol di bawah untuk masuk ke halaman kategori.</p>
-
-          <button class="btn primary" style="width:100%" onclick="goTo('pageKategori')">
-            Masuk Ke Halaman Kategori →
-          </button>
+      <div class="tools">
+        <div class="search">
+          🔎 <input id="q" placeholder="Cari paket..." autocomplete="off" />
         </div>
+        <button class="btn" onclick="scrollToTop()">Kembali ke Kategori</button>
       </div>
-    </section>
 
-    <!-- PAGE: KATEGORI -->
-    <section class="page" id="pageKategori">
-      <div class="panel">
-        <div class="content">
-          <h2>Halaman Kategori</h2>
-          <p>Pilih kategori untuk melihat produk.</p>
+      <div class="list" id="prodList"></div>
+    </div>
+  </div>
 
-          <!-- Typing + Animasi (Kategori) -->
-          <div class="typingWrap">
-            <div class="typingLine">
-              <span class="dotPulse"></span>
-              <span id="typingText"></span><span class="caret">|</span>
-            </div>
-            <div class="floatingTips">
-              <span class="chip">✨ Diskon & promo</span>
-              <span class="chip">⚡ Proses cepat</span>
-              <span class="chip">🛡️ Aman</span>
+  <!-- CHECKOUT MODAL -->
+  <div class="overlay" id="checkoutOv">
+    <div class="modal">
+      <div class="mhead">
+        <b>Checkout</b>
+        <div class="x" onclick="closeCheckout()">✕</div>
+      </div>
+      <div class="mcontent">
+        <div class="line">
+          <div><span>Produk</span><br><b id="cProd">-</b></div>
+          <div style="text-align:right"><span>Harga</span><br><b id="cPrice">-</b></div>
+        </div>
+
+        <div class="field">
+          <label>Nama (wajib)</label>
+          <input id="inpName" placeholder="Nama kamu" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Nomor WhatsApp (wajib)</label>
+          <input id="inpWa" placeholder="Contoh: 628xxxxxxxxxx" inputmode="numeric" autocomplete="off">
+        </div>
+
+        <div class="muted">Catatan: kamu boleh lihat produk tanpa login, tapi untuk checkout wajib isi data dulu.</div>
+
+        <div class="methods" id="mtdWrap">
+          <div class="mtd" data-m="dana" onclick="selectMethod('dana')">
+            <img src="https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" alt="">
+            <div>
+              <b>Dana</b>
+              <small>Transfer • Kamxxx</small>
             </div>
           </div>
+          <div class="mtd" data-m="seabank" onclick="selectMethod('seabank')">
+            <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" alt="">
+            <div>
+              <b>SeaBank</b>
+              <small>Transfer • Kamxxx</small>
+            </div>
+          </div>
+          <div class="mtd" data-m="qris" onclick="selectMethod('qris')">
+            <img src="https://images.bukaolshop.com/hosting/181218/111e83c3a6f5204498.png" alt="">
+            <div>
+              <b>QRIS</b>
+              <small>Scan QR</small>
+            </div>
+          </div>
         </div>
 
-        <div class="grid" id="catGrid"></div>
-
-        <div class="content" style="padding-top:0">
-          <button class="btn danger" onclick="logout()">Logout</button>
+        <div class="payBox" id="payBox" style="display:none">
+          <div class="payTop">
+            <b id="payTitle">Metode Pembayaran</b>
+            <button class="btn" onclick="copyPay()">Salin</button>
+          </div>
+          <img class="payImg" id="payImg" alt="payment" src="">
+          <div class="payBody">
+            <div class="copyRow" id="payInfo"></div>
+            <div class="muted" id="payHint"></div>
+          </div>
         </div>
+
+        <div class="actions">
+          <button class="btn" onclick="closeCheckout()">Nanti Dulu</button>
+          <button class="btn primary" id="btnConfirm" onclick="confirmPaid()" disabled>Saya Sudah Bayar ✅</button>
+        </div>
+        <div class="muted">Tombol “Saya Sudah Bayar” aktif setelah kamu memilih metode pembayaran.</div>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <!-- PAGE: PRODUK -->
-    <section class="page" id="pageProduk">
-      <div class="panel">
-        <div class="content">
-          <h2 id="catTitle">Produk</h2>
-          <p id="catDesc">Pilih paket lalu lanjut checkout.</p>
-        </div>
-
-        <div class="toolbar">
-          <div class="search">
-            🔎 <input id="q" placeholder="Cari produk/paket..." autocomplete="off" oninput="renderProduk()">
-          </div>
-          <button class="btn" onclick="goTo('pageKategori')">Kembali</button>
-          <button class="btn primary" onclick="goToCheckout()">
-            Checkout (<span id="countSel">0</span>)
-          </button>
-        </div>
-
-        <div class="list" id="prodList"></div>
-      </div>
-    </section>
-
-    <!-- PAGE: CHECKOUT -->
-    <section class="page" id="pageCheckout">
-      <div class="panel">
-        <div class="content">
-          <h2>Checkout</h2>
-          <p>Periksa pesanan kamu, lalu lanjut pembayaran.</p>
-        </div>
-
-        <div class="list" id="cartList"></div>
-
-        <div class="sum">
-          <div class="row"><span>Subtotal</span><b id="sumTotal">Rp 0</b></div>
-          <div class="row"><span>Metode</span><b>QRIS</b></div>
-          <div class="row" style="gap:10px">
-            <button class="btn" onclick="goTo('pageProduk')">Kembali</button>
-            <button class="btn primary" onclick="goToPay()">Lanjutkan ke Pembayaran →</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE: PAY -->
-    <section class="page" id="pagePay">
-      <div class="panel">
-        <div class="content">
-          <h2>Pembayaran (QRIS)</h2>
-          <p>Scan QRIS di bawah, lalu konfirmasi ke admin.</p>
-        </div>
-
-        <div class="qrisBox">
-          <div class="qrisImg">
-            <img id="qrisImg" src="https://images.bukaolshop.com/hosting/181218/15b9e709ce2931209.png" alt="QRIS">
-          </div>
-
-          <div class="smallnote">
-            Nama Buyer: <b id="payName">-</b><br>
-            Total: <b id="payTotal">Rp 0</b>
-          </div>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn" onclick="goTo('pageCheckout')">Kembali</button>
-            <button class="btn primary" onclick="chatAdmin()">Saya Sudah Bayar ✅</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="toast" id="toast">Tersalin ✅</div>
-  </main>
+  <div class="toast" id="toast">Tersalin ✅</div>
 
   <script>
-    // ================= SETTINGS =================
-    const ADMIN_WA = "6285150895395"; // ganti nomor admin kamu
+    // ================== CONFIG ==================
+    const ADMIN_WA = "6285150895395"; // ganti kalau perlu
 
-    // ================= DATA KATEGORI (4) =================
-    const categories = [
-      { id:"premium", name:"Aplikasi Premium", desc:"Produk digital • akun/paket premium", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" },
-      { id:"nokos",   name:"Nokos WA/Tele",     desc:"Nomor virtual • proses manual admin", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" },
-      { id:"segera1", name:"Segera Hadir",      desc:"Produk sedang dalam pengembangan", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" },
-      { id:"segera2", name:"Segera Hadir",      desc:"Produk sedang dalam pengembangan", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" },
-    ];
-
-    // ================= DATA PRODUK =================
-    // Kamu bisa edit isi produk sesukamu.
-    const productsByCat = {
-      premium: [
-        {title:"CapCut Pro", variant:"Private 1 Bulan", price:12000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Canva Pro",  variant:"Desainer 1 Bulan", price:6600, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Netflix Premium", variant:"Sharing 1p1u 1 Bulan", price:30500, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-      ],
-      nokos: [
-        // WhatsApp 4 produk
-        {title:"Nokos WhatsApp", variant:"Indonesia", price:8000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Nokos WhatsApp", variant:"Filipina",  price:17300, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Nokos WhatsApp", variant:"Malaysia",  price:9000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Nokos WhatsApp", variant:"Hongkong",  price:16000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        // Telegram 3 produk
-        {title:"Nokos Telegram", variant:"Indonesia", price:7000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Nokos Telegram", variant:"Filipina",  price:8000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-        {title:"Nokos Telegram", variant:"Malaysia",  price:9000, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-      ],
-      segera1: [
-        {title:"Segera Hadir", variant:"Produk dalam pengembangan", price:0, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-      ],
-      segera2: [
-        {title:"Segera Hadir", variant:"Produk dalam pengembangan", price:0, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
-      ]
+    const PAY = {
+      dana: {
+        title: "Dana",
+        img: "https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png",
+        number: "087753513090",
+        name: "Kamxxx",
+        hint: "Transfer sesuai nominal, lalu klik “Saya Sudah Bayar” untuk kirim bukti."
+      },
+      seabank: {
+        title: "SeaBank",
+        img: "https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png",
+        number: "901517870612",
+        name: "Kamxxx",
+        hint: "Transfer sesuai nominal, lalu klik “Saya Sudah Bayar” untuk kirim bukti."
+      },
+      qris: {
+        title: "QRIS",
+        img: "https://images.bukaolshop.com/hosting/181218/111e83c3a6f5204498.png",
+        number: "QRIS",
+        name: "Scan QR",
+        hint: "Scan QRIS, bayar sesuai nominal, lalu klik “Saya Sudah Bayar”."
+      }
     };
 
-    // ================= STATE =================
-    let currentCat = "premium";
-    let selected = []; // {key, title, variant, price, img, qty}
-    let typingTimer = null;
+    // Kategori + produk (contoh). Kamu bebas tambah/ubah.
+    // Aku set minimal beberapa produk biar web langsung hidup.
+    const CATS = [
+      {id:"premium", name:"Aplikasi Premium", desc:"CapCut, Canva, Netflix, dll", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
+      {id:"nokos", name:"Nokos", desc:"WhatsApp & Telegram", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
+      {id:"coming1", name:"Segera Hadir", desc:"Dalam pengembangan", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
+      {id:"coming2", name:"Segera Hadir", desc:"Dalam pengembangan", img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"},
+    ];
 
-    // ================= HELPERS =================
-    const qs = (id)=>document.getElementById(id);
+    const PRODUCTS = {
+      premium: [
+        {title:"CapCut Pro", pack:"Private 1 Bulan", price:12000, img:"https://images.bukaolshop.com/hosting/181218/47f862f5ed4a892435.png"},
+        {title:"Canva Pro", pack:"Desainer 1 Bulan", price:6600, img:"https://images.bukaolshop.com/hosting/181218/fc56c689cb9f975773.png"},
+        {title:"Netflix Premium", pack:"Sharing 1p1u 1 Bulan", price:30500, img:"https://images.bukaolshop.com/hosting/181218/e97361a0f1be36831.png"},
+        {title:"Prime Video", pack:"Shared 1 Bulan 1p1u", price:6600, img:"https://images.bukaolshop.com/hosting/181218/ad8345f7b9c8953792.png"},
+        {title:"ChatGPT", pack:"Plus Plan 1 Bulan", price:30400, img:"https://images.bukaolshop.com/hosting/181218/26f804d66e6e88158.png"},
+      ],
+      nokos: [
+        {title:"Nokos WhatsApp", pack:"Paket A", price:8000, img:"https://images.bukaolshop.com/hosting/181218/60c88b2821bf500477.png"},
+        {title:"Nokos WhatsApp", pack:"Paket B", price:11000, img:"https://images.bukaolshop.com/hosting/181218/60c88b2821bf500477.png"},
+        {title:"Nokos WhatsApp", pack:"Paket C", price:15000, img:"https://images.bukaolshop.com/hosting/181218/60c88b2821bf500477.png"},
+        {title:"Nokos WhatsApp", pack:"Paket D", price:29000, img:"https://images.bukaolshop.com/hosting/181218/60c88b2821bf500477.png"},
+        {title:"Nokos Telegram", pack:"Paket A", price:7000, img:"https://images.bukaolshop.com/hosting/181218/450cb4fcb88a174062.png"},
+        {title:"Nokos Telegram", pack:"Paket B", price:8000, img:"https://images.bukaolshop.com/hosting/181218/450cb4fcb88a174062.png"},
+        {title:"Nokos Telegram", pack:"Paket C", price:9000, img:"https://images.bukaolshop.com/hosting/181218/450cb4fcb88a174062.png"},
+      ],
+      coming1: [{title:"Segera Hadir", pack:"Produk dalam pengembangan", price:0, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"}],
+      coming2: [{title:"Segera Hadir", pack:"Produk dalam pengembangan", price:0, img:"https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png"}],
+    };
+
+    // ================== STATE ==================
+    let currentCat = null;
+    let currentItem = null;
+    let selectedMethod = null;
+
+    // ================== UTIL ==================
+    const el = (id)=>document.getElementById(id);
     const rupiah = (n)=>"Rp " + (n||0).toLocaleString("id-ID");
-    function toast(msg="OK"){
-      const t = qs("toast");
+
+    function toast(msg="Tersalin ✅"){
+      const t = el("toast");
       t.textContent = msg;
       t.classList.add("show");
       clearTimeout(window.__tto);
       window.__tto = setTimeout(()=>t.classList.remove("show"), 1200);
     }
 
-    function setPage(pageId){
-      document.body.setAttribute("data-page", pageId);
-      document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
-      qs(pageId).classList.add("show");
-    }
-
-    // ================= NAV =================
-    function goTo(pageId){
-      setPage(pageId);
-
-      // typing kategori harus mulai saat masuk pageKategori
-      if(pageId === "pageKategori"){
-        startKategoriTyping();
-      }
-    }
-
-    // ================= LOGIN / LOGOUT =================
-    function doLogin(){
-      const name = (qs("inpName").value||"").trim();
-      const wa = (qs("inpWa").value||"").trim();
-      if(!name || !wa){ toast("Isi nama & WA dulu"); return; }
-
-      localStorage.setItem("kp_name", name);
-      localStorage.setItem("kp_wa", wa);
-
-      qs("uName").textContent = name;
-      qs("introName").textContent = name;
-      qs("payName").textContent = name;
-
-      goTo("pageIntro");
-    }
-
-    function logout(){
-      localStorage.removeItem("kp_name");
-      localStorage.removeItem("kp_wa");
-      selected = [];
-      qs("countSel").textContent = "0";
-      qs("uName").textContent = "Guest";
-      setPage("pageLogin");
-    }
-
-    // ================= RENDER KATEGORI =================
-    function renderKategori(){
-      const grid = qs("catGrid");
-      grid.innerHTML = categories.map(cat=>{
-        const count = (productsByCat[cat.id]||[]).length;
-        return `
-          <div class="card" onclick="enterKategori('${cat.id}')">
-            <div class="c-head">
-              <div class="c-ico"><img src="${cat.img}" alt=""></div>
-              <div style="min-width:0">
-                <p class="c-title">${escapeHtml(cat.name)}</p>
-                <p class="c-sub">${escapeHtml(cat.desc)}</p>
-              </div>
-            </div>
-            <div class="c-foot">
-              <span class="chip">${count} Paket</span>
-              <span class="btn primary" style="padding:8px 12px;border-radius:14px">Buka</span>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function enterKategori(catId){
-      currentCat = catId;
-      const cat = categories.find(c=>c.id===catId);
-      qs("catTitle").textContent = cat ? cat.name : "Produk";
-      qs("catDesc").textContent = cat ? cat.desc : "Pilih produk.";
-      qs("q").value = "";
-      renderProduk();
-      goTo("pageProduk");
-    }
-
-    // ================= RENDER PRODUK =================
-    function renderProduk(){
-      const list = qs("prodList");
-      const q = (qs("q").value||"").toLowerCase();
-      const items = (productsByCat[currentCat]||[]).filter(p=>{
-        const s = (p.title+" "+p.variant).toLowerCase();
-        return s.includes(q);
-      });
-
-      if(!items.length){
-        list.innerHTML = `<div class="content" style="padding:14px"><p class="muted">Tidak ada produk.</p></div>`;
-        return;
-      }
-
-      list.innerHTML = items.map(p=>{
-        const key = makeKey(p);
-        const found = selected.find(x=>x.key===key);
-        const qty = found ? found.qty : 0;
-        return `
-          <div class="item">
-            <div class="iL">
-              <img src="${p.img}" alt="">
-              <div class="iT">
-                <b>${escapeHtml(p.title)}</b>
-                <span>${escapeHtml(p.variant)}</span>
-              </div>
-            </div>
-            <div class="iR">
-              <div class="price">${rupiah(p.price)}</div>
-              <button class="btn" onclick="dec('${key}')">-</button>
-              <div class="qty">${qty}</div>
-              <button class="btn primary" onclick="inc('${key}')">+</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function makeKey(p){ return (p.title+"__"+p.variant).replace(/\s+/g," ").trim(); }
-
-    function inc(key){
-      const p = findProductByKey(key);
-      if(!p) return;
-      let it = selected.find(x=>x.key===key);
-      if(!it){
-        it = {key, title:p.title, variant:p.variant, price:p.price, img:p.img, qty:0};
-        selected.push(it);
-      }
-      it.qty++;
-      updateCount();
-      renderProduk();
-    }
-
-    function dec(key){
-      const it = selected.find(x=>x.key===key);
-      if(!it) return;
-      it.qty--;
-      if(it.qty<=0) selected = selected.filter(x=>x.key!==key);
-      updateCount();
-      renderProduk();
-    }
-
-    function updateCount(){
-      const totalQty = selected.reduce((a,b)=>a+b.qty,0);
-      qs("countSel").textContent = String(totalQty);
-    }
-
-    function findProductByKey(key){
-      const all = Object.values(productsByCat).flat();
-      return all.find(p=>makeKey(p)===key);
-    }
-
-    // ================= CHECKOUT =================
-    function goToCheckout(){
-      if(!selected.length){ toast("Pilih produk dulu"); return; }
-      renderCart();
-      goTo("pageCheckout");
-    }
-
-    function renderCart(){
-      const cart = qs("cartList");
-      const total = selected.reduce((a,b)=>a+(b.price*b.qty),0);
-      qs("sumTotal").textContent = rupiah(total);
-
-      cart.innerHTML = selected.map(it=>{
-        return `
-          <div class="item">
-            <div class="iL">
-              <img src="${it.img}" alt="">
-              <div class="iT">
-                <b>${escapeHtml(it.title)}</b>
-                <span>${escapeHtml(it.variant)} • Qty ${it.qty}</span>
-              </div>
-            </div>
-            <div class="iR">
-              <div class="price">${rupiah(it.price*it.qty)}</div>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function goToPay(){
-      const name = localStorage.getItem("kp_name") || "Guest";
-      qs("payName").textContent = name;
-      const total = selected.reduce((a,b)=>a+(b.price*b.qty),0);
-      qs("payTotal").textContent = rupiah(total);
-      goTo("pagePay");
-    }
-
-    function buildOrderText(){
-      const name = localStorage.getItem("kp_name") || "-";
-      const wa = localStorage.getItem("kp_wa") || "-";
-      const lines = selected.map((it,i)=>`${i+1}. ${it.title} - ${it.variant} x${it.qty} = ${rupiah(it.price*it.qty)}`);
-      const total = selected.reduce((a,b)=>a+(b.price*b.qty),0);
-      return [
-        `Halo Admin, saya sudah bayar ✅`,
-        ``,
-        `Nama: ${name}`,
-        `WA: ${wa}`,
-        ``,
-        `Pesanan:`,
-        ...lines,
-        ``,
-        `Total: ${rupiah(total)}`
-      ].join("\n");
-    }
-
-    function chatAdmin(){
-      const text = encodeURIComponent(buildOrderText());
-      window.open(`https://wa.me/${ADMIN_WA}?text=${text}`, "_blank");
-    }
-
-    // ================= TYPING KATEGORI =================
-    const typingMsg = "Selamat Berbelanja Di Website KivoPay, Happy Shopping Ya Kak ☺️";
-    let tIndex = 0;
-    let tForward = true;
-
-    function startKategoriTyping(){
-      // reset dulu biar gak numpuk
-      clearTimeout(typingTimer);
-      tIndex = 0;
-      tForward = true;
-      qs("typingText").textContent = "";
-
-      function step(){
-        const el = qs("typingText");
-        if(!el) return;
-
-        if(tForward){
-          tIndex++;
-          if(tIndex >= typingMsg.length){
-            tForward = false;
-            typingTimer = setTimeout(step, 1100);
-            return;
-          }
-        }else{
-          tIndex--;
-          if(tIndex <= 0){
-            tForward = true;
-          }
-        }
-        el.textContent = typingMsg.substring(0, tIndex);
-        typingTimer = setTimeout(step, 55);
-      }
-
-      // mulai setelah page tampil
-      typingTimer = setTimeout(step, 300);
-    }
-
-    // ================= ESCAPE =================
     function escapeHtml(s){
       return String(s||"")
         .replaceAll("&","&amp;")
@@ -749,21 +611,257 @@
         .replaceAll('"',"&quot;");
     }
 
-    // ================= INIT =================
-    (function init(){
-      renderKategori();
+    // ================== TYPING HERO ==================
+    const HERO_TEXTS = [
+      "Selamat datang di KivoPay Store ✨",
+      "Lihat produk dulu, checkout baru isi data 🛒",
+      "Pilih metode: Dana • SeaBank • QRIS 💳",
+      "Happy shopping ya kak ☺️"
+    ];
+    let ht=0, hi=0, hDel=false;
 
-      const name = localStorage.getItem("kp_name");
-      const wa = localStorage.getItem("kp_wa");
-      if(name && wa){
-        qs("uName").textContent = name;
-        qs("introName").textContent = name;
-        qs("payName").textContent = name;
-        goTo("pageIntro");
+    function heroTyping(){
+      const out = el("typing");
+      const word = HERO_TEXTS[ht];
+      if(!out) return;
+
+      if(!hDel){
+        hi++;
+        out.textContent = word.slice(0, hi);
+        if(hi >= word.length){
+          hDel = true;
+          setTimeout(heroTyping, 1100);
+          return;
+        }
       }else{
-        setPage("pageLogin");
+        hi--;
+        out.textContent = word.slice(0, hi);
+        if(hi <= 0){
+          hDel = false;
+          ht = (ht+1) % HERO_TEXTS.length;
+        }
       }
-    })();
+      setTimeout(heroTyping, hDel ? 35 : 55);
+    }
+
+    // ================== RENDER KATEGORI ==================
+    function renderCats(){
+      const g = el("catGrid");
+      g.innerHTML = CATS.map(c=>{
+        return `
+          <div class="card" onclick="openCat('${c.id}')">
+            <div class="thumb"><img src="${c.img}" alt=""></div>
+            <div class="cbody">
+              <p class="ctitle">${escapeHtml(c.name)}</p>
+              <p class="cdesc">${escapeHtml(c.desc)}</p>
+              <div class="chipRow">
+                <span class="chip">${(PRODUCTS[c.id]||[]).length} Paket</span>
+                <span class="chip">Tap to open</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function scrollToTop(){
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function openCat(catId){
+      currentCat = catId;
+      const cat = CATS.find(x=>x.id===catId);
+      el("prodPanel").style.display = "block";
+      el("catTitle").textContent = cat ? cat.name : "Produk";
+      el("catSub").textContent = "Pilih paket untuk checkout";
+
+      el("q").value = "";
+      renderProducts();
+      // scroll to panel
+      el("prodPanel").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    function closeProduk(){
+      el("prodPanel").style.display = "none";
+      currentCat = null;
+      currentItem = null;
+      selectedMethod = null;
+      scrollToTop();
+    }
+
+    function renderProducts(){
+      const q = (el("q").value||"").toLowerCase();
+      const items = (PRODUCTS[currentCat]||[]).filter(p=>{
+        return (p.title+" "+p.pack).toLowerCase().includes(q);
+      });
+
+      const list = el("prodList");
+      if(!items.length){
+        list.innerHTML = `<div class="item"><div class="iL"><div class="iT"><b>Tidak ada produk</b><span>Coba kata kunci lain.</span></div></div></div>`;
+        return;
+      }
+
+      list.innerHTML = items.map((p, idx)=>{
+        const buyDisabled = p.price<=0 ? "disabled" : "";
+        const buyText = p.price<=0 ? "Segera Hadir" : "Beli / Checkout";
+        return `
+          <div class="item">
+            <div class="iL">
+              <img src="${p.img}" alt="">
+              <div class="iT">
+                <b>${escapeHtml(p.title)}</b>
+                <span>${escapeHtml(p.pack)}</span>
+              </div>
+            </div>
+            <div class="iR">
+              <div class="price">${rupiah(p.price)}</div>
+              <button class="btn primary" ${buyDisabled} onclick="buyNow(${idx})">${buyText}</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // simpan list untuk buyNow index
+      window.__lastList = items;
+    }
+
+    el("q").addEventListener("input", renderProducts);
+
+    // ================== LOGIN GATE (checkout wajib login) ==================
+    function isLoggedIn(){
+      return !!(localStorage.getItem("kp_name") && localStorage.getItem("kp_wa"));
+    }
+    function setUserPill(){
+      const name = localStorage.getItem("kp_name");
+      el("userTxt").textContent = name ? ("Hi, "+name) : "Guest";
+    }
+
+    function openCheckout(){
+      el("checkoutOv").classList.add("show");
+      // reset method
+      selectedMethod = null;
+      document.querySelectorAll(".mtd").forEach(x=>x.classList.remove("active"));
+      el("payBox").style.display = "none";
+      el("btnConfirm").disabled = true;
+
+      // autofill if already login
+      el("inpName").value = localStorage.getItem("kp_name") || "";
+      el("inpWa").value = localStorage.getItem("kp_wa") || "";
+    }
+    function closeCheckout(){
+      el("checkoutOv").classList.remove("show");
+    }
+
+    function buyNow(index){
+      const items = window.__lastList || [];
+      const p = items[index];
+      if(!p || p.price<=0) return;
+
+      currentItem = p;
+
+      // tampilkan item di modal
+      el("cProd").textContent = `${p.title} — ${p.pack}`;
+      el("cPrice").textContent = rupiah(p.price);
+
+      openCheckout();
+    }
+
+    // ================== PAYMENT UI ==================
+    function selectMethod(m){
+      selectedMethod = m;
+      document.querySelectorAll(".mtd").forEach(x=>{
+        x.classList.toggle("active", x.getAttribute("data-m")===m);
+      });
+
+      const data = PAY[m];
+      el("payBox").style.display = "block";
+      el("payTitle").textContent = `Pembayaran via ${data.title}`;
+      el("payImg").src = data.img;
+
+      if(m === "qris"){
+        el("payInfo").innerHTML = `<div><span style="color:var(--muted);font-size:12px">QRIS</span><br><b>Scan QRIS di atas</b></div><code>${rupiah(currentItem?.price||0)}</code>`;
+      }else{
+        el("payInfo").innerHTML = `<div><span style="color:var(--muted);font-size:12px">${data.title}</span><br><b>${data.number}</b><div class="muted" style="margin-top:2px">Atas Nama: <b>${data.name}</b></div></div><code>${rupiah(currentItem?.price||0)}</code>`;
+      }
+      el("payHint").textContent = data.hint;
+
+      // tombol konfirmasi aktif hanya setelah pilih metode
+      el("btnConfirm").disabled = false;
+    }
+
+    function copyPay(){
+      if(!selectedMethod){ toast("Pilih metode dulu"); return; }
+      const d = PAY[selectedMethod];
+      const total = rupiah(currentItem?.price||0);
+      const text = selectedMethod==="qris"
+        ? `KivoPay Payment\nMetode: QRIS\nNominal: ${total}`
+        : `KivoPay Payment\nMetode: ${d.title}\nNo: ${d.number}\nA/N: ${d.name}\nNominal: ${total}`;
+      navigator.clipboard?.writeText(text).then(()=>toast("Tersalin ✅")).catch(()=>toast("Gagal copy"));
+    }
+
+    // ================== CONFIRM (wajib login dulu) ==================
+    function confirmPaid(){
+      // validasi data login
+      const name = (el("inpName").value||"").trim();
+      const wa = (el("inpWa").value||"").trim();
+
+      if(!name || !wa){
+        toast("Isi nama & WA dulu");
+        return;
+      }
+      if(!/^62\d{8,15}$/.test(wa)){
+        toast("Format WA harus 62xxxxxxxx");
+        return;
+      }
+      if(!selectedMethod){
+        toast("Pilih metode dulu");
+        return;
+      }
+
+      // simpan login
+      localStorage.setItem("kp_name", name);
+      localStorage.setItem("kp_wa", wa);
+      setUserPill();
+
+      // kirim ke admin
+      const p = currentItem;
+      const d = PAY[selectedMethod];
+      const total = rupiah(p.price);
+
+      const msgLines = [
+        "Halo Admin, saya sudah bayar ✅",
+        "",
+        `Nama: ${name}`,
+        `WA: ${wa}`,
+        "",
+        `Produk: ${p.title}`,
+        `Paket: ${p.pack}`,
+        `Harga: ${total}`,
+        `Metode: ${d.title}`,
+      ];
+
+      if(selectedMethod === "qris"){
+        msgLines.push("Pembayaran: QRIS (scan)");
+      }else{
+        msgLines.push(`No ${d.title}: ${d.number}`);
+        msgLines.push(`Atas Nama: ${d.name}`);
+      }
+
+      const text = encodeURIComponent(msgLines.join("\n"));
+      window.open(`https://wa.me/${ADMIN_WA}?text=${text}`, "_blank");
+
+      closeCheckout();
+      toast("Dibuka ke WhatsApp ✅");
+    }
+
+    // ================== INIT ==================
+    function init(){
+      renderCats();
+      setUserPill();
+      heroTyping();
+    }
+    init();
   </script>
 </body>
 </html>
+```0
