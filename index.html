@@ -1,200 +1,318 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KivoPay Linktree</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KivoPay Linktree</title>
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+  <style>
+    :root{
+      --bg:#070a12;
+      --card:rgba(255,255,255,.10);
+      --card2:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.14);
+      --text:#eaf0ff;
+      --muted:#b8c2e6;
+      --glow:rgba(110,168,254,.55);
+      --glow2:rgba(120,255,190,.25);
+      --btn1:rgba(110,168,254,.34);
+      --btn2:rgba(94,234,212,.20);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background: var(--bg);
+      overflow-x:hidden;
+    }
 
-body{
-  height:100vh;
-  background:url('https://images.bukaolshop.com/hosting/181218/62fb8ef2e275827256.png') no-repeat center center/cover;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  position:relative;
-}
+    /* background image + blur overlay */
+    .bg{
+      position:fixed; inset:0;
+      background:
+        linear-gradient(to bottom, rgba(7,10,18,.55), rgba(7,10,18,.85)),
+        url("https://images.bukaolshop.com/hosting/181218/62fb8ef2e275827256.png") center/cover no-repeat;
+      filter:saturate(1.1);
+      z-index:-3;
+    }
+    .vignette{
+      position:fixed; inset:0;
+      background: radial-gradient(1200px 700px at 50% 10%, rgba(110,168,254,.20), transparent 60%),
+                  radial-gradient(1000px 700px at 10% 90%, rgba(94,234,212,.12), transparent 55%),
+                  radial-gradient(1000px 700px at 90% 90%, rgba(255,120,180,.10), transparent 55%);
+      z-index:-2;
+      animation: hue 10s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+    @keyframes hue{
+      from{filter:hue-rotate(0deg)}
+      to{filter:hue-rotate(12deg)}
+    }
 
-/* Overlay blur */
-body::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  backdrop-filter:blur(8px);
-  background:rgba(0,0,0,0.5);
-}
+    /* heavier rain */
+    .rain, .rain2, .rain3{
+      position:fixed; inset:-30% 0 0 0;
+      pointer-events:none;
+      z-index:-1;
+      background-repeat:repeat;
+      transform: translate3d(0,0,0);
+      opacity:.85;
+      mix-blend-mode:screen;
+    }
+    .rain{
+      background-image: linear-gradient(115deg, rgba(255,255,255,.28), rgba(255,255,255,0));
+      background-size: 2px 42px;
+      animation: rain 0.35s linear infinite;
+      filter: blur(.1px);
+    }
+    .rain2{
+      background-image: linear-gradient(115deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+      background-size: 2px 60px;
+      animation: rain 0.55s linear infinite;
+      opacity:.65;
+    }
+    .rain3{
+      background-image: linear-gradient(115deg, rgba(255,255,255,.12), rgba(255,255,255,0));
+      background-size: 2px 85px;
+      animation: rain 0.8s linear infinite;
+      opacity:.55;
+    }
+    @keyframes rain{
+      from{ background-position: 0 -120px; transform: translateY(-20px) skewX(-10deg);}
+      to  { background-position: 0 120px;  transform: translateY(20px)  skewX(-10deg);}
+    }
 
-/* Hujan */
-.rain{
-  position:absolute;
-  width:2px;
-  height:100px;
-  background:rgba(255,255,255,0.3);
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  from{transform:translateY(-100vh);}
-  to{transform:translateY(100vh);}
-}
+    .wrap{
+      min-height:100%;
+      display:flex;
+      justify-content:center;
+      padding: 28px 14px 40px;
+    }
+    .card{
+      width:min(560px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 22px 16px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 220px at 50% 0%, rgba(110,168,254,.20), transparent 60%);
+      pointer-events:none;
+    }
 
-/* Container */
-.container{
-  position:relative;
-  z-index:2;
-  width:95%;
-  max-width:420px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border-radius:25px;
-  padding:30px 20px;
-  text-align:center;
-  box-shadow:0 0 40px rgba(0,0,0,0.4);
-}
+    .profile{
+      text-align:center;
+      padding: 8px 8px 10px;
+      position:relative;
+      z-index:1;
+    }
+    .avatar{
+      width:92px; height:92px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid rgba(255,255,255,.25);
+      box-shadow: 0 0 0 8px rgba(110,168,254,.12), 0 20px 60px rgba(0,0,0,.45);
+      margin: 6px auto 10px;
+      display:block;
+      animation: float 3.2s ease-in-out infinite;
+    }
+    @keyframes float{
+      0%,100%{transform: translateY(0)}
+      50%{transform: translateY(-6px)}
+    }
+    .handle{
+      margin:0;
+      font-weight:800;
+      letter-spacing:.3px;
+      opacity:.95;
+    }
+    .title{
+      margin:10px 0 6px;
+      font-size: clamp(18px, 4.2vw, 26px);
+      line-height:1.18;
+      font-weight:900;
+      text-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-weight:700;
+      opacity:.95;
+    }
 
-/* Profile */
-.profile{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  object-fit:cover;
-  border:4px solid rgba(255,255,255,0.3);
-  margin-bottom:15px;
-  box-shadow:0 0 25px rgba(255,255,255,0.3);
-}
+    .typingWrap{
+      margin: 12px auto 6px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(110,168,254,.95);
+      box-shadow: 0 0 0 6px rgba(110,168,254,.14);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1); opacity:1}
+      50%{transform:scale(1.25); opacity:.75}
+    }
+    .typing{
+      font-weight:800;
+      color:rgba(255,255,255,.92);
+      min-height: 20px;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
 
-.username{
-  font-size:18px;
-  color:#ccc;
-  margin-bottom:8px;
-}
+    .btns{
+      margin-top: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      position:relative;
+      z-index:1;
+    }
+    .btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:900;
+      letter-spacing:.6px;
+      padding: 16px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, var(--btn1), var(--btn2));
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      transform: translateZ(0);
+    }
+    .btn:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(520px 120px at 50% 0%, rgba(255,255,255,.22), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .btn:after{
+      content:"";
+      position:absolute;
+      width:140px;height:140px;
+      left:-60px; top:-60px;
+      background: radial-gradient(circle, rgba(110,168,254,.55), transparent 60%);
+      filter: blur(10px);
+      opacity:.0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .btn:active{ transform: scale(.98) }
+    .btn:hover:after{ opacity:.85 }
 
-.title{
-  font-size:20px;
-  font-weight:bold;
-  color:white;
-}
+    /* glow animation */
+    .btn.glow{
+      animation: glow 2.2s ease-in-out infinite;
+    }
+    @keyframes glow{
+      0%,100%{ box-shadow: 0 12px 40px rgba(0,0,0,.35), 0 0 0 rgba(110,168,254,0) }
+      50%{ box-shadow: 0 14px 44px rgba(0,0,0,.38), 0 0 26px rgba(110,168,254,.35) }
+    }
 
-.subtitle{
-  font-size:14px;
-  color:#ddd;
-  margin-top:6px;
-}
-
-/* Typing */
-.typing{
-  margin:15px auto;
-  padding:8px 15px;
-  background:rgba(255,255,255,0.15);
-  border-radius:20px;
-  display:inline-block;
-  font-size:14px;
-  color:#fff;
-}
-
-/* Buttons */
-.link-btn{
-  display:block;
-  margin:15px 0;
-  padding:14px;
-  border-radius:15px;
-  text-decoration:none;
-  font-weight:bold;
-  color:white;
-  background:linear-gradient(135deg,#6dd5ed,#2193b0);
-  box-shadow:0 0 15px rgba(0,255,255,0.5);
-  transition:0.3s;
-}
-
-.link-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px rgba(0,255,255,1);
-}
-
-.footer{
-  margin-top:20px;
-  font-size:12px;
-  color:#bbb;
-}
-</style>
+    .footer{
+      margin-top: 14px;
+      text-align:center;
+      color: rgba(255,255,255,.70);
+      font-weight:700;
+      opacity:.9;
+      position:relative;
+      z-index:1;
+    }
+    .footer small{opacity:.9}
+  </style>
 </head>
 
 <body>
+  <div class="bg"></div>
+  <div class="vignette"></div>
+  <div class="rain"></div>
+  <div class="rain2"></div>
+  <div class="rain3"></div>
 
-<div class="container">
+  <main class="wrap">
+    <section class="card">
+      <div class="profile">
+        <!-- avatar -->
+        <img class="avatar" src="https://images.bukaolshop.com/hosting/181218/5f576e0af873494477.png" alt="KivoPay" />
+        <p class="handle">@KivoPay</p>
 
-<img class="profile" src="https://images.bukaolshop.com/hosting/181218/5f576e0af873494477.png">
+        <h1 class="title">Cari Aplikasi Premium Terpercaya KivoPay Solusi Nya 🚀</h1>
+        <p class="sub">@KivoPayStoreLinktree</p>
 
-<div class="username">@KivoPay</div>
-<div class="title">Cari Aplikasi Premium Terpercaya KivoPay Solusi Nya 🚀</div>
-<div class="subtitle">Aplikasi Store KivoPay Terpercaya 😍</div>
+        <div class="typingWrap" aria-label="typing">
+          <span class="dot"></span>
+          <span id="typing" class="typing"></span>
+        </div>
+      </div>
 
-<div class="typing" id="typing"></div>
+      <div class="btns">
+        <!-- pindah ke posisi paling atas -->
+        <a class="btn glow" href="https://kivopay.github.io/Panel-KivoPay-/" target="_blank" rel="noopener">
+          Website Aplikasi Premium KivoPay
+        </a>
 
-<a class="link-btn" href="https://kivopay.digitalshop.id/download" target="_blank">
-Aplikasi KivoPay
-</a>
+        <a class="btn glow" href="https://whatsapp.com/channel/0029Vb7T9EgFXUud9v38zN2v" target="_blank" rel="noopener">
+          SALURAN KIVOPAY INFORMATION
+        </a>
 
-<a class="link-btn" href="https://whatsapp.com/channel/0029Vb7T9EgFXUud9v38zN2v" target="_blank">
-SALURAN KIVOPAY INFORMATION
-</a>
+        <a class="btn glow" href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank" rel="noopener">
+          SALURAN KIVOPAY UPDATE LAYANAN
+        </a>
 
-<a class="link-btn" href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank">
-SALURAN KIVOPAY UPDATE LAYANAN
-</a>
+        <a class="btn glow" href="https://t.me/KivoPay1" target="_blank" rel="noopener">
+          Ada Pertanyaan Ke Sini
+        </a>
+      </div>
 
-<a class="link-btn" href="https://t.me/KivoPay1" target="_blank">
-Ada Pertanyaan Ke Sini
-</a>
+      <div class="footer">
+        <small>© KivoPay</small>
+      </div>
+    </section>
+  </main>
 
-<a class="link-btn" href="https://kivopay.github.io/Panel-KivoPay-/" target="_blank">
-Website Aplikasi Premium KivoPay
-</a>
+  <script>
+    // typing effect
+    const el = document.getElementById("typing");
+    const text = "Selamat Datang Di Linktree KivoPay 🙏";
+    let i = 0, dir = 1;
 
-<div class="footer">
-© KivoPay
-</div>
+    function tick(){
+      el.textContent = text.slice(0, i);
+      i += dir;
 
-</div>
+      if(i > text.length + 8) dir = -1;         // pause after full
+      if(i < 0){ dir = 1; i = 0; }               // restart
 
-<script>
-// Typing Effect
-const text = "Selamat Datang Di Linktree KivoPay 🙏";
-let i = 0;
-let typingEl = document.getElementById("typing");
+      const speed = (dir === 1) ? 55 : 35;       // typing faster
+      const pause = (i === text.length + 8) ? 800 : 0;
 
-function type(){
-  if(i < text.length){
-    typingEl.innerHTML += text.charAt(i);
-    i++;
-    setTimeout(type,50);
-  } else {
-    setTimeout(()=>{
-      typingEl.innerHTML="";
-      i=0;
-      type();
-    },2000);
-  }
-}
-type();
-
-// Rain Effect
-for(let i=0;i<100;i++){
-  let drop = document.createElement("div");
-  drop.classList.add("rain");
-  drop.style.left = Math.random()*100+"vw";
-  drop.style.animationDuration = (Math.random()*1+0.5)+"s";
-  drop.style.opacity = Math.random();
-  document.body.appendChild(drop);
-}
-</script>
-
+      setTimeout(tick, speed + pause);
+    }
+    tick();
+  </script>
 </body>
 </html>
