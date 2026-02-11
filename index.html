@@ -1,318 +1,196 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KivoPay Linktree</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KivoPay Linktree</title>
 
-  <style>
-    :root{
-      --bg:#070a12;
-      --card:rgba(255,255,255,.10);
-      --card2:rgba(255,255,255,.07);
-      --line:rgba(255,255,255,.14);
-      --text:#eaf0ff;
-      --muted:#b8c2e6;
-      --glow:rgba(110,168,254,.55);
-      --glow2:rgba(120,255,190,.25);
-      --btn1:rgba(110,168,254,.34);
-      --btn2:rgba(94,234,212,.20);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      color:var(--text);
-      background: var(--bg);
-      overflow-x:hidden;
-    }
+<style>
+:root{
+  --bg:#0b0f18;
+  --card:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.15);
+  --text:#f1f4ff;
+  --muted:#c5cbea;
+}
 
-    /* background image + blur overlay */
-    .bg{
-      position:fixed; inset:0;
-      background:
-        linear-gradient(to bottom, rgba(7,10,18,.55), rgba(7,10,18,.85)),
-        url("https://images.bukaolshop.com/hosting/181218/62fb8ef2e275827256.png") center/cover no-repeat;
-      filter:saturate(1.1);
-      z-index:-3;
-    }
-    .vignette{
-      position:fixed; inset:0;
-      background: radial-gradient(1200px 700px at 50% 10%, rgba(110,168,254,.20), transparent 60%),
-                  radial-gradient(1000px 700px at 10% 90%, rgba(94,234,212,.12), transparent 55%),
-                  radial-gradient(1000px 700px at 90% 90%, rgba(255,120,180,.10), transparent 55%);
-      z-index:-2;
-      animation: hue 10s ease-in-out infinite alternate;
-      pointer-events:none;
-    }
-    @keyframes hue{
-      from{filter:hue-rotate(0deg)}
-      to{filter:hue-rotate(12deg)}
-    }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+}
 
-    /* heavier rain */
-    .rain, .rain2, .rain3{
-      position:fixed; inset:-30% 0 0 0;
-      pointer-events:none;
-      z-index:-1;
-      background-repeat:repeat;
-      transform: translate3d(0,0,0);
-      opacity:.85;
-      mix-blend-mode:screen;
-    }
-    .rain{
-      background-image: linear-gradient(115deg, rgba(255,255,255,.28), rgba(255,255,255,0));
-      background-size: 2px 42px;
-      animation: rain 0.35s linear infinite;
-      filter: blur(.1px);
-    }
-    .rain2{
-      background-image: linear-gradient(115deg, rgba(255,255,255,.18), rgba(255,255,255,0));
-      background-size: 2px 60px;
-      animation: rain 0.55s linear infinite;
-      opacity:.65;
-    }
-    .rain3{
-      background-image: linear-gradient(115deg, rgba(255,255,255,.12), rgba(255,255,255,0));
-      background-size: 2px 85px;
-      animation: rain 0.8s linear infinite;
-      opacity:.55;
-    }
-    @keyframes rain{
-      from{ background-position: 0 -120px; transform: translateY(-20px) skewX(-10deg);}
-      to  { background-position: 0 120px;  transform: translateY(20px)  skewX(-10deg);}
-    }
+/* background */
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(10,15,25,.6),rgba(10,15,25,.85)),
+    url("https://images.bukaolshop.com/hosting/181218/62fb8ef2e275827256.png") center/cover no-repeat;
+  z-index:-3;
+}
 
-    .wrap{
-      min-height:100%;
-      display:flex;
-      justify-content:center;
-      padding: 28px 14px 40px;
-    }
-    .card{
-      width:min(560px, 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border:1px solid var(--line);
-      border-radius:24px;
-      box-shadow: 0 20px 80px rgba(0,0,0,.45);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      padding: 22px 16px 18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(600px 220px at 50% 0%, rgba(110,168,254,.20), transparent 60%);
-      pointer-events:none;
-    }
+/* soft rain */
+.rain{
+  position:fixed;
+  inset:-20% 0 0 0;
+  background-image:linear-gradient(120deg, rgba(255,255,255,.15), rgba(255,255,255,0));
+  background-size:2px 80px;
+  animation:rainMove 1.8s linear infinite;
+  opacity:.4;
+  z-index:-2;
+  pointer-events:none;
+}
 
-    .profile{
-      text-align:center;
-      padding: 8px 8px 10px;
-      position:relative;
-      z-index:1;
-    }
-    .avatar{
-      width:92px; height:92px;
-      border-radius:50%;
-      object-fit:cover;
-      border:2px solid rgba(255,255,255,.25);
-      box-shadow: 0 0 0 8px rgba(110,168,254,.12), 0 20px 60px rgba(0,0,0,.45);
-      margin: 6px auto 10px;
-      display:block;
-      animation: float 3.2s ease-in-out infinite;
-    }
-    @keyframes float{
-      0%,100%{transform: translateY(0)}
-      50%{transform: translateY(-6px)}
-    }
-    .handle{
-      margin:0;
-      font-weight:800;
-      letter-spacing:.3px;
-      opacity:.95;
-    }
-    .title{
-      margin:10px 0 6px;
-      font-size: clamp(18px, 4.2vw, 26px);
-      line-height:1.18;
-      font-weight:900;
-      text-shadow: 0 8px 24px rgba(0,0,0,.35);
-    }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-weight:700;
-      opacity:.95;
-    }
+@keyframes rainMove{
+  from{background-position:0 -100px}
+  to{background-position:0 100px}
+}
 
-    .typingWrap{
-      margin: 12px auto 6px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.22);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(110,168,254,.95);
-      box-shadow: 0 0 0 6px rgba(110,168,254,.14);
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-    @keyframes pulse{
-      0%,100%{transform:scale(1); opacity:1}
-      50%{transform:scale(1.25); opacity:.75}
-    }
-    .typing{
-      font-weight:800;
-      color:rgba(255,255,255,.92);
-      min-height: 20px;
-      letter-spacing:.2px;
-      white-space:nowrap;
-    }
+.wrap{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
 
-    .btns{
-      margin-top: 14px;
-      display:flex;
-      flex-direction:column;
-      gap: 12px;
-      position:relative;
-      z-index:1;
-    }
-    .btn{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      color:var(--text);
-      font-weight:900;
-      letter-spacing:.6px;
-      padding: 16px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: linear-gradient(135deg, var(--btn1), var(--btn2));
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-      transform: translateZ(0);
-    }
-    .btn:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(520px 120px at 50% 0%, rgba(255,255,255,.22), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .btn:after{
-      content:"";
-      position:absolute;
-      width:140px;height:140px;
-      left:-60px; top:-60px;
-      background: radial-gradient(circle, rgba(110,168,254,.55), transparent 60%);
-      filter: blur(10px);
-      opacity:.0;
-      transition: opacity .25s ease;
-      pointer-events:none;
-    }
-    .btn:active{ transform: scale(.98) }
-    .btn:hover:after{ opacity:.85 }
+.card{
+  width:min(520px,100%);
+  background:var(--card);
+  backdrop-filter:blur(15px);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:25px 18px 22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  text-align:center;
+}
 
-    /* glow animation */
-    .btn.glow{
-      animation: glow 2.2s ease-in-out infinite;
-    }
-    @keyframes glow{
-      0%,100%{ box-shadow: 0 12px 40px rgba(0,0,0,.35), 0 0 0 rgba(110,168,254,0) }
-      50%{ box-shadow: 0 14px 44px rgba(0,0,0,.38), 0 0 26px rgba(110,168,254,.35) }
-    }
+/* profile */
+.avatar{
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.3);
+  box-shadow:0 0 20px rgba(110,168,254,.4);
+  margin-bottom:10px;
+}
 
-    .footer{
-      margin-top: 14px;
-      text-align:center;
-      color: rgba(255,255,255,.70);
-      font-weight:700;
-      opacity:.9;
-      position:relative;
-      z-index:1;
-    }
-    .footer small{opacity:.9}
-  </style>
+.handle{
+  margin:5px 0;
+  font-weight:700;
+  opacity:.9;
+}
+
+.title{
+  font-size:clamp(18px,4vw,24px);
+  font-weight:900;
+  margin:8px 0;
+}
+
+.sub{
+  color:var(--muted);
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* typing */
+.typingBox{
+  margin:10px auto 15px;
+  padding:8px 15px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  display:inline-block;
+  font-weight:700;
+  font-size:14px;
+}
+
+/* buttons */
+.btn{
+  display:block;
+  margin:12px 0;
+  padding:15px;
+  border-radius:18px;
+  text-decoration:none;
+  color:white;
+  font-weight:800;
+  letter-spacing:.5px;
+  background:linear-gradient(135deg,rgba(110,168,254,.5),rgba(94,234,212,.4));
+  border:1px solid rgba(255,255,255,.2);
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(110,168,254,.4);
+}
+
+.footer{
+  margin-top:12px;
+  font-size:13px;
+  opacity:.7;
+}
+</style>
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="vignette"></div>
-  <div class="rain"></div>
-  <div class="rain2"></div>
-  <div class="rain3"></div>
 
-  <main class="wrap">
-    <section class="card">
-      <div class="profile">
-        <!-- avatar -->
-        <img class="avatar" src="https://images.bukaolshop.com/hosting/181218/5f576e0af873494477.png" alt="KivoPay" />
-        <p class="handle">@KivoPay</p>
+<div class="bg"></div>
+<div class="rain"></div>
 
-        <h1 class="title">Cari Aplikasi Premium Terpercaya KivoPay Solusi Nya 🚀</h1>
-        <p class="sub">@KivoPayStoreLinktree</p>
+<div class="wrap">
+<div class="card">
 
-        <div class="typingWrap" aria-label="typing">
-          <span class="dot"></span>
-          <span id="typing" class="typing"></span>
-        </div>
-      </div>
+<img class="avatar" src="https://images.bukaolshop.com/hosting/181218/5f576e0af873494477.png">
+<p class="handle">@KivoPay</p>
 
-      <div class="btns">
-        <!-- pindah ke posisi paling atas -->
-        <a class="btn glow" href="https://kivopay.github.io/Panel-KivoPay-/" target="_blank" rel="noopener">
-          Website Aplikasi Premium KivoPay
-        </a>
+<h1 class="title">
+Website Aplikasi Premium KivoPay Start Perak an 😋
+</h1>
 
-        <a class="btn glow" href="https://whatsapp.com/channel/0029Vb7T9EgFXUud9v38zN2v" target="_blank" rel="noopener">
-          SALURAN KIVOPAY INFORMATION
-        </a>
+<p class="sub">@KivoPayStoreLinktree</p>
 
-        <a class="btn glow" href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank" rel="noopener">
-          SALURAN KIVOPAY UPDATE LAYANAN
-        </a>
+<div class="typingBox">
+<span id="typing"></span>
+</div>
 
-        <a class="btn glow" href="https://t.me/KivoPay1" target="_blank" rel="noopener">
-          Ada Pertanyaan Ke Sini
-        </a>
-      </div>
+<a class="btn" href="https://kivopay.github.io/Panel-KivoPay-/" target="_blank">
+Website Aplikasi Premium KivoPay
+</a>
 
-      <div class="footer">
-        <small>© KivoPay</small>
-      </div>
-    </section>
-  </main>
+<a class="btn" href="https://whatsapp.com/channel/0029Vb7T9EgFXUud9v38zN2v" target="_blank">
+SALURAN KIVOPAY INFORMATION
+</a>
 
-  <script>
-    // typing effect
-    const el = document.getElementById("typing");
-    const text = "Selamat Datang Di Linktree KivoPay 🙏";
-    let i = 0, dir = 1;
+<a class="btn" href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank">
+SALURAN KIVOPAY UPDATE LAYANAN
+</a>
 
-    function tick(){
-      el.textContent = text.slice(0, i);
-      i += dir;
+<a class="btn" href="https://t.me/KivoPay1" target="_blank">
+Ada Pertanyaan Ke Sini
+</a>
 
-      if(i > text.length + 8) dir = -1;         // pause after full
-      if(i < 0){ dir = 1; i = 0; }               // restart
+<div class="footer">© KivoPay</div>
 
-      const speed = (dir === 1) ? 55 : 35;       // typing faster
-      const pause = (i === text.length + 8) ? 800 : 0;
+</div>
+</div>
 
-      setTimeout(tick, speed + pause);
-    }
-    tick();
-  </script>
+<script>
+const text="Selamat Datang Di Linktree KivoPay 🙏";
+let i=0,dir=1;
+function type(){
+document.getElementById("typing").innerHTML=text.slice(0,i);
+i+=dir;
+if(i>text.length+5) dir=-1;
+if(i<0){dir=1;i=0;}
+setTimeout(type,dir==1?60:30);
+}
+type();
+</script>
+
 </body>
 </html>
