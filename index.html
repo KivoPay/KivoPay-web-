@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keii Official • 4 Halaman</title>
+    <title>Keii Official • 4 Halaman Terpisah</title>
     <style>
         * {
             margin: 0;
@@ -11,12 +11,12 @@
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
         }
-        
+
         body {
             background: #03050a;
             color: white;
         }
-        
+
         /* ========== HALAMAN 1 - INTRO ========== */
         .halaman1 {
             width: 100%;
@@ -27,54 +27,36 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            position: relative;
         }
-        
-        .intro-content {
-            max-width: 900px;
-        }
-        
+
         .logo-img {
             width: 280px;
             margin-bottom: 30px;
-            filter: drop-shadow(0 0 20px rgba(0,255,255,0.5));
         }
-        
+
         .badge {
-            background: rgba(0, 255, 255, 0.1);
+            background: rgba(0,255,255,0.1);
             border: 2px solid cyan;
             padding: 12px 30px;
             border-radius: 50px;
             display: inline-block;
             margin-bottom: 30px;
-            font-size: 20px;
             color: cyan;
-            letter-spacing: 5px;
+            font-size: 20px;
             font-weight: bold;
         }
-        
-        .typing-area {
+
+        .typing-text {
             font-size: 52px;
             font-weight: 800;
-            margin-bottom: 20px;
-            min-height: 80px;
-        }
-        
-        #typingText {
-            display: inline-block;
             color: white;
             text-shadow: 0 0 10px cyan;
+            min-height: 80px;
             border-right: 4px solid cyan;
+            display: inline-block;
             padding-right: 10px;
         }
-        
-        .subtitle {
-            font-size: 24px;
-            color: #b0f0ff;
-            margin: 25px 0;
-            letter-spacing: 3px;
-        }
-        
+
         .btn-masuk {
             background: transparent;
             border: 3px solid cyan;
@@ -85,43 +67,35 @@
             margin-top: 40px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
         }
-        
+
         .btn-masuk:hover {
             background: cyan;
             color: black;
-            box-shadow: 0 0 40px cyan;
         }
-        
-        /* ========== HALAMAN 2 - BERANDA ========== */
-        .halaman2, .halaman3, .halaman4 {
+
+        /* ========== HALAMAN 2 - BERANDA (HANYA KATEGORI) ========== */
+        .halaman2 {
             width: 100%;
             min-height: 100vh;
             background: #0a0f17;
             padding: 30px;
             display: none;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
             border-bottom: 2px solid cyan;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
-        
+
         .logo-small {
-            height: 55px;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 15px;
-            border-radius: 20px;
+            height: 50px;
         }
-        
+
         .nav-btn {
             background: transparent;
             border: 1px solid cyan;
@@ -130,122 +104,107 @@
             border-radius: 30px;
             margin-left: 15px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
         }
-        
-        .nav-btn:hover {
-            background: cyan;
-            color: black;
-        }
-        
-        /* PAYMENT CARD */
-        .payment-card {
-            background: linear-gradient(145deg, #0a1a2a, #041018);
-            border: 2px solid cyan;
-            border-radius: 40px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .nomor-box {
-            background: #0a1420;
-            padding: 15px 25px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 10px;
-            font-size: 18px;
-            border: 1px solid rgba(0,255,255,0.3);
-        }
-        
-        .wa-btn {
-            background: #25D366;
-            color: white;
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        /* KATEGORI GRID */
+
+        /* KATEGORI GRID - 2 KOLOM */
         .kategori-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
-        
+
         .kategori-card {
-            background: rgba(15, 25, 40, 0.9);
+            background: rgba(15,25,40,0.9);
             border: 1px solid rgba(0,255,255,0.3);
             border-radius: 35px;
-            padding: 30px;
+            padding: 35px;
             cursor: pointer;
-            transition: 0.3s;
         }
-        
+
         .kategori-card:hover {
             border-color: cyan;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,255,255,0.1);
+            box-shadow: 0 0 30px rgba(0,255,255,0.2);
         }
-        
-        /* ========== HALAMAN 3 - PRODUK ========== */
+
+        .kategori-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .kategori-header img {
+            height: 80px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+        }
+
+        .kategori-header h2 {
+            font-size: 36px;
+            color: white;
+        }
+
+        /* ========== HALAMAN 3 - PRODUK (DETAIL HARGA) ========== */
+        .halaman3 {
+            width: 100%;
+            min-height: 100vh;
+            background: #0a0f17;
+            padding: 30px;
+            display: none;
+        }
+
         .produk-container {
-            background: rgba(10, 22, 35, 0.95);
+            background: rgba(10,22,35,0.95);
             border: 2px solid cyan;
             border-radius: 50px;
             padding: 40px;
             margin-top: 20px;
         }
-        
+
         .produk-header {
             display: flex;
             align-items: center;
             gap: 25px;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
-        
+
         .produk-header img {
             height: 100px;
             background: white;
             padding: 15px 25px;
             border-radius: 30px;
         }
-        
+
         .produk-header h1 {
             font-size: 48px;
             color: white;
-            text-shadow: 0 0 10px cyan;
         }
-        
+
         .list-produk {
             list-style: none;
         }
-        
+
         .list-produk li {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 25px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0,0,0,0.4);
             margin-bottom: 15px;
             border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
         }
-        
+
         .harga {
-            background: rgba(0, 255, 255, 0.15);
+            background: rgba(0,255,255,0.15);
             padding: 10px 25px;
             border-radius: 40px;
             color: cyan;
             font-weight: bold;
             font-size: 20px;
         }
-        
+
         .btn-beli {
             background: #00b894;
             color: white;
@@ -253,61 +212,63 @@
             padding: 12px 30px;
             border-radius: 40px;
             font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
         }
-        
-        .btn-beli:hover {
-            background: #00cec9;
-        }
-        
+
         .btn-back {
             background: transparent;
-            border: 1px solid #7f8c8d;
+            border: 1px solid gray;
             color: white;
             padding: 12px 30px;
             border-radius: 40px;
             cursor: pointer;
-            font-size: 18px;
             margin-bottom: 25px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
         }
-        
-        .btn-back:hover {
-            border-color: cyan;
-            color: cyan;
+
+        /* ========== HALAMAN 4 - PEMBAYARAN (NOMOR + QRIS + WA) ========== */
+        .halaman4 {
+            width: 100%;
+            min-height: 100vh;
+            background: #0a0f17;
+            padding: 30px;
+            display: none;
         }
-        
-        /* ========== HALAMAN 4 - PEMBAYARAN ========== */
+
         .pembayaran-container {
-            background: rgba(8, 20, 30, 0.98);
+            background: rgba(8,20,30,0.98);
             border: 2px solid cyan;
             border-radius: 50px;
             padding: 40px;
         }
-        
+
         .grid-payment {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin: 30px 0;
         }
-        
+
         .payment-item {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             padding: 30px;
             border-radius: 35px;
         }
-        
+
+        .payment-number {
+            background: #0a1420;
+            padding: 15px;
+            border-radius: 20px;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
         .qris-box {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin: 30px 0;
         }
-        
+
         .qris-image {
             width: 100%;
             max-width: 300px;
@@ -315,8 +276,17 @@
             border: 3px solid cyan;
             cursor: pointer;
         }
-        
-        /* MODAL QRIS */
+
+        .wa-btn {
+            background: #25D366;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 60px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+        }
+
         .modal-qris {
             display: none;
             position: fixed;
@@ -325,18 +295,18 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.98);
-            z-index: 9999;
             justify-content: center;
             align-items: center;
+            z-index: 9999;
         }
-        
+
         .modal-content {
             max-width: 90%;
             max-height: 90%;
             border: 5px solid cyan;
             border-radius: 30px;
         }
-        
+
         .close-modal {
             position: absolute;
             top: 30px;
@@ -345,55 +315,48 @@
             font-size: 70px;
             cursor: pointer;
         }
-        
+
         @media (max-width: 800px) {
             .kategori-grid, .grid-payment, .qris-box {
                 grid-template-columns: 1fr;
             }
-            .typing-area { font-size: 36px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ========== HALAMAN 1 : INTRO (TYPING HAPUS KETIK ULANG) ========== -->
+<!-- ========== HALAMAN 1 : INTRO ========== -->
 <div id="halaman1" class="halaman1">
-    <div class="intro-content">
-        <!-- LOGO -->
+    <div>
         <img src="https://images.bukaolshop.com/hosting/181218/b75e04fa2c36935913.png" 
              onerror="this.src='https://via.placeholder.com/300x120?text=KEII+OFFICIAL'" 
              class="logo-img">
         
-        <!-- BADGE -->
         <div class="badge">
             <i class="fas fa-crown"></i> WEBSITE KEII OFFICIAL <i class="fas fa-crown"></i>
         </div>
         
-        <!-- TYPING AREA (KETIK → HAPUS → KETIK BARU) -->
-        <div class="typing-area">
-            <span id="typingText"></span>
+        <div>
+            <span id="typingText" class="typing-text"></span>
         </div>
         
-        <div class="subtitle">
-            <i class="fas fa-shield-alt"></i> AMAN • TERPERCAYA • CEPAT
-        </div>
+        <p style="font-size: 24px; margin: 30px 0; color: #b0f0ff;">
+            AMAN • TERPERCAYA • CEPAT
+        </p>
         
-        <!-- TOMBOL MASUK -->
         <button id="btnMasuk" class="btn-masuk">
-            <i class="fas fa-store"></i> MASUK KE STORE
-            <i class="fas fa-arrow-right"></i>
+            🏪 MASUK KE STORE →
         </button>
     </div>
 </div>
 
-<!-- ========== HALAMAN 2 : BERANDA ========== -->
+<!-- ========== HALAMAN 2 : BERANDA (HANYA KATEGORI) ========== -->
 <div id="halaman2" class="halaman2">
     <!-- HEADER -->
     <div class="header">
         <div style="display: flex; align-items: center; gap: 15px;">
             <img src="https://images.bukaolshop.com/hosting/181218/b75e04fa2c36935913.png" 
-                 onerror="this.src='https://via.placeholder.com/50x50?text=K'" 
-                 class="logo-small">
+                 class="logo-small" style="height: 50px;">
             <span style="font-size: 32px; font-weight: bold; color: cyan;">Keii Official</span>
         </div>
         <div>
@@ -402,134 +365,102 @@
         </div>
     </div>
     
-    <!-- PAYMENT SECTION (ATAS) -->
-    <div class="payment-card">
-        <h2 style="font-size: 36px; margin-bottom: 25px; color: cyan;">
-            <i class="fas fa-credit-card"></i> Pembayaran Instan
-        </h2>
-        <div>
-            <span class="nomor-box">
-                <img src="https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" style="height: 30px;"> 
-                DANA: 087753513090
-            </span>
-            <span class="nomor-box">
-                <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" style="height: 30px;"> 
-                SEABANK: 901517870612
-            </span>
-        </div>
-        <button onclick="pindahHalaman(4)" style="margin-top: 25px; background: cyan; color: black; border: none; padding: 15px 35px; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer;">
-            🔍 Lihat QRIS & Detail
-        </button>
-    </div>
+    <!-- JUDUL KATEGORI -->
+    <h1 style="font-size: 48px; margin: 30px 0 20px; color: white;">📦 Kategori Produk</h1>
+    <p style="color: #b0e0ff; font-size: 20px; margin-bottom: 40px;">Pilih kategori untuk melihat detail harga</p>
     
-    <!-- WHATSAPP BUTTONS -->
-    <div style="margin: 30px 0;">
-        <a href="https://wa.me/6285150895395" target="_blank" class="wa-btn">
-            <i class="fab fa-whatsapp"></i> Chat Admin (Kirim Bukti)
-        </a>
-        <a href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank" class="wa-btn" style="background: #833ab4;">
-            <i class="fab fa-whatsapp"></i> Saluran Official
-        </a>
-    </div>
-    
-    <!-- KATEGORI PRODUK -->
-    <h2 style="font-size: 36px; margin: 50px 0 25px; color: white;">📦 Kategori Produk</h2>
-    
+    <!-- KATEGORI GRID - PISAH, TIDAK ADA PAYMENT DISINI -->
     <div class="kategori-grid">
-        <!-- Kategori XCVI V9 -->
+        <!-- XCVI V9 -->
         <div class="kategori-card" onclick="bukaProduk('xcvi')">
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+            <div class="kategori-header">
                 <img src="https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" 
-                     onerror="this.src='https://via.placeholder.com/70x70?text=XCVI'" 
-                     style="height: 80px; background: white; padding: 12px 20px; border-radius: 20px;">
-                <h3 style="font-size: 36px;">XCVI V9</h3>
+                     onerror="this.src='https://via.placeholder.com/80x80?text=XCVI'">
+                <h2>XCVI V9</h2>
             </div>
             <p style="color: #b0e0ff; font-size: 18px;">Akses Apk Bug XCVI V9</p>
-            <p style="color: cyan; margin: 15px 0; font-size: 18px;">⭐ 4.8 • 1.2rb+ terjual</p>
+            <p style="color: cyan; font-size: 20px; margin: 20px 0;">⭐ 4.8 • 1.2rb+ terjual</p>
             <button style="background: transparent; border: 2px solid cyan; color: cyan; padding: 12px 30px; border-radius: 40px; font-size: 18px; cursor: pointer;">
                 Lihat Produk →
             </button>
         </div>
         
-        <!-- Kategori NIKA V26 -->
+        <!-- NIKA V26 -->
         <div class="kategori-card" onclick="bukaProduk('nika')">
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+            <div class="kategori-header">
                 <img src="https://images.bukaolshop.com/hosting/181218/160d9ef17e48893793.png" 
-                     onerror="this.src='https://via.placeholder.com/70x70?text=NIKA'" 
-                     style="height: 80px; background: white; padding: 12px 20px; border-radius: 20px;">
-                <h3 style="font-size: 36px;">NIKA V26</h3>
+                     onerror="this.src='https://via.placeholder.com/80x80?text=NIKA'">
+                <h2>NIKA V26</h2>
             </div>
             <p style="color: #b0e0ff; font-size: 18px;">Akses Apk Bug Nika V26</p>
-            <p style="color: cyan; margin: 15px 0; font-size: 18px;">⭐ 4.9 • 2.5rb+ terjual</p>
+            <p style="color: cyan; font-size: 20px; margin: 20px 0;">⭐ 4.9 • 2.5rb+ terjual</p>
             <button style="background: transparent; border: 2px solid cyan; color: cyan; padding: 12px 30px; border-radius: 40px; font-size: 18px; cursor: pointer;">
                 Lihat Produk →
             </button>
         </div>
     </div>
     </div>
-    <!-- ========== HALAMAN 3 : PRODUK (LANGSUNG ISI, TIDAK KOSONG) ========== -->
+    <!-- ========== HALAMAN 3 : PRODUK (DETAIL HARGA) ========== -->
 <div id="halaman3" class="halaman3">
     <button class="btn-back" onclick="pindahHalaman(2)">
-        <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+        ← Kembali ke Kategori
     </button>
     
-    <!-- PRODUK XCVI V9 (LANGSUNG ISI) -->
-    <div id="produkXcvi" class="produk-container" style="display: block;">
+    <!-- PRODUK XCVI V9 -->
+    <div id="produkXcvi" class="produk-container">
         <div class="produk-header">
-            <img src="https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png" 
-                 onerror="this.src='https://via.placeholder.com/100x100?text=XCVI'">
+            <img src="https://images.bukaolshop.com/hosting/181218/16aea1c112a5636278.png">
             <h1>XCVI V9</h1>
         </div>
         
         <ul class="list-produk">
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-clock"></i> Akses Apk 15 Hari</span>
+                <span style="font-size: 22px;">🔹 Akses Apk 15 Hari</span>
                 <span class="harga">Rp 15.000</span>
                 <button class="btn-beli" onclick="beliProduk('XCVI V9 - 15 Hari', 15000)">Beli</button>
             </li>
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-calendar"></i> Akses Apk 1 Bulan</span>
+                <span style="font-size: 22px;">🔹 Akses Apk 1 Bulan</span>
                 <span class="harga">Rp 20.000</span>
                 <button class="btn-beli" onclick="beliProduk('XCVI V9 - 1 Bulan', 20000)">Beli</button>
             </li>
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-infinity"></i> Akses Apk Permanen</span>
+                <span style="font-size: 22px;">🔹 Akses Apk Permanen</span>
                 <span class="harga">Rp 50.000</span>
                 <button class="btn-beli" onclick="beliProduk('XCVI V9 - Permanen', 50000)">Beli</button>
             </li>
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-store"></i> Akses Reseller Apk</span>
+                <span style="font-size: 22px;">🔹 Akses Reseller Apk</span>
                 <span class="harga">Rp 85.000</span>
                 <button class="btn-beli" onclick="beliProduk('XCVI V9 - Reseller', 85000)">Beli</button>
             </li>
         </ul>
         
-        <div style="margin-top: 30px; background: rgba(0,50,70,0.7); padding: 25px; border-radius: 25px; border-left: 6px solid #ffaa00;">
-            <strong style="font-size: 18px;">📌 Note:</strong> Title Member Tidak Bisa Jual Apk. Title Reseller Baru Bisa Jual Apk. Lebih Baik Kalian Buy Reseller Apk Bisa Jual Apk 🚀
+        <div style="margin-top: 30px; background: rgba(0,50,70,0.7); padding: 25px; border-radius: 25px;">
+            <strong>📌 Note:</strong> Title Member Tidak Bisa Jual Apk. Title Reseller Baru Bisa Jual Apk. 🚀
         </div>
     </div>
     
-    <!-- PRODUK NIKA V26 (LANGSUNG ISI) -->
+    <!-- PRODUK NIKA V26 -->
     <div id="produkNika" class="produk-container" style="display: none;">
         <div class="produk-header">
-            <img src="https://images.bukaolshop.com/hosting/181218/160d9ef17e48893793.png" 
-                 onerror="this.src='https://via.placeholder.com/100x100?text=NIKA'">
+            <img src="https://images.bukaolshop.com/hosting/181218/160d9ef17e48893793.png">
             <h1>NIKA V26</h1>
         </div>
         
         <ul class="list-produk">
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-clock"></i> Akses 1 Minggu</span>
+                <span style="font-size: 22px;">🔹 Akses 1 Minggu</span>
                 <span class="harga">Rp 20.000</span>
                 <button class="btn-beli" onclick="beliProduk('NIKA V26 - 1 Minggu', 20000)">Beli</button>
             </li>
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-calendar"></i> Akses 1 Bulan</span>
+                <span style="font-size: 22px;">🔹 Akses 1 Bulan</span>
                 <span class="harga">Rp 40.000</span>
                 <button class="btn-beli" onclick="beliProduk('NIKA V26 - 1 Bulan', 40000)">Beli</button>
             </li>
             <li>
-                <span style="font-size: 22px;"><i class="fas fa-infinity"></i> Akses Permanen</span>
+                <span style="font-size: 22px;">🔹 Akses Permanen</span>
                 <span class="harga">Rp 50.000</span>
                 <button class="btn-beli" onclick="beliProduk('NIKA V26 - Permanen', 50000)">Beli</button>
             </li>
@@ -537,82 +468,73 @@
     </div>
 </div>
 
-<!-- ========== HALAMAN 4 : PEMBAYARAN ========== -->
+<!-- ========== HALAMAN 4 : PEMBAYARAN (NOMOR + QRIS + WA) ========== -->
 <div id="halaman4" class="halaman4">
     <button class="btn-back" onclick="pindahHalaman(2)">
-        <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+        ← Kembali ke Beranda
     </button>
     
     <div class="pembayaran-container">
-        <h1 style="font-size: 48px; margin-bottom: 10px; color: cyan;">
-            <i class="fas fa-credit-card"></i> Halaman Pembayaran
+        <h1 style="font-size: 48px; margin-bottom: 20px; color: cyan;">
+            <i class="fas fa-credit-card"></i> Pembayaran
         </h1>
         
-        <div id="infoProduk" style="background: rgba(0,255,255,0.1); padding: 18px; border-radius: 60px; text-align: center; font-size: 22px; margin: 25px 0;">
+        <div id="infoProduk" style="background: rgba(0,255,255,0.1); padding: 15px; border-radius: 50px; text-align: center; font-size: 22px; margin: 20px 0;">
             ⚡ Silakan pilih produk terlebih dahulu
         </div>
         
-        <!-- REKENING -->
+        <!-- NOMOR REKENING -->
         <div class="grid-payment">
             <div class="payment-item">
-                <h3 style="display: flex; align-items: center; gap: 15px; color: cyan; font-size: 32px; margin-bottom: 20px;">
+                <h3 style="display: flex; align-items: center; gap: 15px; color: cyan; font-size: 32px;">
                     <img src="https://images.bukaolshop.com/hosting/181218/f2f4904ff62a785161.png" style="height: 40px;"> DANA
                 </h3>
-                <div style="background: #0a1420; padding: 18px; border-radius: 20px; font-size: 26px; letter-spacing: 3px;">
-                    087753513090
-                </div>
-                <p style="margin-top: 15px; color: #aaa; font-size: 18px;">a/n kamxxx</p>
+                <div class="payment-number">087753513090</div>
+                <p style="margin-top: 15px; color: #aaa;">a/n kamxxx</p>
             </div>
             
             <div class="payment-item">
-                <h3 style="display: flex; align-items: center; gap: 15px; color: cyan; font-size: 32px; margin-bottom: 20px;">
+                <h3 style="display: flex; align-items: center; gap: 15px; color: cyan; font-size: 32px;">
                     <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" style="height: 40px;"> SEABANK
                 </h3>
-                <div style="background: #0a1420; padding: 18px; border-radius: 20px; font-size: 26px; letter-spacing: 3px;">
-                    901517870612
-                </div>
-                <p style="margin-top: 15px; color: #aaa; font-size: 18px;">a/n kamxxx</p>
+                <div class="payment-number">901517870612</div>
+                <p style="margin-top: 15px; color: #aaa;">a/n kamxxx</p>
             </div>
         </div>
         
         <!-- QRIS -->
-        <h2 style="color: cyan; margin: 40px 0 25px; font-size: 36px;">
+        <h2 style="color: cyan; margin: 40px 0 20px; font-size: 36px;">
             <i class="fas fa-qrcode"></i> QRIS PAYMENT
         </h2>
         
         <div class="qris-box">
-            <div style="text-align: center; background: rgba(0,0,0,0.3); padding: 35px; border-radius: 35px;">
-                <img src="https://images.bukaolshop.com/hosting/181218/111e83c3a6f5204498.png" style="width: 160px;">
-                <p style="color: cyan; font-size: 20px; margin-top: 15px;">Logo Resmi QRIS</p>
+            <div style="text-align: center; background: rgba(0,0,0,0.3); padding: 30px; border-radius: 30px;">
+                <img src="https://images.bukaolshop.com/hosting/181218/111e83c3a6f5204498.png" style="width: 150px;">
+                <p style="color: cyan; margin-top: 15px;">Logo Resmi QRIS</p>
             </div>
             <div style="text-align: center;">
                 <img id="gambarQris" 
                      src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" 
                      class="qris-image"
                      onclick="bukaModal()">
-                <p style="color: #b0e0ff; margin-top: 20px; font-size: 18px;">
-                    <i class="fas fa-search-plus"></i> Klik QRIS untuk perbesar
-                </p>
+                <p style="color: #b0e0ff; margin-top: 15px;">🔍 Klik QRIS untuk perbesar</p>
             </div>
         </div>
         
         <!-- WHATSAPP BUTTONS -->
-        <div style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; margin: 50px 0 30px;">
-            <a href="https://wa.me/6285150895395" target="_blank" style="background: #25D366; color: white; padding: 18px 40px; border-radius: 60px; text-decoration: none; font-size: 22px; display: flex; align-items: center; gap: 15px;">
-                <i class="fab fa-whatsapp"></i> Chat Admin (Kirim Bukti)
+        <div style="display: flex; gap: 25px; justify-content: center; margin: 50px 0 30px;">
+            <a href="https://wa.me/6285150895395" target="_blank" class="wa-btn">
+                <i class="fab fa-whatsapp"></i> Chat Admin
             </a>
-            <a href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank" style="background: #833ab4; color: white; padding: 18px 40px; border-radius: 60px; text-decoration: none; font-size: 22px; display: flex; align-items: center; gap: 15px;">
-                <i class="fab fa-whatsapp"></i> Saluran Admin
+            <a href="https://whatsapp.com/channel/0029Vb6zSDuBadmTBX4YRg1v" target="_blank" class="wa-btn" style="background: #833ab4;">
+                <i class="fab fa-whatsapp"></i> Saluran Official
             </a>
         </div>
         
         <!-- INSTRUKSI -->
-        <div style="background: rgba(0,50,80,0.7); padding: 30px; border-radius: 35px; margin-top: 30px;">
-            <h3 style="color: white; margin-bottom: 15px; font-size: 28px;">
-                <i class="fas fa-camera"></i> Kirim Bukti Transfer
-            </h3>
-            <p style="color: #e0f0ff; font-size: 20px;">✅ Sertakan bukti dengan jelas, <span style="color: #ffd966; font-weight: bold;">NO BUREM</span> & nama harus pas dengan norek/qris.</p>
-            <p style="color: #e0f0ff; font-size: 20px; margin-top: 15px;">✅ Chat admin via WhatsApp di atas, kirim bukti dan nama produk.</p>
+        <div style="background: rgba(0,50,80,0.7); padding: 25px; border-radius: 30px;">
+            <h3 style="font-size: 28px; margin-bottom: 15px;">📸 Kirim Bukti Transfer</h3>
+            <p style="font-size: 20px;">✅ Sertakan bukti dengan jelas, <span style="color: yellow;">NO BUREM</span> & nama harus pas dengan norek/qris.</p>
         </div>
     </div>
 </div>
@@ -627,34 +549,34 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
-    // ========== TYPING EFFECT (KETIK → HAPUS → KETIK BARU) ==========
+    // ========== TYPING EFFECT (KETIK HAPUS KETIK) ==========
     const teksArray = ["Selamat Datang", "Di Website", "Keii Official"];
-    let indexArray = 0;
+    let indexTeks = 0;
     let indexHuruf = 0;
-    let sedangMenghapus = false;
-    const typingElement = document.getElementById("typingText");
+    let hapus = false;
+    const typing = document.getElementById("typingText");
     
-    function typingEffect() {
-        const teksSekarang = teksArray[indexArray];
+    function ketik() {
+        const teksSekarang = teksArray[indexTeks];
         
-        if (sedangMenghapus) {
-            typingElement.textContent = teksSekarang.substring(0, indexHuruf - 1);
+        if(hapus) {
+            typing.textContent = teksSekarang.substring(0, indexHuruf - 1);
             indexHuruf--;
         } else {
-            typingElement.textContent = teksSekarang.substring(0, indexHuruf + 1);
+            typing.textContent = teksSekarang.substring(0, indexHuruf + 1);
             indexHuruf++;
         }
         
-        if (!sedangMenghapus && indexHuruf === teksSekarang.length) {
-            sedangMenghapus = true;
-            setTimeout(typingEffect, 1500);
-        } else if (sedangMenghapus && indexHuruf === 0) {
-            sedangMenghapus = false;
-            indexArray = (indexArray + 1) % teksArray.length;
-            setTimeout(typingEffect, 300);
+        if(!hapus && indexHuruf === teksSekarang.length) {
+            hapus = true;
+            setTimeout(ketik, 1500);
+        } else if(hapus && indexHuruf === 0) {
+            hapus = false;
+            indexTeks = (indexTeks + 1) % teksArray.length;
+            setTimeout(ketik, 300);
         } else {
-            const kecepatan = sedangMenghapus ? 50 : 100;
-            setTimeout(typingEffect, kecepatan);
+            const kecepatan = hapus ? 50 : 100;
+            setTimeout(ketik, kecepatan);
         }
     }
     
@@ -668,26 +590,21 @@
         document.getElementById("halaman3").style.display = "none";
         document.getElementById("halaman4").style.display = "none";
         
-        if(nomor === 1) {
-            document.getElementById("halaman1").style.display = "flex";
-        } else if(nomor === 2) {
-            document.getElementById("halaman2").style.display = "block";
-        } else if(nomor === 3) {
-            document.getElementById("halaman3").style.display = "block";
-        } else if(nomor === 4) {
-            document.getElementById("halaman4").style.display = "block";
-        }
+        if(nomor === 1) document.getElementById("halaman1").style.display = "flex";
+        if(nomor === 2) document.getElementById("halaman2").style.display = "block";
+        if(nomor === 3) document.getElementById("halaman3").style.display = "block";
+        if(nomor === 4) document.getElementById("halaman4").style.display = "block";
     }
     
     // ========== TOMBOL MASUK ==========
-    document.getElementById("btnMasuk").addEventListener("click", function() {
+    document.getElementById("btnMasuk").onclick = function() {
         pindahHalaman(2);
         if(!audio) {
             audio = new Audio("https://files.catbox.moe/cbnrod.mp3");
             audio.loop = true;
-            audio.play().catch(e => console.log("Audio play butuh interaksi"));
+            audio.play();
         }
-    });
+    };
     
     // ========== BUKA PRODUK ==========
     function bukaProduk(produk) {
@@ -718,15 +635,10 @@
     
     // ========== INIT ==========
     window.onload = function() {
-        document.getElementById("halaman1").style.display = "flex";
-        document.getElementById("halaman2").style.display = "none";
-        document.getElementById("halaman3").style.display = "none";
-        document.getElementById("halaman4").style.display = "none";
-        
-        // Mulai typing effect
-        setTimeout(typingEffect, 500);
-    }
+        pindahHalaman(1);
+        setTimeout(ketik, 500);
+    };
 </script>
 
 </body>
-</html> 
+</html>
