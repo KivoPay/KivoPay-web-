@@ -156,7 +156,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #00ff9d;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -166,26 +166,48 @@
             font-size: 1.8rem;
         }
 
-        .status {
+        /* Status Container */
+        .status-container {
+            background: #0f1322;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2f45;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #889;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            background: #0f1322;
-            padding: 8px 12px;
+            background: #1a1e2e;
+            padding: 8px 15px;
             border-radius: 30px;
-            display: inline-flex;
+            border: 1px solid #2a2f45;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            background: #00ff9d;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
             animation: pulse 1.5s infinite;
+        }
+
+        .dot.online {
+            background: #00ff9d;
+            box-shadow: 0 0 10px #00ff9d;
+        }
+
+        .dot.offline {
+            background: #ff4646;
+            box-shadow: 0 0 10px #ff4646;
         }
 
         @keyframes pulse {
@@ -193,18 +215,64 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
+        .status-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .status-text.online {
+            color: #00ff9d;
+        }
+
+        .status-text.offline {
+            color: #ff4646;
+        }
+
+        .schedule {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .schedule-item {
+            background: #1a1e2e;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #2a2f45;
+        }
+
+        .schedule-item i {
+            color: #00ff9d;
+            margin-right: 5px;
+        }
+
+        .schedule-item .time {
+            font-weight: 600;
+            color: #fff;
+            margin: 5px 0;
+        }
+
+        .schedule-item .session {
+            color: #889;
+            font-size: 0.8rem;
+        }
+
         .warning {
             background: rgba(255, 70, 70, 0.1);
             border: 1px solid #ff4646;
             border-radius: 12px;
             padding: 12px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ff9999;
             margin-top: 10px;
+            text-align: center;
         }
 
         .warning i {
             margin-right: 5px;
+            color: #ff4646;
         }
 
         /* Section Title */
@@ -607,17 +675,38 @@
                 <i class="fas fa-store"></i>
                 Keii Official
             </div>
-            <div class="status">
-                <span class="dot"></span>
-                <span>Online · Aktif</span>
-                <i class="fas fa-bolt" style="color: #00ff9d; margin-left: 5px;"></i>
+            
+            <!-- Status Container -->
+            <div class="status-container" id="statusContainer">
+                <div class="status-row">
+                    <div class="status-badge" id="statusBadge">
+                        <span class="dot" id="statusDot"></span>
+                        <span class="status-text" id="statusText">Loading...</span>
+                    </div>
+                    <span><i class="fas fa-clock" style="color: #00ff9d;"></i> WIB</span>
+                </div>
+
+                <div class="schedule">
+                    <div class="schedule-item">
+                        <i class="fas fa-sun"></i>
+                        <div class="time">10.30 - 13.00</div>
+                        <div class="session">Jam Siang</div>
+                    </div>
+                    <div class="schedule-item">
+                        <i class="fas fa-moon"></i>
+                        <div class="time">16.30 - 22.00</div>
+                        <div class="session">Jam Malam</div>
+                    </div>
+                </div>
             </div>
-            <div class="warning">
+
+            <div class="warning" id="warningText">
                 <i class="fas fa-exclamation-triangle"></i>
-                Harap Jangan Order Ketika Status Admin Offline — Nekat Order Kami Proses Nanti
+                Harap Jangan Order/Transfer Ketika Status Admin Di Atas Offline
             </div>
         </div>
-          <!-- KATEGORI VIEW -->
+
+        <!-- KATEGORI VIEW -->
         <div id="kategoriView">
             <!-- Aplikasi Premium -->
             <div class="section-title">
@@ -667,7 +756,7 @@
                         </button>
                     </div>
 
-                    <!-- Seabank -->
+                        <!-- Seabank -->
                     <div class="metode-card">
                         <div class="metode-header">
                             <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" alt="Seabank">
@@ -804,9 +893,10 @@
                 "Akses Permanen Rp 50.000"
               ] }
         ];
+
         document.getElementById('totalApps').textContent = '31 Produk';
 
-        // Intro Typing - LEBIH PENDEK
+        // Intro Typing
         const intro = document.getElementById('introScreen');
         const main = document.getElementById('mainContent');
         const typing = document.getElementById('typingText');
@@ -823,7 +913,6 @@
             }
         }
         
-        // Mulai typing setelah halaman load
         setTimeout(type, 500);
 
         enter.addEventListener('click', () => {
@@ -840,6 +929,45 @@
                 audio.play().catch(e => console.log(e));
             }
         });
+
+        // Status Online/Offline berdasarkan jam
+        function updateStatus() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours + minutes / 60;
+
+            // Jam Siang: 10.30 - 13.00
+            const siangStart = 10 + 30/60; // 10.30
+            const siangEnd = 13 + 0/60; // 13.00
+            
+            // Jam Malam: 16.30 - 22.00
+            const malamStart = 16 + 30/60; // 16.30
+            const malamEnd = 22 + 0/60; // 22.00
+
+            const isOnline = (currentTime >= siangStart && currentTime <= siangEnd) || 
+                            (currentTime >= malamStart && currentTime <= malamEnd);
+
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const statusBadge = document.getElementById('statusBadge');
+
+            if (isOnline) {
+                statusDot.className = 'dot online';
+                statusText.className = 'status-text online';
+                statusText.textContent = 'Online';
+                statusBadge.style.borderColor = '#00ff9d';
+            } else {
+                statusDot.className = 'dot offline';
+                statusText.className = 'status-text offline';
+                statusText.textContent = 'Offline';
+                statusBadge.style.borderColor = '#ff4646';
+            }
+        }
+
+        // Update status setiap detik
+        updateStatus();
+        setInterval(updateStatus, 1000);
 
         // Render Kategori
         const appsGrid = document.getElementById('appsGrid');
@@ -966,3 +1094,4 @@
     </script>
 </body>
 </html>
+  
