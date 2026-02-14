@@ -113,25 +113,26 @@
             50% { transform: translateY(-30px) rotate(10deg); opacity: 0.2; }
         }
 
-        /* Main Icon - Ganti dengan Logo */
+        /* Main Icon - Logo */
         .main-logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 30px;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 25px;
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid #9c27b0;
             box-shadow: 0 0 50px rgba(156, 39, 176, 0.6);
             animation: pulseRotate 2s infinite;
-            background: #fff;
-            padding: 10px;
+            background: transparent;
+            padding: 0;
         }
 
         .main-logo img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            animation: bounceIn 0.5s ease-out;
+            object-fit: cover;
+            object-position: center;
+            display: block;
         }
 
         @keyframes pulseRotate {
@@ -192,7 +193,7 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 60px;
             padding: 5px;
-            margin: 30px 0;
+            margin: 25px 0 15px;
             border: 2px solid rgba(156, 39, 176, 0.4);
             box-shadow: 0 0 40px rgba(156, 39, 176, 0.4);
             position: relative;
@@ -277,7 +278,7 @@
             font-weight: bold;
             color: #ba68c8;
             text-shadow: 0 0 20px #9c27b0;
-            margin: 10px 0;
+            margin: 5px 0;
             position: relative;
             display: inline-block;
             animation: glow 1.5s infinite alternate;
@@ -298,49 +299,62 @@
             z-index: -1;
         }
 
-        /* Products Preview */
+        /* Products Preview - 3 baris seperti gambar */
         .products-preview {
-            display: flex;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
             justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
+            margin: 20px 0 15px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .preview-item {
-            background: rgba(156, 39, 176, 0.15);
+            background: linear-gradient(145deg, rgba(156, 39, 176, 0.2), rgba(156, 39, 176, 0.05));
             border: 1px solid rgba(156, 39, 176, 0.4);
-            border-radius: 12px;
-            padding: 8px 15px;
-            font-size: 0.85rem;
-            color: #ba68c8;
-            animation: fadeInOut 2s infinite;
+            border-radius: 50px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #fff;
+            animation: previewGlow 2s infinite alternate;
             backdrop-filter: blur(5px);
             font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .preview-item:hover {
+            transform: translateY(-2px);
+            background: rgba(156, 39, 176, 0.3);
+            border-color: #ba68c8;
         }
 
         .preview-item:nth-child(1) { animation-delay: 0s; }
-        .preview-item:nth-child(2) { animation-delay: 0.2s; }
-        .preview-item:nth-child(3) { animation-delay: 0.4s; }
-        .preview-item:nth-child(4) { animation-delay: 0.6s; }
-        .preview-item:nth-child(5) { animation-delay: 0.8s; }
-        .preview-item:nth-child(6) { animation-delay: 1s; }
-        .preview-item:nth-child(7) { animation-delay: 1.2s; }
-        .preview-item:nth-child(8) { animation-delay: 1.4s; }
-        .preview-item:nth-child(9) { animation-delay: 1.6s; }
+        .preview-item:nth-child(2) { animation-delay: 0.1s; }
+        .preview-item:nth-child(3) { animation-delay: 0.2s; }
+        .preview-item:nth-child(4) { animation-delay: 0.3s; }
+        .preview-item:nth-child(5) { animation-delay: 0.4s; }
+        .preview-item:nth-child(6) { animation-delay: 0.5s; }
+        .preview-item:nth-child(7) { animation-delay: 0.6s; }
+        .preview-item:nth-child(8) { animation-delay: 0.7s; }
+        .preview-item:nth-child(9) { animation-delay: 0.8s; }
 
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.4; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.05); }
+        @keyframes previewGlow {
+            from { box-shadow: 0 0 10px rgba(156, 39, 176, 0.3); }
+            to { box-shadow: 0 0 20px rgba(156, 39, 176, 0.6); }
         }
-         /* Enter Button - Ungu */
+
+        /* Enter Button - Ungu */
         .enter-btn {
             background: linear-gradient(45deg, #9c27b0, #ba68c8, #ab47bc);
             background-size: 200% 100%;
             color: white;
             border: none;
-            padding: 18px 60px;
-            font-size: 1.4rem;
+            padding: 15px 50px;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 60px;
             cursor: pointer;
@@ -348,8 +362,8 @@
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 20px;
             opacity: 0;
             transform: translateY(30px) scale(0.9);
             animation: fadeInUpScale 0.8s ease 3.2s forwards;
@@ -554,7 +568,7 @@
             transform: scale(0.95);
         }
 
-        /* Main Content */
+        /* MAIN CONTENT - DIPERBARUI DENGAN WARNA CERAH */
         .main-content {
             max-width: 600px;
             margin: 0 auto;
@@ -567,36 +581,38 @@
             to { opacity: 1; }
         }
 
-        /* Header */
+        /* Header dengan warna biru cerah */
         .header {
-            background: #1a1e2e;
+            background: linear-gradient(145deg, #1e3a5f, #0d2b45);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            border: 1px solid #2a2f45;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 1px solid #4a9eff;
+            box-shadow: 0 10px 20px rgba(0, 160, 255, 0.2);
         }
 
         .store-name {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #00ff9d;
+            color: #4a9eff;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-shadow: 0 0 10px #4a9eff;
         }
 
         .store-name i {
             font-size: 1.8rem;
+            color: #4a9eff;
         }
 
         .status-container {
-            background: #0f1322;
+            background: #1a3a5a;
             border-radius: 16px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
         }
 
         .status-row {
@@ -610,10 +626,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #1a1e2e;
+            background: #0d2b45;
             padding: 8px 15px;
             border-radius: 30px;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
         }
 
         .dot {
@@ -623,7 +639,6 @@
             display: inline-block;
             animation: pulse 1.5s infinite;
         }
-
         .dot.online {
             background: #00ff9d;
             box-shadow: 0 0 10px #00ff9d;
@@ -655,15 +670,15 @@
         }
 
         .schedule-item {
-            background: #1a1e2e;
+            background: #0d2b45;
             border-radius: 12px;
             padding: 10px;
             text-align: center;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
         }
 
         .schedule-item i {
-            color: #00ff9d;
+            color: #4a9eff;
             margin-right: 5px;
         }
 
@@ -674,7 +689,7 @@
         }
 
         .schedule-item .session {
-            color: #889;
+            color: #aaccff;
             font-size: 0.8rem;
         }
 
@@ -694,26 +709,34 @@
             color: #ff4646;
         }
 
+        /* Section Title dengan warna cerah */
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin: 20px 0 15px;
             color: #fff;
             display: flex;
             align-items: center;
             gap: 8px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-title i {
-            color: #00ff9d;
-            font-size: 1.1rem;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            -webkit-text-fill-color: #ff6b6b;
         }
 
         .section-title span {
             color: #889;
             font-size: 0.9rem;
             margin-left: auto;
+            -webkit-text-fill-color: #889;
         }
 
+        /* Kategori Grid dengan warna-warna cerah */
         .kategori-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -722,18 +745,45 @@
         }
 
         .kategori-card {
-            background: #1a1e2e;
+            background: linear-gradient(145deg, #2a3a5a, #1a2a45);
             border-radius: 16px;
             padding: 15px;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            animation: cardFloat 3s infinite ease-in-out;
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.2);
+        }
+
+        .kategori-card:nth-child(1) { animation-delay: 0s; }
+        .kategori-card:nth-child(2) { animation-delay: 0.1s; }
+        .kategori-card:nth-child(3) { animation-delay: 0.2s; }
+        .kategori-card:nth-child(4) { animation-delay: 0.3s; }
+        .kategori-card:nth-child(5) { animation-delay: 0.4s; }
+        .kategori-card:nth-child(6) { animation-delay: 0.5s; }
+        .kategori-card:nth-child(7) { animation-delay: 0.6s; }
+        .kategori-card:nth-child(8) { animation-delay: 0.7s; }
+        .kategori-card:nth-child(9) { animation-delay: 0.8s; }
+        .kategori-card:nth-child(10) { animation-delay: 0.9s; }
+        .kategori-card:nth-child(11) { animation-delay: 1s; }
+        .kategori-card:nth-child(12) { animation-delay: 1.1s; }
+        .kategori-card:nth-child(13) { animation-delay: 1.2s; }
+        .kategori-card:nth-child(14) { animation-delay: 1.3s; }
+        .kategori-card:nth-child(15) { animation-delay: 1.4s; }
+        .kategori-card:nth-child(16) { animation-delay: 1.5s; }
+        .kategori-card:nth-child(17) { animation-delay: 1.6s; }
+        .kategori-card:nth-child(18) { animation-delay: 1.7s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(74, 158, 255, 0.3); }
         }
 
         .kategori-card:hover {
-            border-color: #00ff9d;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.1);
+            border-color: #ff6b6b;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+            background: linear-gradient(145deg, #3a4a6a, #2a3a55);
         }
 
         .kategori-header {
@@ -747,49 +797,62 @@
             width: 35px;
             height: 35px;
             object-fit: contain;
-            background: #0f1322;
+            background: #fff;
             padding: 5px;
             border-radius: 10px;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
+            animation: rotateLogo 5s infinite linear;
+        }
+
+        @keyframes rotateLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .kategori-header h3 {
             font-size: 1rem;
             font-weight: 600;
+            color: #4ecdc4;
         }
 
         .kategori-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #889;
+            color: #aaccff;
             font-size: 0.85rem;
-            border-top: 1px solid #2a2f45;
+            border-top: 1px solid #4a9eff;
             padding-top: 10px;
         }
 
         .kategori-paket {
-            color: #889;
+            color: #ffd93d;
         }
 
         .kategori-harga {
-            color: #00ff9d;
+            color: #ff6b6b;
             font-weight: bold;
             font-size: 1rem;
+            animation: priceGlow 2s infinite alternate;
+        }
+
+        @keyframes priceGlow {
+            from { text-shadow: 0 0 5px #ff6b6b; }
+            to { text-shadow: 0 0 15px #ff6b6b; }
         }
 
         .produk-view, .payment-view {
-            background: #1a1e2e;
+            background: linear-gradient(145deg, #2a3a5a, #1a2a45);
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid #2a2f45;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 1px solid #4a9eff;
+            box-shadow: 0 10px 20px rgba(74, 158, 255, 0.2);
         }
 
         .back-btn {
-            background: #0f1322;
-            border: 1px solid #2a2f45;
-            color: white;
+            background: #1a3a5a;
+            border: 1px solid #4a9eff;
+            color: #4ecdc4;
             padding: 10px 20px;
             border-radius: 30px;
             cursor: pointer;
@@ -802,8 +865,9 @@
         }
 
         .back-btn:hover {
-            border-color: #00ff9d;
-            color: #00ff9d;
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+            transform: translateX(-5px);
         }
 
         .produk-header {
@@ -812,16 +876,17 @@
             gap: 12px;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #2a2f45;
+            border-bottom: 1px solid #4a9eff;
         }
 
         .produk-header img {
             width: 45px;
             height: 45px;
             object-fit: contain;
-            background: #0f1322;
+            background: #fff;
             padding: 8px;
             border-radius: 12px;
+            border: 1px solid #4a9eff;
         }
 
         .produk-list {
@@ -831,31 +896,48 @@
         }
 
         .produk-item {
-            background: #0f1322;
+            background: #1a3a5a;
             border-radius: 12px;
             padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            animation: itemPulse 2s infinite alternate;
+        }
+
+        .produk-item:nth-child(1) { animation-delay: 0s; }
+        .produk-item:nth-child(2) { animation-delay: 0.1s; }
+        .produk-item:nth-child(3) { animation-delay: 0.2s; }
+        .produk-item:nth-child(4) { animation-delay: 0.3s; }
+        .produk-item:nth-child(5) { animation-delay: 0.4s; }
+        .produk-item:nth-child(6) { animation-delay: 0.5s; }
+        .produk-item:nth-child(7) { animation-delay: 0.6s; }
+
+        @keyframes itemPulse {
+            from { box-shadow: 0 0 5px #4a9eff; }
+            to { box-shadow: 0 0 15px #ff6b6b; }
         }
 
         .produk-item:hover {
-            border-color: #00ff9d;
+            border-color: #ff6b6b;
             transform: translateX(5px);
+            background: #2a4a6a;
         }
 
         .produk-nama {
             font-size: 0.95rem;
             flex: 1;
+            color: #4ecdc4;
         }
 
         .produk-harga {
-            color: #00ff9d;
+            color: #ff6b6b;
             font-weight: bold;
             margin-left: 10px;
+            animation: priceGlow 2s infinite alternate;
         }
 
         .produk-catatan {
@@ -863,26 +945,27 @@
             color: #ff9999;
             margin-top: 5px;
             padding: 5px 0;
-            border-top: 1px dashed #ff4646;
+            border-top: 1px dashed #ff6b6b;
         }
 
         .selected-info {
-            background: #0f1322;
+            background: #1a3a5a;
             border-radius: 12px;
             padding: 15px;
             text-align: center;
             margin-bottom: 20px;
-            border: 1px solid #00ff9d;
-            }
-         .selected-info h3 {
-            color: #00ff9d;
+            border: 1px solid #ff6b6b;
+        }
+
+        .selected-info h3 {
+            color: #4ecdc4;
             margin-bottom: 5px;
             font-size: 1.2rem;
         }
 
         .selected-harga {
             font-size: 1.5rem;
-            color: #00ff9d;
+            color: #ff6b6b;
             font-weight: bold;
             margin-top: 5px;
         }
@@ -895,10 +978,16 @@
         }
 
         .metode-card {
-            background: #0f1322;
+            background: #1a3a5a;
             border-radius: 12px;
             padding: 15px;
-            border: 1px solid #2a2f45;
+            border: 1px solid #4a9eff;
+            transition: all 0.3s;
+        }
+
+        .metode-card:hover {
+            border-color: #ff6b6b;
+            transform: scale(1.02);
         }
 
         .metode-header {
@@ -912,26 +1001,32 @@
             width: 25px;
             height: 25px;
             object-fit: contain;
+            background: #fff;
+            border-radius: 5px;
+            padding: 2px;
         }
 
         .metode-header span {
             font-weight: 600;
             font-size: 0.95rem;
+            color: #4ecdc4;
         }
 
         .nomor {
-            background: #1a1e2e;
+            background: #0d2b45;
             padding: 8px;
             border-radius: 8px;
             font-family: monospace;
             font-size: 0.9rem;
             text-align: center;
             margin: 10px 0;
+            color: #ffd93d;
+            border: 1px solid #4a9eff;
         }
 
         .btn-popup {
-            background: #00ff9d;
-            color: #0a0c14;
+            background: #ff6b6b;
+            color: white;
             border: none;
             padding: 8px;
             border-radius: 8px;
@@ -947,7 +1042,7 @@
         }
 
         .btn-popup:hover {
-            background: #00cc7d;
+            background: #ff8a8a;
             transform: scale(0.98);
         }
 
@@ -957,6 +1052,7 @@
             margin: 10px auto;
             display: block;
             border-radius: 8px;
+            border: 2px solid #4a9eff;
         }
 
         .metode-card.full {
@@ -981,11 +1077,17 @@
             color: white;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            animation: btnPulse 2s infinite alternate;
+        }
+
+        @keyframes btnPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
         }
 
         .admin-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
             filter: brightness(1.1);
         }
 
@@ -1010,27 +1112,34 @@
         }
 
         .suntik-note {
-            background: #0f1322;
+            background: #1a3a5a;
             border-radius: 12px;
             padding: 15px;
             margin: 20px 0;
             text-align: center;
-            border: 1px dashed #00ff9d;
+            border: 1px dashed #ff6b6b;
+            animation: noteGlow 2s infinite alternate;
+        }
+
+        @keyframes noteGlow {
+            from { box-shadow: 0 0 10px #ff6b6b; }
+            to { box-shadow: 0 0 20px #ff6b6b; }
         }
 
         .suntik-note i {
-            color: #00ff9d;
+            color: #ff6b6b;
             margin-right: 8px;
         }
 
         .suntik-note a {
-            color: #00ff9d;
+            color: #ff6b6b;
             text-decoration: none;
             font-weight: bold;
         }
 
         .suntik-note a:hover {
             text-decoration: underline;
+            color: #ff8a8a;
         }
 
         .modal {
@@ -1048,12 +1157,12 @@
         }
 
         .modal-content {
-            background: #1a1e2e;
+            background: linear-gradient(145deg, #2a3a5a, #1a2a45);
             padding: 25px;
             border-radius: 20px;
             text-align: center;
             max-width: 300px;
-            border: 1px solid #00ff9d;
+            border: 2px solid #ff6b6b;
             animation: modalPop 0.3s ease;
         }
 
@@ -1075,8 +1184,8 @@
         }
 
         .close-modal {
-            background: #00ff9d;
-            color: #0a0c14;
+            background: #ff6b6b;
+            color: white;
             border: none;
             padding: 8px 25px;
             border-radius: 30px;
@@ -1086,11 +1195,10 @@
         }
 
         .close-modal:hover {
-            background: #00cc7d;
+            background: #ff8a8a;
             transform: scale(0.95);
         }
-
-        audio {
+          audio {
             display: none;
         }
     </style>
@@ -1158,7 +1266,7 @@
                 </div>
             </div>
 
-            <!-- Products Preview -->
+            <!-- Products Preview - 3 baris sesuai gambar -->
             <div class="products-preview">
                 <span class="preview-item">Capcut</span>
                 <span class="preview-item">Netflix</span>
@@ -1212,7 +1320,7 @@
                         <span class="dot" id="statusDot"></span>
                         <span class="status-text" id="statusText">Loading...</span>
                     </div>
-                    <span><i class="fas fa-clock" style="color: #00ff9d;"></i> WIB</span>
+                    <span><i class="fas fa-clock" style="color: #4a9eff;"></i> WIB</span>
                 </div>
 
                 <div class="schedule">
@@ -1337,15 +1445,16 @@
             </div>
         </div>
     </div>
+
     <!-- Modals -->
     <div class="modal" id="seabankModal">
         <div class="modal-content">
             <img src="https://images.bukaolshop.com/hosting/181218/0d46bd2ba133491753.png" alt="Seabank">
-            <h3 style="color: #00ff9d; margin: 10px 0;">SEABANK</h3>
-            <div style="background: #0f1322; padding: 12px; border-radius: 8px; margin: 15px 0; font-family: monospace; font-size: 1.1rem;">
+            <h3 style="color: #ff6b6b; margin: 10px 0;">SEABANK</h3>
+            <div style="background: #0d2b45; padding: 12px; border-radius: 8px; margin: 15px 0; font-family: monospace; font-size: 1.1rem; color: #ffd93d;">
                 9015 1787 0612
             </div>
-            <p style="margin-bottom: 15px;">a.n Keii Official</p>
+            <p style="margin-bottom: 15px; color: #4ecdc4;">a.n Keii Official</p>
             <button class="close-modal" onclick="closeModal('seabankModal')">Tutup</button>
         </div>
     </div>
@@ -1353,7 +1462,7 @@
     <div class="modal" id="qrisModal">
         <div class="modal-content">
             <img src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" alt="QRIS" style="max-width: 250px;">
-            <h3 style="color: #00ff9d; margin: 15px 0;">QRIS</h3>
+            <h3 style="color: #ff6b6b; margin: 15px 0;">QRIS</h3>
             <button class="close-modal" onclick="closeModal('qrisModal')">Tutup</button>
         </div>
     </div>
@@ -1509,7 +1618,6 @@
                     "Private 1 Tahun (acc b) Rp 5.500"
                 ] 
             },
-            
             // 12. Lok Lok Premium
             { 
                 name: "Lok Lok Premium", 
@@ -1651,6 +1759,7 @@
                 catatan: "Catatan: Sesudah Order Wajib Chat Admin Via Wa/Telegram Dan Sertakan Bukti Transfer !!!"
             }
         ];
+
         document.getElementById('totalApps').textContent = kategoriData.length + ' Kategori';
 
         // Create Particles
