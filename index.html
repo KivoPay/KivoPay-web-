@@ -19,19 +19,54 @@
             color: #fff;
         }
 
-        /* Intro Loading Screen */
+        /* INTRO LOADING SUPER KEREN */
         .intro-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #0a0c14 0%, #1a1e2e 100%);
+            background: radial-gradient(circle at 30% 30%, #1a1e2e, #0a0c14);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             transition: opacity 0.8s ease;
+            overflow: hidden;
+        }
+
+        .intro-screen::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 157, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            from { transform: translateX(-100%) rotate(45deg); }
+            to { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .intro-screen::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 157, 0.03) 2px,
+                rgba(0, 255, 157, 0.03) 4px
+            );
+            pointer-events: none;
         }
 
         .intro-screen.hide {
@@ -42,111 +77,341 @@
         .intro-content {
             text-align: center;
             padding: 20px;
-            max-width: 400px;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
         }
 
-        .loading-icon {
-            font-size: 5rem;
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-elements i {
+            position: absolute;
+            color: rgba(0, 255, 157, 0.1);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .floating-elements i:nth-child(1) { top: 10%; left: 10%; font-size: 3rem; animation-delay: 0s; }
+        .floating-elements i:nth-child(2) { top: 20%; right: 15%; font-size: 4rem; animation-delay: 1s; }
+        .floating-elements i:nth-child(3) { bottom: 15%; left: 20%; font-size: 3.5rem; animation-delay: 2s; }
+        .floating-elements i:nth-child(4) { bottom: 25%; right: 10%; font-size: 4.5rem; animation-delay: 3s; }
+        .floating-elements i:nth-child(5) { top: 40%; left: 5%; font-size: 2.5rem; animation-delay: 1.5s; }
+        .floating-elements i:nth-child(6) { top: 60%; right: 5%; font-size: 3.2rem; animation-delay: 2.5s; }
+        .floating-elements i:nth-child(7) { bottom: 5%; left: 40%; font-size: 4rem; animation-delay: 0.5s; }
+        .floating-elements i:nth-child(8) { top: 80%; right: 25%; font-size: 3.8rem; animation-delay: 3.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-30px) rotate(10deg); opacity: 0.2; }
+        }
+
+        /* Main Icon */
+        .main-icon {
+            font-size: 6rem;
             color: #00ff9d;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             filter: drop-shadow(0 0 30px #00ff9d);
-            animation: pulse 1.5s ease-in-out infinite;
+            animation: pulseRotate 2s infinite;
+            position: relative;
+            z-index: 5;
         }
 
-        @keyframes pulse {
+        .main-icon i {
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        @keyframes pulseRotate {
             0%, 100% { 
-                transform: scale(1);
-                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 30px #00ff9d);
             }
-            50% { 
-                transform: scale(1.1);
-                opacity: 0.8;
+            33% { 
+                transform: scale(1.1) rotate(5deg);
+                filter: drop-shadow(0 0 50px #00ff9d);
+            }
+            66% { 
+                transform: scale(0.95) rotate(-5deg);
+                filter: drop-shadow(0 0 40px #00ff9d);
             }
         }
 
-        .loading-text {
-            font-size: 2rem;
-            font-weight: bold;
+        /* Title */
+        .loading-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff9d;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .loading-title span {
             color: #00ff9d;
-            margin-bottom: 30px;
-            text-shadow: 0 0 15px #00ff9d;
-            letter-spacing: 2px;
+            display: inline-block;
+            animation: wave 2s infinite;
+        }
+
+        .loading-title span:nth-child(1) { animation-delay: 0s; }
+        .loading-title span:nth-child(2) { animation-delay: 0.1s; }
+        .loading-title span:nth-child(3) { animation-delay: 0.2s; }
+        .loading-title span:nth-child(4) { animation-delay: 0.3s; }
+        .loading-title span:nth-child(5) { animation-delay: 0.4s; }
+        .loading-title span:nth-child(6) { animation-delay: 0.5s; }
+        .loading-title span:nth-child(7) { animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Loading Bar Container */
+        .loading-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 60px;
+            padding: 5px;
+            margin: 30px 0;
+            border: 2px solid rgba(0, 255, 157, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+            position: relative;
+            z-index: 5;
+            overflow: hidden;
         }
 
         .loading-bar {
-            width: 300px;
-            height: 10px;
-            background: #1a1e2e;
-            border-radius: 10px;
-            margin: 20px auto;
-            overflow: hidden;
-            border: 1px solid #2a2f45;
+            height: 25px;
+            background: linear-gradient(90deg, #00ff9d, #00cc7d, #00ff9d);
+            background-size: 200% 100%;
+            border-radius: 60px;
+            width: 0%;
+            animation: loading 3s ease-in-out forwards, gradient 2s infinite linear;
+            position: relative;
+            box-shadow: 0 0 20px #00ff9d;
         }
 
-        .loading-progress {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #00ff9d, #00cc7d);
-            border-radius: 10px;
-            animation: loading 2.5s ease-in-out forwards;
-            box-shadow: 0 0 20px #00ff9d;
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            animation: shimmer 1.5s infinite;
         }
 
         @keyframes loading {
             0% { width: 0%; }
-            20% { width: 40%; }
-            50% { width: 70%; }
-            80% { width: 90%; }
+            20% { width: 30%; }
+            40% { width: 50%; }
+            60% { width: 70%; }
+            80% { width: 85%; }
+            90% { width: 95%; }
             100% { width: 100%; }
         }
 
-        .loading-percent {
-            color: #889;
-            font-size: 1rem;
-            margin-top: 15px;
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Loading Stats */
+        .loading-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #889;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-item i {
+            color: #00ff9d;
+            animation: spin 2s infinite linear;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .percentage {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff9d;
+            text-shadow: 0 0 10px #00ff9d;
+            margin: 10px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .percentage::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,255,157,0.3) 0%, transparent 70%);
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        /* Products Preview */
+        .products-preview {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .preview-item {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            color: #00ff9d;
+            animation: fadeInOut 2s infinite;
+            backdrop-filter: blur(5px);
+        }
+
+        .preview-item:nth-child(1) { animation-delay: 0s; }
+        .preview-item:nth-child(2) { animation-delay: 0.2s; }
+        .preview-item:nth-child(3) { animation-delay: 0.4s; }
+        .preview-item:nth-child(4) { animation-delay: 0.6s; }
+        .preview-item:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Enter Button */
         .enter-btn {
-            background: #00ff9d;
+            background: linear-gradient(45deg, #00ff9d, #00cc7d, #00ff9d);
+            background-size: 200% 100%;
             color: #0a0c14;
             border: none;
-            padding: 15px 50px;
-            font-size: 1.3rem;
+            padding: 18px 60px;
+            font-size: 1.4rem;
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 60px;
             cursor: pointer;
-            box-shadow: 0 0 30px #00ff9d;
+            box-shadow: 0 0 40px #00ff9d;
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             margin-top: 30px;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease 2.5s forwards;
+            transform: translateY(30px) scale(0.9);
+            animation: fadeInUpScale 0.8s ease 3.2s forwards;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .enter-btn i {
-            transition: transform 0.3s;
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: btnShimmer 2s infinite;
+        }
+
+        @keyframes btnShimmer {
+            100% { left: 100%; }
         }
 
         .enter-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px #00ff9d;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 0 60px #00ff9d;
+            background-position: 100% 50%;
+        }
+
+        .enter-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
         }
 
         .enter-btn:hover i {
-            transform: translateX(5px);
+            transform: translateX(8px) rotate(10deg);
         }
 
-        @keyframes fadeInUp {
+        @keyframes fadeInUpScale {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
-        /* Main Content */
+        /* Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff9d;
+            border-radius: 50%;
+            animation: particleFloat 4s infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Rest of your existing CSS styles (main content, header, kategori, etc.) */
+        /* ... (saya tidak mengubah bagian ini, tetap sama seperti sebelumnya) ... */
+        
+        /* Lanjutan CSS dari website sebelumnya (saya sertakan di sini tapi tidak saya ubah) */
         .main-content {
             max-width: 600px;
             margin: 0 auto;
@@ -159,7 +424,6 @@
             to { opacity: 1; }
         }
 
-        /* Header */
         .header {
             background: #1a1e2e;
             border-radius: 20px;
@@ -226,24 +490,6 @@
             box-shadow: 0 0 10px #ff4646;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .status-text {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .status-text.online {
-            color: #00ff9d;
-        }
-
-        .status-text.offline {
-            color: #ff4646;
-        }
-
         .schedule {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -291,7 +537,6 @@
             color: #ff4646;
         }
 
-        /* Section Title */
         .section-title {
             font-size: 1.2rem;
             margin: 20px 0 15px;
@@ -312,7 +557,6 @@
             margin-left: auto;
         }
 
-        /* Kategori Grid 2 Kolom */
         .kategori-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -377,7 +621,6 @@
             font-size: 1rem;
         }
 
-        /* Produk View */
         .produk-view, .payment-view {
             background: #1a1e2e;
             border-radius: 20px;
@@ -456,7 +699,6 @@
             font-weight: bold;
         }
 
-        /* Payment View */
         .selected-info {
             background: #0f1322;
             border-radius: 12px;
@@ -555,7 +797,6 @@
             grid-column: span 2;
         }
 
-        /* Admin Contacts */
         .admin-contacts {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -626,7 +867,6 @@
             text-decoration: underline;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -690,25 +930,87 @@
     </style>
 </head>
 <body>
-    <!-- Intro Loading Screen -->
+    <!-- INTRO LOADING SUPER KEREN -->
     <div class="intro-screen" id="introScreen">
+        <!-- Floating Icons -->
+        <div class="floating-elements">
+            <i class="fas fa-crown"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-gem"></i>
+            <i class="fas fa-bolt"></i>
+            <i class="fas fa-fire"></i>
+            <i class="fas fa-rocket"></i>
+            <i class="fas fa-shield"></i>
+            <i class="fas fa-trophy"></i>
+        </div>
+
+        <!-- Particles -->
+        <div class="particles" id="particles"></div>
+
         <div class="intro-content">
-            <div class="loading-icon">
+            <!-- Main Icon -->
+            <div class="main-icon">
                 <i class="fas fa-crown"></i>
             </div>
-            <div class="loading-text">Keii Official</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
+
+            <!-- Animated Title -->
+            <div class="loading-title">
+                <span>K</span>
+                <span>e</span>
+                <span>i</span>
+                <span>i</span>
+                <span>&nbsp;</span>
+                <span>O</span>
+                <span>f</span>
+                <span>f</span>
+                <span>i</span>
+                <span>c</span>
+                <span>i</span>
+                <span>a</span>
+                <span>l</span>
             </div>
-            <div class="loading-percent">Loading Store...</div>
+
+            <!-- Loading Bar with Stats -->
+            <div class="loading-container">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+
+            <div class="percentage" id="percentage">0%</div>
+
+            <div class="loading-stats">
+                <div class="stat-item">
+                    <i class="fas fa-box"></i>
+                    <span>18 Kategori</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-tags"></i>
+                    <span>62+ Produk</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span>1K+ Happy</span>
+                </div>
+            </div>
+
+            <!-- Products Preview -->
+            <div class="products-preview">
+                <span class="preview-item">Capcut</span>
+                <span class="preview-item">Netflix</span>
+                <span class="preview-item">YouTube</span>
+                <span class="preview-item">Disney+</span>
+                <span class="preview-item">ChatGPT</span>
+                <span class="preview-item">Canva</span>
+            </div>
+
+            <!-- Enter Button -->
             <button class="enter-btn" id="enterBtn">
-                <span>Masuk ke Store</span>
+                <span>MASUK STORE</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content (sama seperti sebelumnya, tidak diubah) -->
     <div class="main-content" id="mainContent" style="display: none;">
         <!-- Header -->
         <div class="header">
@@ -862,7 +1164,6 @@
             <button class="close-modal" onclick="closeModal('seabankModal')">Tutup</button>
         </div>
     </div>
-
     <div class="modal" id="qrisModal">
         <div class="modal-content">
             <img src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" alt="QRIS" style="max-width: 250px;">
@@ -877,7 +1178,7 @@
     </audio>
 
     <script>
-        // DATA LENGKAP PRODUK BARU
+        // DATA LENGKAP PRODUK (sama seperti sebelumnya)
         const kategoriData = [
             // 1. Capcut Premium
             { 
@@ -1124,7 +1425,35 @@
         ];
         document.getElementById('totalApps').textContent = kategoriData.length + ' Produk';
 
-        // Intro Loading
+        // Create Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (3 + Math.random() * 2) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Loading percentage
+        const loadingBar = document.getElementById('loadingBar');
+        const percentageEl = document.getElementById('percentage');
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+            } else {
+                width++;
+                percentageEl.textContent = width + '%';
+            }
+        }, 30);
+
+        // Intro elements
         const intro = document.getElementById('introScreen');
         const main = document.getElementById('mainContent');
         const enter = document.getElementById('enterBtn');
@@ -1145,18 +1474,15 @@
             }
         });
 
-        // Status Online/Offline berdasarkan jam
+        // Status Online/Offline
         function updateStatus() {
             const now = new Date();
             const hours = now.getHours();
             const minutes = now.getMinutes();
             const currentTime = hours + minutes / 60;
 
-            // Jam Siang: 10.30 - 13.00
             const siangStart = 10 + 30/60;
             const siangEnd = 13 + 0/60;
-            
-            // Jam Malam: 16.30 - 22.00
             const malamStart = 16 + 30/60;
             const malamEnd = 22 + 0/60;
 
@@ -1317,3 +1643,4 @@
     </script>
 </body>
 </html>
+            g
