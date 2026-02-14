@@ -168,6 +168,12 @@
         .loading-title span:nth-child(5) { animation-delay: 0.4s; }
         .loading-title span:nth-child(6) { animation-delay: 0.5s; }
         .loading-title span:nth-child(7) { animation-delay: 0.6s; }
+        .loading-title span:nth-child(8) { animation-delay: 0.7s; }
+        .loading-title span:nth-child(9) { animation-delay: 0.8s; }
+        .loading-title span:nth-child(10) { animation-delay: 0.9s; }
+        .loading-title span:nth-child(11) { animation-delay: 1s; }
+        .loading-title span:nth-child(12) { animation-delay: 1.1s; }
+        .loading-title span:nth-child(13) { animation-delay: 1.2s; }
 
         @keyframes wave {
             0%, 100% { transform: translateY(0); }
@@ -304,6 +310,10 @@
         .preview-item:nth-child(3) { animation-delay: 0.4s; }
         .preview-item:nth-child(4) { animation-delay: 0.6s; }
         .preview-item:nth-child(5) { animation-delay: 0.8s; }
+        .preview-item:nth-child(6) { animation-delay: 1s; }
+        .preview-item:nth-child(7) { animation-delay: 1.2s; }
+        .preview-item:nth-child(8) { animation-delay: 1.4s; }
+        .preview-item:nth-child(9) { animation-delay: 1.6s; }
 
         @keyframes fadeInOut {
             0%, 100% { opacity: 0.3; transform: scale(0.95); }
@@ -408,10 +418,7 @@
             }
         }
 
-        /* Rest of your existing CSS styles (main content, header, kategori, etc.) */
-        /* ... (saya tidak mengubah bagian ini, tetap sama seperti sebelumnya) ... */
-        
-        /* Lanjutan CSS dari website sebelumnya (saya sertakan di sini tapi tidak saya ubah) */
+        /* Main Content */
         .main-content {
             max-width: 600px;
             margin: 0 auto;
@@ -424,6 +431,7 @@
             to { opacity: 1; }
         }
 
+        /* Header */
         .header {
             background: #1a1e2e;
             border-radius: 20px;
@@ -488,6 +496,19 @@
         .dot.offline {
             background: #ff4646;
             box-shadow: 0 0 10px #ff4646;
+        }
+
+        .status-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .status-text.online {
+            color: #00ff9d;
+        }
+
+        .status-text.offline {
+            color: #ff4646;
         }
 
         .schedule {
@@ -585,7 +606,6 @@
             gap: 10px;
             margin-bottom: 12px;
         }
-
         .kategori-header img {
             width: 35px;
             height: 35px;
@@ -692,11 +712,22 @@
 
         .produk-nama {
             font-size: 0.95rem;
+            flex: 1;
         }
 
         .produk-harga {
             color: #00ff9d;
             font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* Catatan Khusus */
+        .produk-catatan {
+            font-size: 0.8rem;
+            color: #ff9999;
+            margin-top: 5px;
+            padding: 5px 0;
+            border-top: 1px dashed #ff4646;
         }
 
         .selected-info {
@@ -980,11 +1011,11 @@
             <div class="loading-stats">
                 <div class="stat-item">
                     <i class="fas fa-box"></i>
-                    <span>18 Kategori</span>
+                    <span>21 Kategori</span>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-tags"></i>
-                    <span>62+ Produk</span>
+                    <span>70+ Produk</span>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-users"></i>
@@ -1000,6 +1031,9 @@
                 <span class="preview-item">Disney+</span>
                 <span class="preview-item">ChatGPT</span>
                 <span class="preview-item">Canva</span>
+                <span class="preview-item">Jasa Web</span>
+                <span class="preview-item">Suntik WA</span>
+                <span class="preview-item">Robux</span>
             </div>
 
             <!-- Enter Button -->
@@ -1010,7 +1044,7 @@
         </div>
     </div>
 
-    <!-- Main Content (sama seperti sebelumnya, tidak diubah) -->
+    <!-- Main Content -->
     <div class="main-content" id="mainContent" style="display: none;">
         <!-- Header -->
         <div class="header">
@@ -1105,7 +1139,6 @@
                             <i class="fas fa-eye"></i> Tampilkan
                         </button>
                     </div>
-
                     <!-- Seabank -->
                     <div class="metode-card">
                         <div class="metode-header">
@@ -1164,6 +1197,7 @@
             <button class="close-modal" onclick="closeModal('seabankModal')">Tutup</button>
         </div>
     </div>
+
     <div class="modal" id="qrisModal">
         <div class="modal-content">
             <img src="https://images.bukaolshop.com/hosting/181218/cce817858ef1663896.png" alt="QRIS" style="max-width: 250px;">
@@ -1178,7 +1212,7 @@
     </audio>
 
     <script>
-        // DATA LENGKAP PRODUK (sama seperti sebelumnya)
+        // DATA LENGKAP PRODUK (21 Kategori)
         const kategoriData = [
             // 1. Capcut Premium
             { 
@@ -1421,9 +1455,52 @@
                     "1000 Robux Vilog Rp 135.800",
                     "2000 Robux Vilog Rp 268.800"
                 ] 
+            },
+            
+            // 19. Jasa Pembuatan Website Store
+            { 
+                name: "Jasa Web Store", 
+                paket: "2 Paket", 
+                harga: "Rp 30.000", 
+                logo: "https://images.bukaolshop.com/hosting/181218/99e951089ed4964596.png",
+                produk: [
+                    "Pembuatan Website Store Simple No Sound No Animasi Rp 30.000",
+                    "Pembuatan Website Keren + Animasi Loading + Sound Rp 50.000"
+                ] 
+            },
+            
+            // 20. Jasa Pembuatan Website Payment
+            { 
+                name: "Jasa Web Payment", 
+                paket: "2 Paket + Note", 
+                harga: "Rp 15.000", 
+                logo: "https://images.bukaolshop.com/hosting/181218/99e951089ed4964596.png",
+                produk: [
+                    "Pembuatan Website Payment Simple Tanpa Sound Rp 15.000",
+                    "Pembuatan Website Payment Animasi Loading + sound Rp 35.000"
+                ],
+                catatan: "Note: Tambah Domain + Nama Sendiri Itu Bisa 500-1jt ++"
+            },
+            
+            // 21. Price Suntik Saluran Wa
+            { 
+                name: "Suntik WA", 
+                paket: "7 Paket", 
+                harga: "Rp 5.000", 
+                logo: "https://images.bukaolshop.com/hosting/181218/7266732e2e41874360.png",
+                produk: [
+                    "100 Pengikut Rp 5.000",
+                    "300 Pengikut Rp 15.000",
+                    "400 Pengikut Rp 20.000",
+                    "500 Pengikut Rp 25.000",
+                    "1.000 Pengikut Rp 50.000",
+                    "2.000 Pengikut Rp 99.000"
+                ],
+                catatan: "Catatan: Sesudah Order Wajib Chat Admin Via Wa/Telegram Dan Sertakan Bukti Transfer !!!"
             }
         ];
-        document.getElementById('totalApps').textContent = kategoriData.length + ' Produk';
+
+        document.getElementById('totalApps').textContent = kategoriData.length + ' Kategori';
 
         // Create Particles
         function createParticles() {
@@ -1516,7 +1593,7 @@
         function renderKategori() {
             // Apps pertama (1-16)
             let appsHtml = '';
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < 18; i++) {
                 const item = kategoriData[i];
                 appsHtml += `
                     <div class="kategori-card" onclick="showProduk(${i})">
@@ -1533,9 +1610,9 @@
             }
             appsGrid.innerHTML = appsHtml;
 
-            // Sisanya (Nokos & Robux)
+            // Sisanya (Nokos, Robux, Jasa, Suntik)
             let nokosHtml = '';
-            for (let i = 16; i < kategoriData.length; i++) {
+            for (let i = 18; i < kategoriData.length; i++) {
                 const item = kategoriData[i];
                 nokosHtml += `
                     <div class="kategori-card" onclick="showProduk(${i})">
@@ -1562,7 +1639,7 @@
         window.showProduk = (index) => {
             const item = kategoriData[index];
             
-            let html = `
+      let html = `
                 <div class="produk-header">
                     <img src="${item.logo}" alt="${item.name}">
                     <h2>${item.name}</h2>
@@ -1583,6 +1660,12 @@
             });
             
             html += '</div>';
+            
+            // Tambah catatan jika ada
+            if (item.catatan) {
+                html += `<div class="produk-catatan"><i class="fas fa-info-circle"></i> ${item.catatan}</div>`;
+            }
+            
             produkContainer.innerHTML = html;
             
             kategoriView.style.display = 'none';
@@ -1643,4 +1726,3 @@
     </script>
 </body>
 </html>
-            g
