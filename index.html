@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaStore | Experiment</title>
+    <title>⎛⎝ V O I D • P R O J E C T ⎠⎞</title>
     <style>
         * {
             margin: 0;
@@ -13,182 +13,233 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0a0f1e;
-            color: #e0e0e0;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: #0a0c0f;
+            color: #e2e8f0;
         }
 
-        /* INTRO LOADING KEREN + GACOR */
+        /* ========== INTRO LOADING NEXT LEVEL ========== */
         #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #03050a;
+            background: #030405;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 1s cubic-bezier(0.77, 0, 0.175, 1), visibility 1s ease;
         }
 
         .loader-container {
             text-align: center;
+            width: 90%;
+            max-width: 600px;
         }
 
-        .glitch {
-            font-size: 4rem;
-            font-weight: bold;
+        .glitch-text {
+            font-size: clamp(2.5rem, 12vw, 5.5rem);
+            font-weight: 900;
             text-transform: uppercase;
-            color: white;
-            letter-spacing: 5px;
+            color: #fff;
+            letter-spacing: 0.2em;
             position: relative;
             text-shadow: 
-                0.05em 0 0 rgba(255,0,0,0.75),
-                -0.025em -0.05em 0 rgba(0,255,0,0.75),
-                0.025em 0.05em 0 rgba(0,0,255,0.75);
-            animation: glitch 500ms infinite;
+                0.05em 0 0 rgba(255,0,0,0.8),
+                -0.025em -0.05em 0 rgba(0,255,255,0.8),
+                0.025em 0.05em 0 rgba(0,0,255,0.8);
+            animation: glitch-main 1.8s infinite;
         }
 
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
+        @keyframes glitch-main {
+            0% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.8), -0.05em -0.025em 0 rgba(0,255,255,0.8); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.8), 0.025em 0.05em 0 rgba(0,255,255,0.8); }
+            30% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.8), -0.05em -0.025em 0 rgba(0,255,255,0.8); }
+            45% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.8), 0.025em 0.05em 0 rgba(0,255,255,0.8); }
+            60% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.8), -0.05em -0.025em 0 rgba(0,255,255,0.8); }
+            75% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.8), 0.025em 0.05em 0 rgba(0,255,255,0.8); }
+            100% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.8), -0.05em -0.025em 0 rgba(0,255,255,0.8); }
+        }
+
+        .progress-container {
             width: 100%;
-            height: 100%;
-        }
-
-        .glitch::before {
-            animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
-            left: 2px;
-            text-shadow: -2px 0 #ff00c1;
-            background: #03050a;
-        }
-
-        .glitch::after {
-            animation: glitch-anim-2 0.4s infinite linear alternate-reverse;
-            left: -2px;
-            text-shadow: 2px 0 #00fff9;
-            background: #03050a;
-        }
-
-        @keyframes glitch-anim-1 {
-            0% { clip-path: inset(20% 0 30% 0); }
-            20% { clip-path: inset(60% 0 10% 0); }
-            40% { clip-path: inset(30% 0 40% 0); }
-            60% { clip-path: inset(80% 0 5% 0); }
-            80% { clip-path: inset(10% 0 70% 0); }
-            100% { clip-path: inset(40% 0 30% 0); }
-        }
-
-        @keyframes glitch-anim-2 {
-            0% { clip-path: inset(30% 0 50% 0); }
-            20% { clip-path: inset(10% 0 60% 0); }
-            40% { clip-path: inset(70% 0 20% 0); }
-            60% { clip-path: inset(40% 0 40% 0); }
-            80% { clip-path: inset(90% 0 5% 0); }
-            100% { clip-path: inset(20% 0 70% 0); }
-        }
-
-        .loader-bar {
-            width: 300px;
             height: 4px;
-            background: #1a1f30;
-            margin: 30px auto 20px;
+            background: #1e1e2f;
+            margin: 2rem 0 1.5rem;
             border-radius: 4px;
             overflow: hidden;
             position: relative;
         }
 
-        .loader-bar::after {
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00f5d4, #ff006e, #fbff00);
+            animation: loading-pro 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            box-shadow: 0 0 30px #00f5d4;
+            position: relative;
+        }
+
+        .progress-bar::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00d2ff, #3a7bd5, #00d2ff);
-            animation: loading-progress 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-            box-shadow: 0 0 20px #00d2ff;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shimmer 1.5s infinite;
         }
 
-        @keyframes loading-progress {
+        @keyframes loading-pro {
             0% { width: 0%; }
-            20% { width: 35%; }
-            50% { width: 70%; }
-            80% { width: 90%; }
+            20% { width: 28%; }
+            40% { width: 47%; }
+            60% { width: 71%; }
+            80% { width: 89%; }
             100% { width: 100%; }
         }
 
-        .loading-percent {
-            color: #7f8fa6;
-            font-family: monospace;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        /* MAIN CONTENT STYLES */
-        .navbar {
+        .loading-stats {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            background: rgba(10, 15, 30, 0.9);
-            backdrop-filter: blur(10px);
+            color: #6c7986;
+            font-family: 'Monospace', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .loading-percent {
+            color: #00f5d4;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        #main-content {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* NAVBAR FUTURISTIC */
+        .navbar {
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #2a2f45;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background: rgba(10, 12, 15, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 245, 212, 0.15);
         }
 
         .logo {
             font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #00d2ff, #928dff);
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5d4, #ff006e);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #b0b8d0;
+            color: #b0b8c5;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: 0.2s;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #00f5d4;
+            transition: width 0.2s;
         }
 
         .nav-links a:hover {
-            color: #00d2ff;
+            color: #00f5d4;
         }
 
-        /* HERO */
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO SECTION */
         .hero {
-            min-height: 80vh;
+            min-height: 90vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             text-align: center;
             padding: 2rem;
-            background: radial-gradient(circle at top right, #1a1f35, #0a0f1e);
+            background: radial-gradient(circle at 70% 30%, #1a1f2f, #0a0c0f);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 245, 212, 0.02) 10px,
+                rgba(0, 245, 212, 0.02) 20px
+            );
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(-10%, -10%) rotate(0deg); }
+            100% { transform: translate(10%, 10%) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 10vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
             margin-bottom: 1rem;
         }
 
-        .highlight {
-            background: linear-gradient(45deg, #00d2ff, #ff6b6b);
+        .hero h1 span {
+            background: linear-gradient(135deg, #00f5d4, #ff006e);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -196,240 +247,621 @@
 
         .hero p {
             font-size: 1.3rem;
-            color: #a0a8c0;
-            margin-bottom: 2rem;
+            color: #8f9bb3;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
         }
 
-        .cta-button {
-            padding: 1rem 2.5rem;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 1rem 2.8rem;
+            background: linear-gradient(135deg, #00f5d4, #00b8a9);
             border: none;
             border-radius: 50px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
+            color: #0a0c0f;
+            font-weight: 700;
             text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 40px #00f5d4;
         }
 
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px #00d2ff;
+        .btn-outline {
+            padding: 1rem 2.8rem;
+            background: transparent;
+            border: 2px solid #00f5d4;
+            border-radius: 50px;
+            color: #00f5d4;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
         }
 
-        /* PRODUK */
-        .products {
-            padding: 5rem 5%;
-            background: #0d1225;
+        .btn-outline:hover {
+            background: #00f5d4;
+            color: #0a0c0f;
+            box-shadow: 0 0 30px #00f5d4;
         }
 
-        .products h2 {
+        /* SECTION HEADER */
+        .section-header {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
             color: #fff;
         }
 
-        .product-grid {
+        .section-header h2 span {
+            color: #00f5d4;
+            border-bottom: 3px solid #ff006e;
+            padding-bottom: 5px;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            padding: 6rem 5%;
+            background: #0d0f13;
+        }
+
+        .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            background: #1e1e2f;
+            height: 400px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            box-shadow: 0 20px 40px rgba(0, 245, 212, 0.1);
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 60%, rgba(0, 245, 212, 0.1));
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .about-content p {
+            color: #9aa4b8;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* PROJECT SECTION */
+        .projects {
+            padding: 6rem 5%;
+            background: #0a0c0f;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .product-card {
-            background: #161c30;
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #2a2f45;
+        .project-card {
+            background: #13161c;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #2a2f3c;
+            transition: 0.4s;
         }
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.2);
-            border-color: #00d2ff;
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #00f5d4;
+            box-shadow: 0 30px 50px rgba(0, 245, 212, 0.15);
         }
 
-        .product-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 1rem;
+        .project-img {
+            height: 220px;
+            background: #1e1e2f;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: white;
+            font-size: 3.5rem;
+            border-bottom: 1px solid #2a2f3c;
         }
 
-        .product-card h3 {
-            margin: 1rem 0 0.5rem;
+        .project-info {
+            padding: 1.8rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             color: #fff;
         }
 
-        .product-card p {
-            color: #00d2ff;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .project-info p {
+            color: #8f9bb3;
+            margin-bottom: 1.2rem;
         }
 
-        .buy-btn {
-            padding: 0.7rem 1.5rem;
-            background: transparent;
-            border: 2px solid #00d2ff;
-            color: #00d2ff;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
-        .buy-btn:hover {
-            background: #00d2ff;
-            color: #0a0f1e;
+        .tag {
+            background: #1e1e2f;
+            color: #00f5d4;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            border: 1px solid #00f5d4;
         }
 
-        /* ABOUT */
-        .about, .contact {
-            padding: 5rem 5%;
+        /* SKILLS */
+        .skills {
+            padding: 6rem 5%;
+            background: #0d0f13;
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-item {
             text-align: center;
-            background: #0a0f1e;
-            border-top: 1px solid #2a2f45;
+            padding: 2rem 1rem;
+            background: #13161c;
+            border-radius: 15px;
+            border: 1px solid #2a2f3c;
+            transition: 0.3s;
         }
 
-        .about h2, .contact h2 {
-            font-size: 2.5rem;
+        .skill-item:hover {
+            border-color: #00f5d4;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-item span {
+            display: block;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        /* CONTACT */
+        .contact {
+            padding: 6rem 5%;
+            background: #0a0c0f;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: #13161c;
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 1px solid #2a2f3c;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
             margin-bottom: 2rem;
-            color: #fff;
+            color: #00f5d4;
         }
 
-        .about p, .contact p {
-            max-width: 800px;
-            margin: 1rem auto;
-            color: #b0b8d0;
-            line-height: 1.8;
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: #1e1e2f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #00f5d4;
+            }
+            .contact-text p {
+            color: #8f9bb3;
+        }
+
+        .contact-text strong {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background: #13161c;
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 1px solid #2a2f3c;
+        }
+
+        .contact-form h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #00f5d4;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: #1e1e2f;
+            border: 1px solid #2a2f3c;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00f5d4;
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00f5d4, #00b8a9);
+            border: none;
+            border-radius: 10px;
+            color: #0a0c0f;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #00b8a9, #00f5d4);
+            box-shadow: 0 0 30px #00f5d4;
         }
 
         /* FOOTER */
         footer {
+            background: #030405;
+            padding: 3rem 5%;
             text-align: center;
-            padding: 2rem;
-            background: #03050a;
-            color: #7f8fa6;
-            border-top: 1px solid #1a1f30;
+            border-top: 1px solid #1e1e2f;
+        }
+
+        .footer-content p {
+            color: #6c7986;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: #8f9bb3;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #00f5d4;
+            transform: translateY(-5px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- INTRO LOADING KEREN + GACOR -->
+    <!-- INTRO LOADING EXTREME -->
     <div id="loading-screen">
         <div class="loader-container">
-            <div class="glitch" data-text="NOVASTORE">NOVASTORE</div>
-            <div class="loader-bar"></div>
-            <div class="loading-percent">0%</div>
+            <div class="glitch-text">VOID</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="loading-stats">
+                <span>>_ INITIALIZE CORE</span>
+                <span class="loading-percent">0%</span>
+            </div>
         </div>
     </div>
 
-    <!-- MAIN CONTENT (HIDDEN AWAL) -->
-    <div id="main-content" style="display: none;">
+    <!-- MAIN WEBSITE -->
+    <div id="main-content">
         <!-- NAVBAR -->
         <nav class="navbar">
-            <div class="logo">NOVASTORE</div>
+            <div class="logo">⎛⎝VOID⎠⎞</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#produk">Produk</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#kontak">Kontak</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
 
-        <!-- HERO SECTION -->
+        <!-- HERO -->
         <section id="home" class="hero">
-            <h1>Welcome to <span class="highlight">NovaStore</span></h1>
-            <p>Tempat belanja masa percobaan dengan vibe kosmik.</p>
-            <a href="#produk" class="cta-button">Lihat Produk</a>
-        </section>
-
-        <!-- PRODUK SECTION -->
-        <section id="produk" class="products">
-            <h2>Produk Percobaan</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-img" style="background-color: #ff5757;">🚀</div>
-                    <h3>Roket Mini</h3>
-                    <p>Rp 150.000</p>
-                    <button class="buy-btn">Tambah ke Keranjang</button>
-                </div>
-                <div class="product-card">
-                    <div class="product-img" style="background-color: #5d9bff;">💊</div>
-                    <h3>Kapsul Waktu</h3>
-                    <p>Rp 89.000</p>
-                    <button class="buy-btn">Tambah ke Keranjang</button>
-                </div>
-                <div class="product-card">
-                    <div class="product-img" style="background-color: #50c878;">🔮</div>
-                    <h3>Bola Kristal</h3>
-                    <p>Rp 275.000</p>
-                    <button class="buy-btn">Tambah ke Keranjang</button>
-                </div>
-                <div class="product-card">
-                    <div class="product-img" style="background-color: #ffbe5c;">📦</div>
-                    <h3>Misteri Box</h3>
-                    <p>Rp 50.000</p>
-                    <button class="buy-btn">Tambah ke Keranjang</button>
+            <div class="hero-content">
+                <h1><span>CREATE.</span> <br>BREAK. <span>REPEAT.</span></h1>
+                <p>I'm a digital architect, building the unseen. Exploring the intersection of code, design, and chaos.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn-primary">VIEW WORK</a>
+                    <a href="#contact" class="btn-outline">LET'S TALK</a>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT SECTION -->
+        <!-- ABOUT -->
         <section id="about" class="about">
-            <h2>About Us</h2>
-            <p>NovaStore adalah toko percobaan yang didesain untuk menunjukkan kemampuan loading epik dan tata letak modern. Kami tidak benar-benar menjual produk ini. Ini hanya simulasi antarmuka untuk keperluan eksperimen dan pengembangan.</p>
-            <p>Dibangun dengan <span style="color: red;">❤️</span> oleh Chardox.</p>
+            <div class="section-header">
+                <h2>// <span>ABOUT</span>_ME</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    ⚡
+                </div>
+                <div class="about-content">
+                    <h3>I don't just code, I architect.</h3>
+                    <p>10+ years of navigating the digital abyss. From reverse engineering legacy systems to building scalable modern applications, I thrive on complexity. I see code as art, and every project is a new canvas.</p>
+                    <p>Based somewhere in the cloud. Working with startups, agencies, and visionaries to turn ideas into digital reality. Obsessed with performance, security, and aesthetic.</p>
+                </div>
+            </div>
         </section>
 
-        <!-- KONTAK SECTION -->
-        <section id="kontak" class="contact">
-            <h2>Kontak</h2>
-            <p>Email: experiment@novastore.cosmos</p>
-            <p>Telepon: +62 123 4567 8910</p>
-            <p>Alamat: Stasiun Luar Angkasa Nova, Orbit Bumi.</p>
+        <!-- PROJECTS -->
+        <section id="projects" class="projects">
+            <div class="section-header">
+                <h2>// <span>PROJECTS</span></h2>
+            </div>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-img">🌐</div>
+                    <div class="project-info">
+                        <h3>NOVA ECHO</h3>
+                        <p>AI-powered analytics dashboard with real-time anomaly detection.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">TensorFlow</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">🔐</div>
+                    <div class="project-info">
+                        <h3>ZERO TRUST</h3>
+                        <p>Decentralized authentication protocol for Web3 applications.</p>
+                        <div class="project-tags">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Solidity</span>
+                            <span class="tag">WASM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">🧠</div>
+                    <div class="project-info">
+                        <h3>SYNAPSE</h3>
+                        <p>Neural interface prototype for enhanced creative workflows.</p>
+                        <div class="project-tags">
+                            <span class="tag">C++</span>
+                            <span class="tag">OpenGL</span>
+                            <span class="tag">ML</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SKILLS -->
+        <section id="skills" class="skills">
+            <div class="section-header">
+                <h2>// <span>SKILLS</span></h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-icon">⚙️</div>
+                    <span>Reverse Eng.</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">🐍</div>
+                    <span>Python</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">🦀</div>
+                    <span>Rust</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">⚛️</div>
+                    <span>React</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">🔷</div>
+                    <span>TypeScript</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">🗄️</div>
+                    <span>Postgres</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">☁️</div>
+                    <span>AWS</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon">🔧</div>
+                    <span>Kubernetes</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="contact">
+            <div class="section-header">
+                <h2>// <span>CONTACT</span></h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Reach_Out</h3>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-text">
+                            <p>Email</p>
+                            <strong>void@cyber.digital</strong>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-text">
+                            <p>Signal</p>
+                            <strong>@void.42</strong>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">🌌</div>
+                        <div class="contact-text">
+                            <p>Discord</p>
+                            <strong>void_architect</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send_Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">TRANSMIT</button>
+                    </form>
+                </div>
+            </div>
         </section>
 
         <!-- FOOTER -->
         <footer>
-            <p>&copy; 2025 NovaStore Experiment. All rights reversed.</p>
+            <div class="footer-content">
+                <p>© 2025 ⎛⎝VOID⎠⎞ — Digital Architect</p>
+                <div class="social-links">
+                    <a href="#">𝕏</a>
+                    <a href="#">💬</a>
+                    <a href="#">⌨️</a>
+                    <a href="#">⚡</a>
+                </div>
+            </div>
         </footer>
     </div>
 
     <script>
-        // Simulasi loading persen
+        // LOADING SCREEN CONTROLLER
         const loadingScreen = document.getElementById('loading-screen');
         const mainContent = document.getElementById('main-content');
-        const percentEl = document.querySelector('.loading-percent');
-
-        let progress = 0;
+        const percentSpan = document.querySelector('.loading-percent');
+        
+        let percent = 0;
         const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 5) + 1;
-            if (progress >= 100) {
-                progress = 100;
+            percent += Math.floor(Math.random() * 4) + 1;
+            if (percent >= 100) {
+                percent = 100;
                 clearInterval(interval);
-
-                // Sembunyikan loading, tampilkan konten
+                
+                // Hide loading
                 loadingScreen.style.opacity = '0';
                 loadingScreen.style.visibility = 'hidden';
                 mainContent.style.display = 'block';
-                
-                // Trigger scroll halus
-                document.body.style.overflow = 'auto';
             }
-            percentEl.textContent = progress + '%';
-        }, 60);
+            percentSpan.textContent = percent + '%';
+        }, 50);
     </script>
 </body>
 </html>
