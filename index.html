@@ -308,7 +308,6 @@
             0%, 100% { transform: translateZ(100px) translate(0, 0) rotate(0deg); }
             50% { transform: translateZ(150px) translate(-30px, -30px) rotate(180deg); }
         }
-
         @keyframes float3d2 {
             0%, 100% { transform: translateZ(100px) translate(0, 0) rotate(0deg); }
             50% { transform: translateZ(200px) translate(30px, -40px) rotate(-180deg); }
@@ -378,6 +377,7 @@
             animation: progressLoading 3s ease-in-out forwards;
             box-shadow: 0 0 30px #8a2be2;
         }
+
         .intro-progress-fill::after {
             content: '';
             position: absolute;
@@ -726,7 +726,7 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* ===== QRIS SECTION DENGAN POP UP ===== */
+        /* ===== QRIS SECTION DENGAN POP UP SUPER BESAR ===== */
         .qris-showcase {
             text-align: center;
             margin: 60px 0;
@@ -738,24 +738,24 @@
         }
 
         .qris-preview {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             margin: 0 auto 30px;
             background: white;
-            border-radius: 40px;
-            padding: 20px;
+            border-radius: 50px;
+            padding: 30px;
             border: 5px solid transparent;
             background: linear-gradient(white, white) padding-box,
                         var(--gradient-utama) border-box;
-            box-shadow: 0 0 50px rgba(138,43,226,0.5);
+            box-shadow: 0 0 80px rgba(138,43,226,0.6);
             transition: 0.5s;
             animation: pulseShadow 2s ease-in-out infinite;
             cursor: pointer;
         }
 
         @keyframes pulseShadow {
-            0%, 100% { box-shadow: 0 0 50px rgba(138,43,226,0.5); }
-            50% { box-shadow: 0 0 100px rgba(65,105,225,0.7); }
+            0%, 100% { box-shadow: 0 0 80px rgba(138,43,226,0.6); }
+            50% { box-shadow: 0 0 150px rgba(65,105,225,0.8); }
         }
 
         .qris-preview img {
@@ -765,33 +765,36 @@
         }
 
         .qris-preview:hover {
-            transform: scale(1.05) rotate(2deg);
-            }
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 0 120px rgba(138,43,226,0.8);
+        }
+
         .qris-preview-text {
-            font-size: 24px;
-            margin-top: 20px;
+            font-size: 28px;
+            margin-top: 25px;
             background: var(--gradient-utama);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-
+            gap: 15px;
+            font-weight: 600;
+          }
         .qris-preview-text i {
             animation: bounce 2s ease-in-out infinite;
+            font-size: 35px;
         }
 
-        /* MODAL POP UP QRIS */
+        /* MODAL POP UP QRIS SUPER BESAR */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(30px);
             z-index: 10000;
             display: none;
             justify-content: center;
@@ -802,7 +805,7 @@
 
         .modal-overlay.active {
             display: flex;
-            animation: modalFadeIn 0.3s forwards;
+            animation: modalFadeIn 0.4s forwards;
         }
 
         @keyframes modalFadeIn {
@@ -812,17 +815,17 @@
 
         .modal-content {
             background: linear-gradient(135deg, #1a1a2a, #16213e);
-            border-radius: 60px;
-            padding: 60px;
-            max-width: 800px;
-            width: 90%;
+            border-radius: 80px;
+            padding: 80px;
+            max-width: 1100px;
+            width: 95%;
             position: relative;
-            border: 2px solid transparent;
+            border: 3px solid transparent;
             background: linear-gradient(#1a1a2a, #16213e) padding-box,
                         var(--gradient-utama) border-box;
-            box-shadow: 0 0 100px rgba(138,43,226,0.7);
+            box-shadow: 0 0 150px rgba(138,43,226,0.8);
             transform: scale(0.9);
-            animation: modalPop 0.3s forwards;
+            animation: modalPop 0.5s forwards;
         }
 
         @keyframes modalPop {
@@ -831,10 +834,10 @@
 
         .modal-close {
             position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            top: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
@@ -842,36 +845,46 @@
             justify-content: center;
             cursor: pointer;
             transition: 0.3s;
-            border: 1px solid rgba(138,43,226,0.3);
+            border: 2px solid rgba(138,43,226,0.5);
+            z-index: 10;
         }
 
         .modal-close:hover {
             background: #ff0000;
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
+            border-color: white;
         }
 
         .modal-close i {
-            font-size: 24px;
+            font-size: 30px;
             color: white;
         }
 
         .modal-title {
-            font-size: 40px;
-            margin-bottom: 30px;
+            font-size: 50px;
+            margin-bottom: 40px;
             text-align: center;
             background: var(--gradient-utama);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .modal-qris-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
         }
 
         .modal-qris {
-            width: 350px;
-            height: 350px;
-            margin: 0 auto 30px;
+            width: 500px;
+            height: 500px;
             background: white;
-            border-radius: 40px;
-            padding: 20px;
-            box-shadow: 0 0 50px rgba(138,43,226,0.5);
+            border-radius: 60px;
+            padding: 30px;
+            box-shadow: 0 0 100px rgba(138,43,226,0.6);
+            border: 5px solid #8a2be2;
         }
 
         .modal-qris img {
@@ -881,44 +894,53 @@
         }
 
         .modal-info {
-            background: rgba(0,0,0,0.3);
-            border-radius: 30px;
-            padding: 30px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 50px;
+            padding: 40px;
             margin-top: 30px;
+            border: 1px solid rgba(138,43,226,0.3);
         }
 
         .modal-info p {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 18px;
+            gap: 20px;
+            font-size: 22px;
+            color: white;
         }
 
         .modal-info i {
-            width: 30px;
+            width: 40px;
+            font-size: 28px;
             color: #8a2be2;
         }
 
         .modal-info strong {
             color: #00bfff;
+            font-weight: 600;
+            margin-right: 10px;
         }
 
         .modal-btn {
             display: inline-block;
-            padding: 20px 50px;
+            padding: 25px 70px;
             background: var(--gradient-utama);
             color: white;
             text-decoration: none;
-            border-radius: 60px;
-            font-size: 20px;
-            margin-top: 30px;
+            border-radius: 80px;
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 40px;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(138,43,226,0.5);
         }
 
         .modal-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px #8a2be2;
+            transform: scale(1.1);
+            box-shadow: 0 0 60px #8a2be2;
         }
 
         /* ===== INSTRUCTIONS PREMIUM ===== */
@@ -1149,13 +1171,37 @@
                 grid-template-columns: 1fr;
             }
 
+            .qris-preview {
+                width: 280px;
+                height: 280px;
+                padding: 15px;
+            }
+
+            .qris-preview-text {
+                font-size: 20px;
+            }
+
             .modal-content {
-                padding: 30px;
+                padding: 40px 20px;
             }
 
             .modal-qris {
-                width: 250px;
-                height: 250px;
+                width: 280px;
+                height: 280px;
+                padding: 15px;
+            }
+
+            .modal-title {
+                font-size: 32px;
+            }
+
+            .modal-info p {
+                font-size: 16px;
+                gap: 10px;
+        }
+               .modal-btn {
+                padding: 15px 40px;
+                font-size: 18px;
             }
 
             .steps-container {
@@ -1182,7 +1228,8 @@
         <div class="gradient-sphere2"></div>
         <div class="grid-3d"></div>
     </div>
-     <!-- INTRO LOADING SUPER PREMIUM -->
+
+    <!-- INTRO LOADING SUPER PREMIUM -->
     <div class="intro-loading" id="introLoading">
         <div class="intro-container">
             <!-- 3D CUBE -->
@@ -1234,16 +1281,22 @@
         </div>
     </div>
 
-    <!-- MODAL POP UP QRIS -->
+    <!-- MODAL POP UP QRIS SUPER BESAR -->
     <div class="modal-overlay" id="qrisModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeQRIS()">
                 <i class="fas fa-times"></i>
             </div>
             <h2 class="modal-title">QRIS PAYMENT</h2>
-            <div class="modal-qris">
-                <img src="https://images.bukaolshop.com/hosting/181218/15b9e709ce2931209.png" alt="QRIS KEII OFFICIAL">
+            
+            <!-- QRIS SUPER BESAR -->
+            <div class="modal-qris-container">
+                <div class="modal-qris">
+                    <img src="https://images.bukaolshop.com/hosting/181218/15b9e709ce2931209.png" alt="QRIS KEII OFFICIAL">
+                </div>
             </div>
+            
+            <!-- INFO QRIS LENGKAP -->
             <div class="modal-info">
                 <p><i class="fas fa-store"></i> <strong>Merchant:</strong> KEIZO STORE</p>
                 <p><i class="fas fa-id-card"></i> <strong>NMID:</strong> ID1025386843615</p>
@@ -1251,6 +1304,8 @@
                 <p><i class="fas fa-info-circle"></i> <strong>Cara bayar:</strong> Scan QRIS menggunakan aplikasi DANA/OVO/GoPay/m-banking</p>
                 <p><i class="fas fa-check-circle" style="color: #00ff00;"></i> <strong>Status:</strong> Aktif - Satu QRIS untuk semua</p>
             </div>
+            
+            <!-- TOMBOL TUTUP -->
             <div style="text-align: center;">
                 <button class="modal-btn" onclick="closeQRIS()">
                     <i class="fas fa-check"></i> OK, GOT IT
@@ -1312,14 +1367,14 @@
                 </div>
             </div>
 
-            <!-- QRIS PREVIEW - KLIK UNTUK POP UP -->
+            <!-- QRIS PREVIEW - KLIK UNTUK POP UP (SUPER BESAR) -->
             <div class="qris-showcase" data-aos="zoom-in">
                 <div class="qris-trigger" onclick="openQRIS()">
                     <div class="qris-preview">
                         <img src="https://images.bukaolshop.com/hosting/181218/15b9e709ce2931209.png" alt="QRIS Preview">
                     </div>
                     <div class="qris-preview-text">
-                        <i class="fas fa-hand-pointer"></i> KLIK UNTUK LIHAT QRIS <i class="fas fa-hand-pointer"></i>
+                        <i class="fas fa-hand-pointer"></i> KLIK UNTUK LIHAT QRIS SUPER BESAR <i class="fas fa-hand-pointer"></i>
                     </div>
                 </div>
             </div>
@@ -1494,4 +1549,5 @@
         document.head.appendChild(style);
     </script>
 </body>
-</html>
+</html>  
+                            
